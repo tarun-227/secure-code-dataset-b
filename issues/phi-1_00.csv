@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_89_py_1189,phi4:14b,python,CWE-89,normal,1,Rename a project owned by a given user.,mysql_connector,11-20,17,f_string,web_request,type_conversion,plain_vulnerable,cursor.execute,web_handler,,,,
-phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Count how many tickets have a given status.,sqlite3,6-10,10,per_pattern,function_argument,,constant_fragments_only,cursor.execute,method,,,,
-phi_89_py_1184,phi4:14b,python,CWE-89,hard_positive,1,Mark an invoice as paid by invoice number.,sqlite3,21-40,37,concatenation,environment,query_builder_orm,keyword_blocklist,cursor.execute,web_handler,,,,
-phi_89_py_1197,phi4:14b,python,CWE-89,safe,0,Add a tag to an article.,django_raw,11-20,17,parameterised,function_argument,,standard_safe,cursor.execute,method,,,,
-phi_89_py_1187,phi4:14b,python,CWE-89,no_code,0,"Merge two lists of product records, removing duplicates.",none,11-20,17,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,
+phi_89_py_1189,phi4:14b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,sqlalchemy_text,1-5,4,percent_format,environment,type_conversion,plain_vulnerable,cursor.execute,method,,,,
+phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Return the top N scores of a game.,psycopg2,6-10,7,per_pattern,file_content,,fstring_placeholders_only,cursor.execute,cli_entry,,,,
+phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,cursor.execute,cli_entry,,,,
+phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute,helper_called_by_caller,,,,
+phi_89_py_1187,phi4:14b,python,CWE-89,no_code,0,Format a list of order records as CSV text.,none,21-40,36,none,not_applicable,,no_dangerous_call,,web_handler,,,,

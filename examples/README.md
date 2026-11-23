@@ -27,4 +27,4 @@
 - No comment or name says "safe", "vulnerable" or "fixed".
 - `fixed_code` changes only the lines that matter and keeps the function's name and parameters.
 - `vulnerable_lines` points at the lines that **build** and **use** the dangerous value, not at the whole function.
-- Line numbers count every line from 1, including blank lines and `#include` lines.
+- Line numbers (`vulnerable_lines`) count every line from 1, including blank lines and `#include` lines. The `band` counts only real code lines (no blank, comment-only or import lines).

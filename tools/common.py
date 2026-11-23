@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -37,6 +38,38 @@ def parse_lines(s: str):
     if not all(isinstance(x, int) for x in v):
         raise ValueError("not a list of whole numbers")
     return v
+
+
+IMPORT = {
+    "python": re.compile(r"^(import\s|from\s+\S+\s+import\s)"),
+    "c": re.compile(r"^#\s*(include|pragma\s+once)\b"),
+    "cpp": re.compile(r"^(#\s*(include|pragma\s+once)\b|using\s+namespace\s)"),
+    "go": re.compile(r"^(package\s|import\s)"),
+}
+
+
+def code_lines(code: str, lang: str) -> int:
+    """Real code lines: lines that are not blank, not only a comment, and not an import / #include / package line.
+    This is what `band` and `target_lines` count."""
+    n, in_block, in_go_import = 0, False, False
+    for raw in code.split("\n"):
+        s = raw.strip()
+        if in_block:
+            in_block = "*/" not in s
+            continue
+        if lang != "python" and s.startswith("/*"):
+            in_block = "*/" not in s
+            continue
+        if in_go_import:
+            in_go_import = s != ")"
+            continue
+        if lang == "go" and re.match(r"^import\s*\($", s):
+            in_go_import = True
+            continue
+        if not s or s.startswith("#" if lang == "python" else "//") or IMPORT[lang].match(s):
+            continue
+        n += 1
+    return n
 
 
 def numbered(code: str) -> str:

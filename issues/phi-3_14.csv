@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_338_go_0970,phi4:14b,go,CWE-338,normal,1,Create a remember-me cookie value.,salt,6-10,9,go_math_rand,not_applicable,crypto_rand_text,plain_vulnerable,math/rand,cli_entry,,,,
-phi_338_go_0961,phi4:14b,go,CWE-338,hard_positive,1,Create a random PIN for a door lock.,password,6-10,10,go_math_rand,not_applicable,crypto_rand_text,weak_generator_in_helper,math/rand,method,,,,
-phi_338_go_0975,phi4:14b,go,CWE-338,safe,0,Create a token for a magic login link.,session,41-100,45,csprng,not_applicable,,standard_safe,math/rand,method,,,,
-phi_338_go_0957,phi4:14b,go,CWE-338,hard_negative,0,Pick a random starting player.,non_security,21-40,33,per_pattern,not_applicable,,non_security_shuffle_or_sample,math/rand,web_handler,,,,
-phi_338_go_0971,phi4:14b,go,CWE-338,normal,1,Generate an initialisation vector for encryption.,password,41-100,42,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,method,,,,
+phi_338_go_0970,phi4:14b,go,CWE-338,normal,1,Generate a session identifier.,session,21-40,32,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,cli_entry,,,,
+phi_338_go_0961,phi4:14b,go,CWE-338,hard_positive,1,Create an email verification code.,otp,6-10,8,go_math_rand,not_applicable,crypto_rand_text,weak_generator_in_helper,math/rand,helper_called_by_caller,,,,
+phi_338_go_0975,phi4:14b,go,CWE-338,safe,0,Create a password for a service account.,password,41-100,46,csprng,not_applicable,,standard_safe,math/rand,plain_function,,,,
+phi_338_go_0957,phi4:14b,go,CWE-338,hard_negative,0,Randomise the order of quiz questions.,non_security,6-10,10,per_pattern,not_applicable,,non_security_shuffle_or_sample,math/rand,plain_function,,,,
+phi_338_go_0971,phi4:14b,go,CWE-338,normal,1,Generate a random encryption key.,key,11-20,17,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,web_handler,,,,

@@ -126,7 +126,7 @@ Only add your one `submissions/...csv` file.
 - **Never merge a pull request and never push to `main`.** Only the project lead merges, including your own pull request. You work only on your `issue/<id>` branch.
 - Use **only your team's model**. Do not use ChatGPT, Gemini, Claude or another model for these rows.
 - Change only `code`, `fixed_code`, `vulnerable_lines` and `notes`. Never edit the other columns.
-- Keep each function within its `band` (number of lines).
+- Keep the code within its `band`. Only real code lines count: not blank lines, comment-only lines or imports.
 - `fixed_code` changes at most 10 lines and keeps the same function name.
 - Never test an attack against a real website, server or anyone's data. You do not need to run any attack at all.
 - Do not share the files outside this repository.

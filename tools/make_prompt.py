@@ -85,7 +85,7 @@ def prompt(r) -> str:
         L.append(_detail(r))
     if r["source"] != "not_applicable" and ct != "no_code":
         L.append(f"The input comes from {SOURCE[r['source']]}.")
-    L.append(f"Length: about {r['target_lines']} lines in total, at least {lo} and at most {hi}, counting imports and blank lines.")
+    L.append(f"Length: about {r['target_lines']} lines of code, at least {lo} and at most {hi}. Blank lines, comment lines and imports do not count.")
     if hi <= 10:
         L.append("This is short: write only what the task needs.")
     elif lo >= 41:

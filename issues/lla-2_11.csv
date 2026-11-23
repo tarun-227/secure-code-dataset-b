@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_338_c_0520,llama3.1:8b,c,CWE-338,normal,1,Create a token for a magic login link.,password,11-20,20,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,plain_function,,,,
-lla_338_c_0511,llama3.1:8b,c,CWE-338,hard_positive,1,Generate a temporary download token.,otp,41-100,43,libc_rand,not_applicable,csprng_library,secure_seed_for_weak_generator,rand / srand,method,,,,
-lla_338_c_0525,llama3.1:8b,c,CWE-338,safe,0,Create an unsubscribe link token.,password,6-10,6,csprng,not_applicable,,standard_safe,rand / srand,plain_function,,,,
-lla_338_c_0507,llama3.1:8b,c,CWE-338,hard_negative,0,Add random jitter to a retry delay.,non_security,21-40,28,per_pattern,not_applicable,,non_security_shuffle_or_sample,rand / srand,method,,,,
-lla_338_c_0521,llama3.1:8b,c,CWE-338,normal,1,Generate a password-reset token.,session,11-20,14,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,web_handler,,,,
+lla_338_c_0520,llama3.1:8b,c,CWE-338,normal,1,Create a remember-me cookie value.,session,21-40,25,libc_rand,not_applicable,csprng_library,plain_vulnerable,rand / srand,plain_function,,,,
+lla_338_c_0511,llama3.1:8b,c,CWE-338,hard_positive,1,Generate a backup encryption passphrase.,password,11-20,20,libc_rand,not_applicable,dev_urandom,secure_seed_for_weak_generator,rand / srand,web_handler,,,,
+lla_338_c_0525,llama3.1:8b,c,CWE-338,safe,0,Generate a one-time password for a bank transfer.,otp,21-40,37,csprng,not_applicable,,standard_safe,rand / srand,helper_called_by_caller,,,,
+lla_338_c_0507,llama3.1:8b,c,CWE-338,hard_negative,0,Simulate network packet loss in a test harness.,non_security,11-20,11,per_pattern,not_applicable,,non_security_simulation,rand / srand,callback_or_async,,,,
+lla_338_c_0521,llama3.1:8b,c,CWE-338,normal,1,Generate a bearer token for an internal service.,token,21-40,33,libc_rand,not_applicable,csprng_library,plain_vulnerable,rand / srand,plain_function,,,,

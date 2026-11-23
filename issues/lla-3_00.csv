@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_89_cpp_0739,llama3.1:8b,cpp,CWE-89,normal,1,Insert a new audit-log entry with an action and a user name.,mysql_connector_cpp,21-40,26,std_format,network_message,allow_list,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,cli_entry,,,,
-lla_89_cpp_0726,llama3.1:8b,cpp,CWE-89,hard_negative,0,Add a tag to an article.,sqlite3_c,6-10,9,per_pattern,database_value,,integer_forced,sqlite3_exec / QSqlQuery::exec,method,,,,
-lla_89_cpp_0734,llama3.1:8b,cpp,CWE-89,hard_positive,1,Find duplicate accounts sharing an email address.,qt_qsqlquery,41-100,64,std_format,file_content,query_builder_orm,hand_written_escaping,sqlite3_exec / QSqlQuery::exec,web_handler,,,,
-lla_89_cpp_0747,llama3.1:8b,cpp,CWE-89,safe,0,Check whether a login name and password hash match a stored account.,qt_qsqlquery,1-5,4,parameterised,database_value,,standard_safe,sqlite3_exec / QSqlQuery::exec,helper_called_by_caller,,,,
-lla_89_cpp_0738,llama3.1:8b,cpp,CWE-89,no_code,0,Build a cache key from a tenant name and a record id.,none,11-20,18,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,
+lla_89_cpp_0739,llama3.1:8b,cpp,CWE-89,normal,1,Return the inventory rows for a warehouse code.,sqlite3_c,1-5,5,std_format,function_argument,parameterised_query,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,callback_or_async,,,,
+lla_89_cpp_0726,llama3.1:8b,cpp,CWE-89,hard_negative,0,"List a user's uploaded files, ordered by a field the caller picks.",sqlite3_c,21-40,32,per_pattern,environment,,allow_listed_identifier,sqlite3_exec / QSqlQuery::exec,method,,,,
+lla_89_cpp_0733,llama3.1:8b,cpp,CWE-89,hard_positive,1,Find vehicles by licence-plate fragment.,qt_qsqlquery,41-100,45,ostringstream,web_request,parameterised_query,hand_written_escaping,sqlite3_exec / QSqlQuery::exec,web_handler,,,,
+lla_89_cpp_0748,llama3.1:8b,cpp,CWE-89,safe,0,Add a tag name to an article.,sqlite3_c,6-10,9,parameterised,function_argument,,standard_safe,sqlite3_exec / QSqlQuery::exec,callback_or_async,,,,
+lla_89_cpp_0738,llama3.1:8b,cpp,CWE-89,no_code,0,"Merge two lists of product records, removing duplicates.",none,11-20,16,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
