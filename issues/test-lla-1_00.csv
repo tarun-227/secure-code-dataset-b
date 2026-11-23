@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_py_0788,llama3.1:8b,python,CWE-89,normal,1,Find vehicles by licence-plate fragment.,psycopg2,6-10,7,percent_format,command_line,allow_list,plain_vulnerable,cursor.execute,method,,,,
+lla_89_py_0776,llama3.1:8b,python,CWE-89,hard_negative,0,Return all rows from a table chosen by the caller.,sqlite3,1-5,5,per_pattern,network_message,,query_builder_bound,cursor.execute,callback_or_async,,,,
+lla_89_py_0782,llama3.1:8b,python,CWE-89,hard_positive,1,Find customers whose phone number starts with a prefix.,mysql_connector,11-20,15,percent_format,command_line,allow_list,second_order_stored_value,cursor.execute,cli_entry,,,,
+lla_89_py_0797,llama3.1:8b,python,CWE-89,safe,0,Update a user's email address.,psycopg2,41-100,44,parameterised,environment,,standard_safe,cursor.execute,method,,,,
+lla_89_py_0786,llama3.1:8b,python,CWE-89,no_code,0,Parse a date string in YYYY-MM-DD form.,none,21-40,22,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
