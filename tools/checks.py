@@ -35,14 +35,16 @@ def extract_code(text: str) -> str:
 
 
 def take_markers(code: str):
-    """Remove '# @@' / '// @@' end-of-line markers; return (clean code, marked line numbers)."""
+    """Remove the @@ markers (normally # @@ or // @@ at the end of a line, but models sometimes put them
+    inside a string); return (clean code, marked line numbers)."""
     out, marked = [], []
-    for i, line in enumerate(code.split("\n"), 1):
-        if MARK.search(line):
+    for i, line in enumerate(code.split(chr(10)), 1):
+        if "@@" in line:
             marked.append(i)
             line = MARK.sub("", line)
+            line = re.sub(r"[ 	]*(?:#|//)?[ 	]*@@", "", line)
         out.append(line.rstrip())
-    return "\n".join(out), marked
+    return chr(10).join(out), marked
 
 
 def give_away(text: str):
