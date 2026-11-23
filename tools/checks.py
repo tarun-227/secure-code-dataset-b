@@ -213,7 +213,7 @@ def flagged(code: str, lang: str, cwe: str) -> bool:
 
 # hard rows whose pattern makes the rough check clear-cut
 HARD_NEG_CLEAN = {"query_builder_bound", "argv_list_user_data", "strict_parser_no_shell", "end_of_options_marker",
-                  "command_from_fixed_map", "resolve_then_contain_with_separator", "basename_only", "safe_filename_fixed_folder"}
+                  "resolve_then_contain_with_separator", "basename_only", "safe_filename_fixed_folder"}
 HARD_POS_FLAGGED_CWE = {"CWE-89", "CWE-338"}
 
 
