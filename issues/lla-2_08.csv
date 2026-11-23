@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_22_c_0420,llama3.1:8b,c,CWE-22,normal,1,Unpack a tar archive into a project folder.,unlink,21-40,23,strcat,database_value,id_to_file_map,plain_vulnerable,fopen / unlink,plain_function,,,,
-lla_22_c_0410,llama3.1:8b,c,CWE-22,hard_positive,1,Read a recipe file from a collection.,open,1-5,5,snprintf,web_request,basename_only,prefix_without_separator,fopen / unlink,plain_function,,,,
-lla_22_c_0425,llama3.1:8b,c,CWE-22,safe,0,Read a theme stylesheet by theme name.,fopen,41-100,49,contained_path,database_value,,standard_safe,fopen / unlink,helper_called_by_caller,,,,
-lla_22_c_0406,llama3.1:8b,c,CWE-22,hard_negative,0,Read a configuration file for a named profile.,rename,11-20,17,per_pattern,command_line,,id_mapped_to_known_file,fopen / unlink,helper_called_by_caller,,,,
-lla_22_c_0421,llama3.1:8b,c,CWE-22,normal,1,Read the README of a project folder.,open,11-20,18,sprintf,command_line,safe_join_library,plain_vulnerable,fopen / unlink,cli_entry,,,,
+lla_22_c_0420,llama3.1:8b,c,CWE-22,normal,1,Delete the cached copy of a dashboard chosen by name.,unlink,21-40,27,sprintf,environment,id_to_file_map,plain_vulnerable,fopen / unlink,helper_called_by_caller,,,,
+lla_22_c_0410,llama3.1:8b,c,CWE-22,hard_positive,1,Write cached data under a cache key.,fopen,21-40,33,snprintf,network_message,normalize_prefix_check,check_before_normalise,fopen / unlink,method,,,,
+lla_22_c_0425,llama3.1:8b,c,CWE-22,safe,0,Read a markdown page for a wiki path such as guides/setup.,fopen,6-10,10,contained_path,file_content,,standard_safe,fopen / unlink,callback_or_async,,,,
+lla_22_c_0406,llama3.1:8b,c,CWE-22,hard_negative,0,Load a user's avatar image.,fopen,11-20,14,per_pattern,environment,,safe_filename_fixed_folder,fopen / unlink,cli_entry,,,,
+lla_22_c_0421,llama3.1:8b,c,CWE-22,normal,1,"Read the price list for a region code (eu, us, asia).",open,41-100,50,sprintf,web_request,id_to_file_map,plain_vulnerable,fopen / unlink,web_handler,,,,

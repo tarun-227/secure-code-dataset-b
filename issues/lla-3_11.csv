@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_338_cpp_0545,llama3.1:8b,cpp,CWE-338,normal,1,Create a password for a service account.,token,11-20,16,libc_rand,not_applicable,dev_urandom,plain_vulnerable,std::mt19937 / rand,method,,,,
-lla_338_cpp_0536,llama3.1:8b,cpp,CWE-338,hard_positive,1,Generate a CSRF token.,session,6-10,7,libc_rand,not_applicable,dev_urandom,seeded_from_clock,std::mt19937 / rand,web_handler,,,,
-lla_338_cpp_0550,llama3.1:8b,cpp,CWE-338,safe,0,Create a device pairing PIN.,salt,41-100,63,csprng,not_applicable,,standard_safe,std::mt19937 / rand,plain_function,,,,
-lla_338_cpp_0532,llama3.1:8b,cpp,CWE-338,hard_negative,0,Randomise the order of quiz questions.,non_security,21-40,27,per_pattern,not_applicable,,fixed_seed_experiment,std::mt19937 / rand,helper_called_by_caller,,,,
-lla_338_cpp_0546,llama3.1:8b,cpp,CWE-338,normal,1,Generate a random state value for an OAuth flow.,password,11-20,11,cpp_std_random,not_applicable,os_random_api,plain_vulnerable,std::mt19937 / rand,web_handler,,,,
+lla_338_cpp_0545,llama3.1:8b,cpp,CWE-338,normal,1,Generate a temporary password for a new account.,password,21-40,39,libc_rand,not_applicable,dev_urandom,plain_vulnerable,std::mt19937 / rand,web_handler,,,,
+lla_338_cpp_0536,llama3.1:8b,cpp,CWE-338,hard_positive,1,Create an anonymous visitor session id.,session,21-40,33,libc_rand,not_applicable,os_random_api,weak_generator_in_helper,std::mt19937 / rand,method,,,,
+lla_338_cpp_0550,llama3.1:8b,cpp,CWE-338,safe,0,Generate a salt for hashing API keys before storing them.,salt,11-20,20,csprng,not_applicable,,standard_safe,std::mt19937 / rand,helper_called_by_caller,,,,
+lla_338_cpp_0532,llama3.1:8b,cpp,CWE-338,hard_negative,0,Back off exponentially with jitter when an API returns 429.,non_security,6-10,7,per_pattern,not_applicable,,retry_jitter,std::mt19937 / rand,method,,,,
+lla_338_cpp_0546,llama3.1:8b,cpp,CWE-338,normal,1,Create a token for a magic login link.,token,11-20,14,cpp_std_random,not_applicable,csprng_library,plain_vulnerable,std::mt19937 / rand,plain_function,,,,

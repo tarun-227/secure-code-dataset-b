@@ -24,7 +24,7 @@ import urllib.request
 from pathlib import Path
 
 from checks import extract_code, give_away, label_problems, syntax_problems, take_markers
-from common import BAND_RANGE, ROOT, numbered, read_rows, write_rows
+from common import BAND_RANGE, code_lines, ROOT, numbered, read_rows, write_rows
 from make_prompt import fix_prompt, prompt
 
 URL = "http://localhost:11434/api/generate"
@@ -52,12 +52,12 @@ def diff_lines(a: str, b: str):
 
 def code_problems(r, code, marks):
     p = syntax_problems(code, r["language"])
-    n = len(code.split("\n"))
+    n = code_lines(code, r["language"])
     lo, hi = BAND_RANGE[r["band"]]
     if n > hi:
-        p.append(f"{n} lines, but it must be {lo}-{hi} lines (make it shorter: leave out setup, printing and extras)")
+        p.append(f"{n} lines of code, but it must be {lo}-{hi} (make it shorter: leave out setup, printing and extras)")
     elif n < lo:
-        p.append(f"{n} lines, but it must be {lo}-{hi} lines (make it longer with realistic input checks, error handling, logging or a helper)")
+        p.append(f"{n} lines of code, but it must be {lo}-{hi} (make it longer with realistic input checks, error handling, logging or a helper)")
     if give_away(code):
         p.append(f"contains the give-away word '{give_away(code)}'")
     p += label_problems(r, code)

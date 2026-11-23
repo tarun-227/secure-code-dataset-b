@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_338_c_0920,phi4:14b,c,CWE-338,normal,1,Create a voucher code for a gift card.,otp,6-10,6,libc_rand,not_applicable,dev_urandom,plain_vulnerable,rand / srand,callback_or_async,,,,
-phi_338_c_0910,phi4:14b,c,CWE-338,hard_positive,1,Generate a CSRF token.,key,11-20,20,libc_rand,not_applicable,csprng_library,seeded_from_clock,rand / srand,helper_called_by_caller,,,,
-phi_338_c_0925,phi4:14b,c,CWE-338,safe,0,Generate a bearer token for an internal service.,password,21-40,25,csprng,not_applicable,,standard_safe,rand / srand,plain_function,,,,
-phi_338_c_0906,phi4:14b,c,CWE-338,hard_negative,0,Pick a random tip of the day.,non_security,21-40,29,per_pattern,not_applicable,,game_or_ui_randomness,rand / srand,web_handler,,,,
-phi_338_c_0921,phi4:14b,c,CWE-338,normal,1,Generate a one-time password for a bank transfer.,salt,6-10,10,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,helper_called_by_caller,,,,
+phi_338_c_0920,phi4:14b,c,CWE-338,normal,1,Generate a per-user salt for storing a PIN hash.,salt,11-20,11,libc_rand,not_applicable,dev_urandom,plain_vulnerable,rand / srand,callback_or_async,,,,
+phi_338_c_0910,phi4:14b,c,CWE-338,hard_positive,1,Create a key for signing cookies.,key,21-40,37,libc_rand,not_applicable,csprng_library,weak_generator_in_helper,rand / srand,cli_entry,,,,
+phi_338_c_0925,phi4:14b,c,CWE-338,safe,0,Generate a share-link token for a private file.,token,11-20,14,csprng,not_applicable,,standard_safe,rand / srand,helper_called_by_caller,,,,
+phi_338_c_0906,phi4:14b,c,CWE-338,hard_negative,0,Reconnect to a message broker after a random pause.,non_security,41-100,42,per_pattern,not_applicable,,retry_jitter,rand / srand,callback_or_async,,,,
+phi_338_c_0921,phi4:14b,c,CWE-338,normal,1,Generate a session identifier.,session,6-10,7,libc_rand,not_applicable,dev_urandom,plain_vulnerable,rand / srand,method,,,,

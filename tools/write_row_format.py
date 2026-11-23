@@ -18,8 +18,8 @@ Every issue CSV has the same 20 columns. The first 16 are filled in already; **d
 | `label` | 1 vulnerable, 0 safe | `0` |
 | `task_description` | what the function does | `Read a log file chosen by the caller.` |
 | `cwe_detail` | the API or operation to use (for CWE-338: what the random value is for) | `fstream` |
-| `band` | allowed number of lines in `code` | `11-20` |
-| `target_lines` | aim for about this many lines | `14` |
+| `band` | allowed number of real code lines in `code` (blank lines, comment-only lines and import / `#include` / `package` lines do not count) | `11-20` |
+| `target_lines` | aim for about this many real code lines | `14` |
 | `build_style` | how the dangerous value is built (`per_pattern` for hard negatives: follow the pattern) | `path_operator` |
 | `source` | where the untrusted input comes from | `web_request` |
 | `fix_type` | how `fixed_code` must fix it (vulnerable rows only) | `normalize_prefix_check` |
@@ -31,7 +31,7 @@ Every issue CSV has the same 20 columns. The first 16 are filled in already; **d
 
 | Column | What to put | Rule |
 |---|---|---|
-| `code` | the complete function | line count inside `band` |
+| `code` | the complete code, imports at the top | real code lines inside `band` |
 | `fixed_code` | the same function made safe | vulnerable rows only; at most 10 changed lines; same name and parameters; empty for safe rows |
 | `vulnerable_lines` | line numbers in `code` that build or use the dangerous value | vulnerable rows only; like `[3, 4]`; counted from 1 including blank lines; empty for safe rows |
 | `notes` | anything the reviewer should know | optional |

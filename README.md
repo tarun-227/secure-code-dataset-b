@@ -69,7 +69,7 @@ You only ever edit `code`, `fixed_code`, `vulnerable_lines` and `notes`. Never c
 - **Never merge a pull request and never push to `main`.** Only the project lead merges. Work only on your `issue/<id>` branch. This includes your own pull request, even after it is approved.
 - **Use only your team's model** for the code. Small manual corrections are fine; rewriting a row entirely by hand is not. If the model cannot do a row after three tries, say so in `notes` and in the issue.
 - **No give-away words** in comments, names or strings: vulnerable, insecure, unsafe, sanitize, exploit, inject, attack, fixed, CWE, and so on.
-- **Keep the length inside the band.** `target_lines` is a target; the line count must stay within `band`.
+- **Keep the length inside the band.** `band` and `target_lines` count only real code lines: blank lines, comment-only lines and import / `#include` / `package` lines do not count. `tools/validate.py` counts them for you.
 - **`fixed_code` changes at most 10 lines** and keeps the function name and parameters.
 - **One function per row**, complete and self-contained (imports or `#include`s at the top are fine; a small helper is fine when the shape asks for one).
 - **Never run attacks against real systems.** You do not need to run any attack at all; the reviewer does the security checks.

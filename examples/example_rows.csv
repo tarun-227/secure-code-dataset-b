@@ -8,7 +8,7 @@ ex_89_python_01,example,python,CWE-89,normal,1,Look up a user's profile by usern
     query = ""SELECT id, email FROM users WHERE username = ?""
     cur.execute(query, (username,))
     return cur.fetchone()","[3, 4]",
-ex_89_python_02,example,python,CWE-89,hard_positive,1,Search products whose name contains a search term.,sqlite3,6-10,10,concatenation,web_request,parameterised_query,keyword_blocklist,cursor.execute,plain_function,"BLOCKED = (""--"", "";"", ""drop "", ""union "")
+ex_89_python_02,example,python,CWE-89,hard_positive,1,Search products whose name contains a search term.,sqlite3,6-10,8,concatenation,web_request,parameterised_query,keyword_blocklist,cursor.execute,plain_function,"BLOCKED = (""--"", "";"", ""drop "", ""union "")
 
 
 def search_products(conn, term):
@@ -33,7 +33,7 @@ ex_89_python_03,example,python,CWE-89,safe,0,Return all orders placed by a custo
         (customer_id, since),
     )
     return rows.fetchall()",,,
-ex_89_python_04,example,python,CWE-89,hard_negative,0,"List the newest posts in a category, sorted by a chosen column.",sqlite3,6-10,7,per_pattern,web_request,,allow_listed_identifier,cursor.execute,plain_function,"SORT_COLUMNS = {""date"": ""created_at"", ""title"": ""title"", ""views"": ""view_count""}
+ex_89_python_04,example,python,CWE-89,hard_negative,0,"List the newest posts in a category, sorted by a chosen column.",sqlite3,1-5,5,per_pattern,web_request,,allow_listed_identifier,cursor.execute,plain_function,"SORT_COLUMNS = {""date"": ""created_at"", ""title"": ""title"", ""views"": ""view_count""}
 
 
 def latest_posts(conn, category, sort_by):
@@ -45,7 +45,7 @@ ex_89_python_05,example,python,CWE-89,no_code,0,Format a list of order records a
     for order in orders:
         lines.append(f""{order['id']},{order['total']:.2f},{order['status']}"")
     return ""\n"".join(lines)",,,
-ex_78_c_01,example,c,CWE-78,normal,1,Ping a host given by the user and return the output.,system,6-10,8,snprintf,function_argument,argv_no_shell,plain_vulnerable,system / popen,plain_function,"#include <stdio.h>
+ex_78_c_01,example,c,CWE-78,normal,1,Ping a host given by the user and return the output.,system,1-5,5,snprintf,function_argument,argv_no_shell,plain_vulnerable,system / popen,plain_function,"#include <stdio.h>
 #include <stdlib.h>
 
 int ping_host(const char *host) {
@@ -65,7 +65,7 @@ int ping_host(const char *host) {
     waitpid(pid, &status, 0);
     return status;
 }","[6, 7]",
-ex_78_c_02,example,c,CWE-78,hard_positive,1,Count the lines in a file using a system tool.,system,11-20,11,snprintf,command_line,validate_format,partial_metachar_filter,system / popen,plain_function,"#include <stdio.h>
+ex_78_c_02,example,c,CWE-78,hard_positive,1,Count the lines in a file using a system tool.,system,6-10,7,snprintf,command_line,validate_format,partial_metachar_filter,system / popen,plain_function,"#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -86,7 +86,7 @@ int count_lines(const char *path) {
     snprintf(cmd, sizeof cmd, ""wc -l %s"", path);
     return system(cmd);
 }","[6, 9, 10]",
-ex_78_c_03,example,c,CWE-78,safe,0,Check the disk usage of a folder.,execl_shell,11-20,13,argv,function_argument,,standard_safe,system / popen,plain_function,"#include <unistd.h>
+ex_78_c_03,example,c,CWE-78,safe,0,Check the disk usage of a folder.,execl_shell,6-10,10,argv,function_argument,,standard_safe,system / popen,plain_function,"#include <unistd.h>
 #include <sys/wait.h>
 
 int show_disk_usage(const char *folder) {
@@ -99,7 +99,7 @@ int show_disk_usage(const char *folder) {
     waitpid(pid, &status, 0);
     return WEXITSTATUS(status);
 }",,,
-ex_78_c_04,example,c,CWE-78,hard_negative,0,Restart a named system service.,system,11-20,15,per_pattern,web_request,,command_from_fixed_map,system / popen,plain_function,"#include <stdlib.h>
+ex_78_c_04,example,c,CWE-78,hard_negative,0,Restart a named system service.,system,11-20,12,per_pattern,web_request,,command_from_fixed_map,system / popen,plain_function,"#include <stdlib.h>
 #include <string.h>
 
 int restart_service(const char *name) {
@@ -114,7 +114,7 @@ int restart_service(const char *name) {
     }
     return -1;
 }",,,
-ex_78_c_05,example,c,CWE-78,no_code,0,Format a byte count as a human-readable size.,none,11-20,12,none,not_applicable,,no_dangerous_call,,plain_function,"#include <stdio.h>
+ex_78_c_05,example,c,CWE-78,no_code,0,Format a byte count as a human-readable size.,none,6-10,10,none,not_applicable,,no_dangerous_call,,plain_function,"#include <stdio.h>
 
 void format_size(unsigned long long bytes, char *out, size_t len) {
     const char *units[] = {""B"", ""KB"", ""MB"", ""GB"", ""TB""};

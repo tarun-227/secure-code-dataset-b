@@ -3,6 +3,9 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+from common import code_lines  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -157,7 +160,7 @@ BANDS = [("1-5", 1, 5), ("6-10", 6, 10), ("11-20", 11, 20), ("21-40", 21, 40), (
 rows = []
 for lang, cwe, table in (("python", "CWE-89", PY), ("c", "CWE-78", C)):
     for i, (case, (code, fixed, vl)) in enumerate(table.items(), 1):
-        n = len(code.split("\n"))
+        n = code_lines(code, lang)
         band = next(b for b, lo, hi in BANDS if lo <= n <= hi)
         rows.append(dict(sample_id=f"ex_{cwe.split('-')[1]}_{lang}_{i:02d}", generator="example", language=lang, cwe=cwe, case_type=case,
                          label=1 if case in ("normal", "hard_positive") else 0, band=band, target_lines=n,

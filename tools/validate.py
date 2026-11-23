@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 from checks import HINT, label_problems, syntax_problems
-from common import BAND_RANGE, COLUMNS, FILLED, ROOT, SPEC, parse_lines, read_rows
+from common import BAND_RANGE, code_lines, COLUMNS, FILLED, ROOT, SPEC, parse_lines, read_rows
 
 COMMENT = {"python": r"#.*|\"\"\"[\s\S]*?\"\"\"|'''[\s\S]*?'''", "c": r"//.*|/\*[\s\S]*?\*/", "cpp": r"//.*|/\*[\s\S]*?\*/", "go": r"//.*|/\*[\s\S]*?\*/"}
 
@@ -61,11 +61,12 @@ def check_row(r, errors, warnings):
         e("code is empty")
         return
     n = len(code.rstrip("\n").split("\n"))
+    real = code_lines(code, lang)
     lo, hi = BAND_RANGE[r["band"]]
-    if not lo <= n <= hi:
-        e(f"code has {n} lines but the band is {r['band']}")
-    elif abs(n - int(r["target_lines"])) > max(3, int(r["target_lines"]) // 2):
-        w(f"code has {n} lines; the target was {r['target_lines']}")
+    if not lo <= real <= hi:
+        e(f"code has {real} real code lines but the band is {r['band']} (blank, comment-only and import lines do not count)")
+    elif abs(real - int(r["target_lines"])) > max(3, int(r["target_lines"]) // 2):
+        w(f"code has {real} real code lines; the target was {r['target_lines']}")
     for name, text in (("code", code), ("fixed_code", r["fixed_code"])):
         words = re.sub(r"([a-z])([A-Z])", r"\1 \2", text).replace("_", " ") if text else ""
         if words and HINT.search(words):

@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_89_py_0389,deepseek-coder-v2:16b,python,CWE-89,normal,1,Return the inventory rows for a warehouse code.,psycopg2,21-40,36,concatenation,function_argument,type_conversion,plain_vulnerable,cursor.execute,method,,,,
-dsk_89_py_0376,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Report the number of sign-ups per country in a date range.,sqlite3,1-5,5,per_pattern,file_content,,query_builder_bound,cursor.execute,plain_function,,,,
-dsk_89_py_0384,deepseek-coder-v2:16b,python,CWE-89,hard_positive,1,Return the leaderboard for a game mode.,sqlalchemy_text,41-100,42,format_method,database_value,parameterised_query,identifier_from_input,cursor.execute,web_handler,,,,
-dsk_89_py_0397,deepseek-coder-v2:16b,python,CWE-89,safe,0,"List the newest posts in a category, sorted by a chosen column.",django_raw,6-10,6,parameterised,command_line,,standard_safe,cursor.execute,web_handler,,,,
-dsk_89_py_0387,deepseek-coder-v2:16b,python,CWE-89,no_code,0,Sort a list of employees by salary.,none,21-40,38,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
+dsk_89_py_0389,deepseek-coder-v2:16b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,django_raw,1-5,4,percent_format,network_message,type_conversion,plain_vulnerable,cursor.execute,callback_or_async,,,,
+dsk_89_py_0376,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Return the events matching a list of ids.,mysql_connector,21-40,25,per_pattern,environment,,generated_placeholders,cursor.execute,cli_entry,,,,
+dsk_89_py_0383,deepseek-coder-v2:16b,python,CWE-89,hard_positive,1,Find accounts whose email address ends with a given domain.,sqlite3,41-100,70,f_string,function_argument,parameterised_query,keyword_blocklist,cursor.execute,callback_or_async,,,,
+dsk_89_py_0399,deepseek-coder-v2:16b,python,CWE-89,safe,0,Insert a new audit-log entry with an action and a user name.,sqlalchemy_text,6-10,10,parameterised,function_argument,,standard_safe,cursor.execute,method,,,,
+dsk_89_py_0387,deepseek-coder-v2:16b,python,CWE-89,no_code,0,Compute pagination numbers from a total count and page size.,none,11-20,20,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,

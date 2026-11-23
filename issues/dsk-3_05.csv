@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_78_cpp_0245,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Check whether a port is open on a host.,popen,11-20,15,ostringstream,environment,quote_escape,plain_vulnerable,system / popen,helper_called_by_caller,,,,
-dsk_78_cpp_0236,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Search a directory for files matching a pattern.,system,6-10,7,std_format,command_line,argv_no_shell,argument_injection_dash,system / popen,method,,,,
-dsk_78_cpp_0250,deepseek-coder-v2:16b,cpp,CWE-78,safe,0,Extract a zip archive into a folder.,qprocess,21-40,37,argv,environment,,standard_safe,system / popen,callback_or_async,,,,
-dsk_78_cpp_0232,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Count the lines in a file using a system tool.,popen,11-20,17,per_pattern,function_argument,,constant_shell_command,system / popen,web_handler,,,,
-dsk_78_cpp_0246,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Generate a PDF from an HTML file.,qprocess,11-20,13,string_concatenation,command_line,quote_escape,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+dsk_78_cpp_0245,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Look up WHOIS information for a domain.,system,21-40,34,ostringstream,function_argument,argv_no_shell,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+dsk_78_cpp_0236,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Run a linter on a source file.,popen,11-20,12,string_concatenation,file_content,quote_escape,validates_other_variable,system / popen,cli_entry,,,,
+dsk_78_cpp_0250,deepseek-coder-v2:16b,cpp,CWE-78,safe,0,Send a desktop notification with a message.,popen,11-20,19,argv,network_message,,standard_safe,system / popen,callback_or_async,,,,
+dsk_78_cpp_0232,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Download a file from a URL with curl.,popen,41-100,63,per_pattern,web_request,,strict_parser_no_shell,system / popen,web_handler,,,,
+dsk_78_cpp_0246,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Kill the processes with a given name.,boost_process,6-10,9,std_format,command_line,end_of_options,plain_vulnerable,system / popen,helper_called_by_caller,,,,
