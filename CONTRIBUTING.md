@@ -91,7 +91,7 @@ If a row is wrong, you can:
 - fix small things by hand, or
 - ask the model again for that row only: `python tools/generate.py issues/phi-2_00.csv --only 3` (row 3).
 
-Do not rewrite a whole row by hand. If the model fails three times, write that in the row's `notes` column and in the issue.
+Do not rewrite a whole row by hand. If the model still fails after you ran the row again with `--only` (so at least 3 more tries), keep its best attempt, write `FAILED:` and the reason in the row's `notes` (for example `FAILED: never adds the escaping`), and mention it in the pull request. The checker then turns that row's errors into warnings and the reviewer decides.
 
 **Step 6. Run the checker.**
 ```

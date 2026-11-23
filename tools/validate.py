@@ -148,7 +148,12 @@ def main():
     else:
         warnings.append(f"no issue file found at {issue}; pre-filled columns not compared")
     for _, r in d.iterrows():
-        check_row(r, errors, warnings)
+        if "FAILED:" in r["notes"]:  # the contributor reports that the model could not do this row; the reviewer decides
+            row_errors = []
+            check_row(r, row_errors, warnings)
+            warnings += [m + " (row marked FAILED in notes)" for m in row_errors]
+        else:
+            check_row(r, errors, warnings)
     keys = d.code.map(norm)
     for k in keys[keys.duplicated() & (keys != "")]:
         errors.append(f"duplicate code: {', '.join(d.sample_id[keys == k])}")

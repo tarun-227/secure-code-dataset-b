@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import json
+import re
 import urllib.request
 from pathlib import Path
 
@@ -84,13 +85,24 @@ def again(text, probs):
     return text + "\n\nYour previous answer had these problems. Write it again and fix them:\n" + "\n".join("- " + p for p in probs)
 
 
+def score(probs):
+    """Fewer problems first; among equals, the length closest to the band."""
+    off = 0
+    for p in probs:
+        m = re.match(r"(\d+) lines of code, but it must be (\d+)-(\d+)", p)
+        if m:
+            n, lo, hi = map(int, m.groups())
+            off += lo - n if n < lo else n - hi
+    return (len(probs), off)
+
+
 def best_of(make, check, label):
     """Ask up to TRIES times, telling the model what was wrong; return the first clean answer, else the one with the fewest problems."""
     best, probs = None, []
     for t in range(TRIES):
         ans = make(0.4 if t == 0 else 0.7, probs)
         probs = check(ans)
-        if best is None or len(probs) < len(best[1]):
+        if best is None or score(probs) < score(best[1]):
             best = (ans, probs)
         if not probs:
             break
