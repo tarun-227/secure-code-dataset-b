@@ -46,16 +46,21 @@ Your team and your cells are listed in [docs/ASSIGNMENTS.md](docs/ASSIGNMENTS.md
 
 ## Workflow for each issue
 
-1. **Open your issue.** It lists the rows and links to its CSV, for example `issues/phi-2_03.csv`. Pull the repository so you have the file.
-2. **Generate a draft:** `python tools/generate.py issues/phi-2_03.csv`
-   This asks your local model for every row and writes `filled/phi-2_03.csv`. If you prefer, print one prompt with `python tools/make_prompt.py issues/phi-2_03.csv --row 3` and paste it into `ollama run <model>` yourself.
-3. **Check every row by hand.** Open `filled/phi-2_03.csv` (Excel, LibreOffice or VS Code).
+Every issue gets **its own branch** and is handed in as a **pull request**. [CONTRIBUTING.md](CONTRIBUTING.md) walks through it in detail.
+
+1. **Open your issue.** It lists the rows, the prompt for each row, and its CSV, for example `issues/phi-2_03.csv`.
+2. **Start a branch:** `git checkout main`, then `git pull`, then `git checkout -b issue/phi-2_03`
+3. **Generate a draft:** `python tools/generate.py issues/phi-2_03.csv`
+   This asks your local model for every row and writes `submissions/phi-2_03.csv`. You can also paste one prompt from the issue into `ollama run <model>` yourself.
+4. **Check every row by hand** in `submissions/phi-2_03.csv`:
    - Does the code really do what the case type says? A `safe` row must be safe; a `normal` row must really be exploitable.
    - Is `fixed_code` the same function with only the needed lines changed?
    - **Recount `vulnerable_lines`.** Models often get line numbers wrong. Count from 1, including blank lines.
    - If a row is wrong, fix it by hand or regenerate it: `python tools/generate.py issues/phi-2_03.csv --only 3`
-4. **Validate:** `python tools/validate.py filled/phi-2_03.csv` and fix every ERROR.
-5. **Hand in:** attach `filled/phi-2_03.csv` to a comment on the issue and change the label to `status:needs-review`.
+5. **Validate:** `python tools/validate.py submissions/phi-2_03.csv` and fix every ERROR.
+6. **Commit and push:** `git add submissions/phi-2_03.csv`, `git commit -m "Rows for phi-2_03"`, `git push -u origin issue/phi-2_03`
+7. **Open a pull request** into `main` with **Closes #<issue number>** in the description, and set the issue's label to `status:needs-review`.
+8. **Review:** fix requested changes on the same branch and push again. When the pull request is merged, the rows count as accepted.
 
 You only ever edit `code`, `fixed_code`, `vulnerable_lines` and `notes`. Never change the other columns; the validator compares them with the original.
 
@@ -77,9 +82,9 @@ Your first issue has **5 rows**, one of each case type. The reviewer checks it l
 | Label | Meaning |
 |---|---|
 | `status:in-progress` | you are working on it |
-| `status:needs-review` | you uploaded the file; waiting for the reviewer |
+| `status:needs-review` | you opened the pull request; waiting for the reviewer |
 | `status:changes-requested` | see the reviewer's comment, fix, upload again |
-| `status:accepted` | done; the file is merged into `data/accepted/` |
+| `status:accepted` | done; your pull request is merged |
 
 ## Questions
 
@@ -92,10 +97,9 @@ README.md               this file
 docs/ROW_FORMAT.md      every column and every tag explained
 docs/ASSIGNMENTS.md     who works on which model and cells
 examples/               10 complete, annotated example rows
-issues/                 one CSV per issue (do not edit; your work goes in filled/)
-filled/                 your drafts (not committed)
+issues/                 one CSV per issue (do not edit; your work goes in submissions/)
+submissions/            finished issue files, one per issue (merged = accepted)
 tools/                  generate, make_prompt, validate (for you); build_plan, make_issues, progress (for the reviewer)
 plan/                   the full plan of all 1,200 rows
-data/accepted/          files the reviewer accepted
 PROGRESS.md             accepted rows against the targets
 ```

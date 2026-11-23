@@ -1,9 +1,13 @@
-## What this changes
-<!-- accepted rows added, tool fix, docs -->
+Closes #<issue number>
 
-## Accepted rows (if any)
-- Issue: #
-- File: `data/accepted/<model>/<slot>_<nn>.csv`
-- [ ] `tools/validate.py` passes on the file
-- [ ] Label checks and the Claude pass done; reviewer columns filled
-- [ ] `tools/progress.py` run and `PROGRESS.md` updated
+## Issue file
+`submissions/<issue_id>.csv`
+
+## Checklist
+- [ ] This branch is `issue/<issue_id>` and changes only my one file in `submissions/`
+- [ ] Every row does what its case type says
+- [ ] `fixed_code` changes as few lines as possible and keeps the function name
+- [ ] `vulnerable_lines` recounted by hand
+- [ ] No comment, name or string gives away the label
+- [ ] `python tools/validate.py submissions/<issue_id>.csv` says OK
+- [ ] Code written only by my team's model (small manual corrections noted in `notes`)

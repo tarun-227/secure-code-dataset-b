@@ -1,6 +1,6 @@
-"""Check a filled issue file before you upload it. Fix every ERROR; read every WARNING.
+"""Check a finished issue file before you commit it. Fix every ERROR; read every WARNING.
 
-Usage: python tools/validate.py filled/lla-1_01.csv
+Usage: python tools/validate.py submissions/lla-1_01.csv
        (compares against issues/lla-1_01.csv automatically when it exists, or pass --issue PATH)
 Exit code 0 = no errors.
 """
@@ -144,18 +144,21 @@ def main():
     keys = d.code.map(norm)
     for k in keys[keys.duplicated() & (keys != "")]:
         errors.append(f"duplicate code: {', '.join(d.sample_id[keys == k])}")
-    acc = ROOT / "data" / "accepted"
-    if acc.exists():
-        seen = {norm(c) for f in acc.rglob("*.csv") for c in read_rows(f).code}
-        for sid, k in zip(d.sample_id, keys):
-            if k and k in seen and sid not in {s for f in acc.rglob("*.csv") for s in read_rows(f).sample_id}:
-                errors.append(f"{sid}: same code as an accepted row")
+    others = [f for f in (ROOT / "submissions").glob("*.csv") if f.resolve() != Path(a.file).resolve()]
+    seen = {}
+    for f in others:
+        for sid, c in zip(read_rows(f).sample_id, read_rows(f).code):
+            if c:
+                seen[norm(c)] = sid
+    for sid, k in zip(d.sample_id, keys):
+        if k and k in seen and seen[k] != sid:
+            errors.append(f"{sid}: same code as {seen[k]} in another submission")
     for m in warnings:
         print("WARNING:", m)
     for m in errors:
         print("ERROR:", m)
     print(f"\n{len(d)} rows, {len(errors)} errors, {len(warnings)} warnings")
-    print("OK - you can upload this file" if not errors else "Fix the errors and run again.")
+    print("OK - you can commit and push this file" if not errors else "Fix the errors and run again.")
     sys.exit(1 if errors else 0)
 
 

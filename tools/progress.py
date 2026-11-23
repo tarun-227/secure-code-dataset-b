@@ -1,4 +1,4 @@
-"""Rebuild PROGRESS.md from the accepted files in data/accepted/.
+"""Rebuild PROGRESS.md from the merged files in submissions/ (merged into main = accepted).
 
 Usage: python tools/progress.py
 """
@@ -10,8 +10,9 @@ from common import ROOT, read_rows
 
 if __name__ == "__main__":
     plan = pd.read_csv(ROOT / "plan" / "all_rows.csv", dtype=str)
-    files = list((ROOT / "data" / "accepted").rglob("*.csv"))
-    acc = pd.concat([read_rows(f) for f in files], ignore_index=True) if files else pd.DataFrame(columns=["sample_id"])
+    files = [f for f in (ROOT / "submissions").glob("*.csv") if not f.name.startswith("test-")]
+    acc = pd.concat([read_rows(f) for f in files], ignore_index=True) if files else pd.DataFrame(columns=["sample_id", "code"])
+    acc = acc[acc.code.astype(str).str.strip() != ""]
     plan["done"] = plan.sample_id.isin(set(acc.sample_id))
     lines = ["# Progress", "", f"Accepted rows: **{int(plan.done.sum())} of {len(plan)}** ({plan.done.mean():.0%}).", ""]
     lines += ["## By model", "", "| Model | Accepted | Target |", "|---|---|---|"]

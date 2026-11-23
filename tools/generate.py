@@ -2,7 +2,7 @@
 
 The draft is only a starting point: read every row, fix the code if needed, and recount vulnerable_lines yourself.
 
-Usage: python tools/generate.py issues/lla-1_01.csv            -> filled/lla-1_01.csv
+Usage: python tools/generate.py issues/lla-1_01.csv            -> submissions/lla-1_01.csv
        python tools/generate.py issues/lla-1_01.csv --only 3   (redo row 3 only)
 Needs Ollama running (ollama serve) and the row's model pulled (ollama pull <generator>).
 """
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     ap.add_argument("--only", type=int, help="regenerate one row number (1-based)")
     a = ap.parse_args()
     src = read_rows(a.file)
-    out_path = ROOT / "filled" / Path(a.file).name
+    out_path = ROOT / "submissions" / Path(a.file).name
     out_path.parent.mkdir(exist_ok=True)
     d = read_rows(out_path) if out_path.exists() else src.copy()
     for i, r in src.iterrows():

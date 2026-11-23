@@ -60,21 +60,24 @@ Go to the **Issues** tab. Click **Assignee** and choose yourself. Open the issue
 **Step 2. Mark that you started.**
 Leave a comment "Starting". Keep the label `status:in-progress`.
 
-**Step 3. Update your copy of the project.**
-New issue files are added over time, so always run this first:
+**Step 3. Make a new branch for this issue.**
+Every issue gets its own branch. Use the issue's ID (it is in the issue title, for example `phi-2_00`):
 ```
+git checkout main
 git pull
+git checkout -b issue/phi-2_00
 ```
+`git pull` also brings you any new issue files. Never work directly on `main`.
 
 **Step 4. Let the model write a draft.**
 The issue names its file, for example `issues/phi-2_00.csv`. Run:
 ```
 python tools/generate.py issues/phi-2_00.csv
 ```
-This sends each row's prompt (you can read them inside the issue) to your model and saves a draft in `filled/phi-2_00.csv`. It prints each answer with line numbers.
+This sends each row's prompt (you can read them inside the issue) to your model and saves a draft in `submissions/phi-2_00.csv`. It prints each answer with line numbers.
 
 **Step 5. Check every row yourself.**
-Open `filled/phi-2_00.csv` in Excel, LibreOffice or VS Code. For each row ask:
+Open `submissions/phi-2_00.csv` in LibreOffice, VS Code or Excel. For each row ask:
 - **Does the code match the case type?** A `safe` row must really be safe. A `normal` or `hard_positive` row must really be vulnerable.
 - **Does it follow the row's other columns?** Language, task, pattern, shape, length.
 - **Is `fixed_code` the same function with only a few lines changed?** (vulnerable rows only)
@@ -89,17 +92,30 @@ Do not rewrite a whole row by hand. If the model fails three times, write that i
 
 **Step 6. Run the checker.**
 ```
-python tools/validate.py filled/phi-2_00.csv
+python tools/validate.py submissions/phi-2_00.csv
 ```
-Fix every line that says `ERROR` and run it again until it says `OK - you can upload this file`. Read the `WARNING` lines too.
+Fix every line that says `ERROR` and run it again until it says `OK - you can commit and push this file`. Read the `WARNING` lines too.
 
-**Step 7. Hand it in.**
-1. In the issue, write a comment and drag `filled/phi-2_00.csv` into the comment box. Post it.
-2. Change the label from `status:in-progress` to `status:needs-review`.
+**Step 7. Save your work to GitHub.**
+```
+git add submissions/phi-2_00.csv
+git commit -m "Rows for phi-2_00"
+git push -u origin issue/phi-2_00
+```
+Only add your one `submissions/...csv` file.
 
-**Step 8. Wait for the review.**
-- `status:changes-requested`: read the lead's comment, fix the rows, run the checker, upload the new file, and set `status:needs-review` again.
-- `status:accepted`: done. You will get your next issues (10 rows each).
+**Step 8. Open a pull request.**
+1. After `git push`, GitHub prints a link. Open it (or go to the repository page and click **Compare & pull request**).
+2. Check that it goes from `issue/phi-2_00` into `main`.
+3. In the description, write `Closes #5` (use your issue's number) and tick the checklist.
+4. Click **Create pull request**.
+5. On your issue, change the label from `status:in-progress` to `status:needs-review`.
+
+**Step 9. Wait for the review.**
+- If the lead asks for changes: stay on the same branch, fix the rows, run the checker, then `git add`, `git commit` and `git push` again. The pull request updates by itself.
+- When the lead merges the pull request, the issue closes and your rows are accepted. You will get your next issues (10 rows each).
+
+**Next issue:** start again from Step 3 with a new branch named after the new issue.
 
 ## Rules in one place
 
@@ -120,7 +136,8 @@ Fix every line that says `ERROR` and run it again until it says `OK - you can up
 | Generation is very slow | Normal without a big graphics card. Let it run; it saves after every row |
 | The model writes an explanation instead of code | Run that row again with `--only N` |
 | Excel breaks the code's line breaks | Use LibreOffice or VS Code, or a text editor that handles CSV |
-| `git pull` complains about your changes | Your drafts live in `filled/`, which git ignores; if it still complains, ask in a Question issue |
+| `git pull` or `git checkout` complains about your changes | Commit them on your issue branch first (`git add`, `git commit`), then try again |
+| You worked on `main` by mistake | Run `git checkout -b issue/<id>` now; your changes move to the new branch. Then commit there |
 
 ## Need help?
 
