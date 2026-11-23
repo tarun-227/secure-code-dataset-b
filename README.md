@@ -35,6 +35,8 @@ Your team and your cells are listed in [docs/ASSIGNMENTS.md](docs/ASSIGNMENTS.md
 
 `hard_positive` and `hard_negative` rows matter most: they are exactly where detectors fail. The `pattern` column tells you which trick to use; every tag is explained in [docs/ROW_FORMAT.md](docs/ROW_FORMAT.md).
 
+**New here? Start with [CONTRIBUTING.md](CONTRIBUTING.md)**: a step-by-step guide from installing the tools to handing in your first issue.
+
 ## Setup (once)
 
 1. Install Python 3.10 or newer, then: `pip install -r requirements.txt`
