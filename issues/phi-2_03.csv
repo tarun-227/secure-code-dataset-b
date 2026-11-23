@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_c_1014,phi4:14b,c,CWE-78,normal,1,Run a linter on a source file.,popen,6-10,8,snprintf,web_request,argv_no_shell,plain_vulnerable,system / popen,callback_or_async,,,,
+phi_78_c_1001,phi4:14b,c,CWE-78,hard_negative,0,Generate a PDF from an HTML file.,system,6-10,7,per_pattern,command_line,,constant_shell_command,system / popen,callback_or_async,,,,
+phi_78_c_1008,phi4:14b,c,CWE-78,hard_positive,1,Look up WHOIS information for a domain.,execl_shell,1-5,3,strcat,environment,quote_escape,validator_too_permissive,system / popen,web_handler,,,,
+phi_78_c_1022,phi4:14b,c,CWE-78,safe,0,Check whether a port is open on a host.,system,21-40,21,argv,function_argument,,standard_safe,system / popen,helper_called_by_caller,,,,
+phi_78_c_1015,phi4:14b,c,CWE-78,normal,1,Download a file from a URL with curl.,execl_shell,6-10,6,sprintf,file_content,validate_format,plain_vulnerable,system / popen,web_handler,,,,
+phi_78_c_1002,phi4:14b,c,CWE-78,hard_negative,0,Create a database backup with a dump tool.,execl_shell,11-20,14,per_pattern,network_message,,constant_shell_command,system / popen,cli_entry,,,,
+phi_78_c_1012,phi4:14b,c,CWE-78,no_code,0,Format a byte count as a human-readable size.,none,6-10,9,none,not_applicable,,no_dangerous_call,,plain_function,,,,
+phi_78_c_1016,phi4:14b,c,CWE-78,normal,1,Text-to-speech a message with a system tool.,popen,11-20,17,snprintf,file_content,allow_list,plain_vulnerable,system / popen,web_handler,,,,
+phi_78_c_1003,phi4:14b,c,CWE-78,hard_negative,0,Run a traceroute to a target address.,popen,11-20,11,per_pattern,web_request,,command_from_fixed_map,system / popen,callback_or_async,,,,
+phi_78_c_1009,phi4:14b,c,CWE-78,hard_positive,1,Count the lines in a file using a system tool.,popen,21-40,30,sprintf,web_request,quote_escape,quoting_wrong_context,system / popen,plain_function,,,,

@@ -1,0 +1,15 @@
+name: Question
+description: Ask about a row, a tag, or the tools
+labels: ["question"]
+body:
+  - type: input
+    id: row
+    attributes:
+      label: Issue or sample_id (if any)
+      placeholder: phi-2_03 / phi_22_cpp_0612
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true

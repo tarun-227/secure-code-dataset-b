@@ -1,0 +1,35 @@
+name: Batch of rows
+description: A set of rows to write (normally opened by the maintainer with tools/make_issues.py)
+title: "[slot_nn] Language CWE-xx, N rows (model)"
+labels: ["status:in-progress"]
+body:
+  - type: input
+    id: file
+    attributes:
+      label: Issue CSV
+      description: Path of the CSV in issues/
+      placeholder: issues/phi-2_03.csv
+    validations:
+      required: true
+  - type: dropdown
+    id: model
+    attributes:
+      label: Model
+      options: ["llama3.1:8b", "phi4:14b", "deepseek-coder-v2:16b"]
+    validations:
+      required: true
+  - type: textarea
+    id: rows
+    attributes:
+      label: Rows
+      description: Table of the rows (sample_id, case type, task, lines, pattern, fix type, input, shape)
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before you upload
+      options:
+        - label: Every row does what its case type says.
+        - label: fixed_code changes as few lines as possible and keeps the function name.
+        - label: vulnerable_lines were recounted by hand.
+        - label: No comment, name or string gives away the label.
+        - label: tools/validate.py reports no errors.

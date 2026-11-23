@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_c_0620,llama3.1:8b,c,CWE-78,normal,1,Send a desktop notification with a message.,execl_shell,11-20,19,sprintf,command_line,quote_escape,plain_vulnerable,system / popen,web_handler,,,,
+lla_78_c_0611,llama3.1:8b,c,CWE-78,hard_positive,1,List the processes matching a name.,popen,6-10,9,snprintf,function_argument,validate_format,argument_injection_dash,system / popen,helper_called_by_caller,,,,
+lla_78_c_0625,llama3.1:8b,c,CWE-78,safe,0,Encrypt a file with gpg for a recipient.,execl_shell,11-20,19,argv,environment,,standard_safe,system / popen,cli_entry,,,,
+lla_78_c_0607,llama3.1:8b,c,CWE-78,hard_negative,0,Calculate the checksum of a file with a system tool.,system,11-20,16,per_pattern,environment,,argv_list_user_data,system / popen,cli_entry,,,,
+lla_78_c_0621,llama3.1:8b,c,CWE-78,normal,1,Search a directory for files matching a pattern.,popen,6-10,10,sprintf,file_content,end_of_options,plain_vulnerable,system / popen,web_handler,,,,

@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_cpp_0749,llama3.1:8b,cpp,CWE-89,safe,0,Update a user's email address.,qt_qsqlquery,11-20,13,parameterised,database_value,,standard_safe,sqlite3_exec / QSqlQuery::exec,helper_called_by_caller,,,,
+lla_89_cpp_0737,llama3.1:8b,cpp,CWE-89,no_code,0,Convert a price in cents to a display string.,none,21-40,26,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
+lla_89_cpp_0730,llama3.1:8b,cpp,CWE-89,hard_negative,0,List students enrolled in a course code.,sqlite3_c,41-100,66,per_pattern,database_value,,fstring_placeholders_only,sqlite3_exec / QSqlQuery::exec,cli_entry,,,,
+lla_89_cpp_0744,llama3.1:8b,cpp,CWE-89,normal,1,Look up a user's profile by username.,sqlite3_c,6-10,6,string_concatenation,file_content,allow_list,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,method,,,,
+lla_89_cpp_0731,llama3.1:8b,cpp,CWE-89,hard_negative,0,Report the number of sign-ups per country in a date range.,qt_qsqlquery,6-10,6,per_pattern,function_argument,,constant_fragments_only,sqlite3_exec / QSqlQuery::exec,cli_entry,,,,
+lla_89_cpp_0745,llama3.1:8b,cpp,CWE-89,normal,1,Find vehicles by licence-plate fragment.,mysql_connector_cpp,11-20,14,string_concatenation,file_content,query_builder_orm,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,plain_function,,,,
+lla_89_cpp_0736,llama3.1:8b,cpp,CWE-89,hard_positive,1,"List the newest posts in a category, sorted by a chosen column.",qt_qsqlquery,11-20,15,std_format,web_request,parameterised_query,hand_written_escaping,sqlite3_exec / QSqlQuery::exec,helper_called_by_caller,,,,
+lla_89_cpp_0750,llama3.1:8b,cpp,CWE-89,safe,0,Change the priority of a task.,mysql_connector_cpp,6-10,6,parameterised,function_argument,,standard_safe,sqlite3_exec / QSqlQuery::exec,cli_entry,,,,
+lla_89_cpp_0732,llama3.1:8b,cpp,CWE-89,hard_negative,0,Fetch the latest sensor readings for a device id.,sqlite3_c,11-20,14,per_pattern,database_value,,integer_forced,sqlite3_exec / QSqlQuery::exec,web_handler,,,,
+lla_89_cpp_0746,llama3.1:8b,cpp,CWE-89,normal,1,Return events matching a list of ids.,sqlite3_c,21-40,21,std_format,database_value,allow_list,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,method,,,,

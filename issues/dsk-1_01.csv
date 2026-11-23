@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_py_0390,deepseek-coder-v2:16b,python,CWE-89,normal,1,Filter books by author and publication year.,sqlalchemy_text,41-100,47,concatenation,environment,query_builder_orm,plain_vulnerable,cursor.execute,method,,,,
+dsk_89_py_0377,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Rename a project owned by a given user.,sqlite3,6-10,7,per_pattern,command_line,,query_builder_bound,cursor.execute,plain_function,,,,
+dsk_89_py_0383,deepseek-coder-v2:16b,python,CWE-89,hard_positive,1,Reset the failed-login counter for an account.,sqlalchemy_text,1-5,3,percent_format,environment,type_conversion,hand_written_escaping,cursor.execute,cli_entry,,,,
+dsk_89_py_0398,deepseek-coder-v2:16b,python,CWE-89,safe,0,Change the priority of a task.,sqlite3,6-10,9,parameterised,network_message,,standard_safe,cursor.execute,callback_or_async,,,,
+dsk_89_py_0391,deepseek-coder-v2:16b,python,CWE-89,normal,1,Return the average rating of a product.,psycopg2,6-10,10,concatenation,file_content,allow_list,plain_vulnerable,cursor.execute,cli_entry,,,,
+dsk_89_py_0378,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Remove a member from a team.,django_raw,21-40,21,per_pattern,database_value,,constant_fragments_only,cursor.execute,cli_entry,,,,
+dsk_89_py_0392,deepseek-coder-v2:16b,python,CWE-89,normal,1,Find customers whose phone number starts with a prefix.,mysql_connector,6-10,8,percent_format,function_argument,parameterised_query,plain_vulnerable,cursor.execute,cli_entry,,,,
+dsk_89_py_0379,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Search products whose name contains a search term.,psycopg2,11-20,14,per_pattern,function_argument,,allow_listed_identifier,cursor.execute,helper_called_by_caller,,,,
+dsk_89_py_0393,deepseek-coder-v2:16b,python,CWE-89,normal,1,Delete a comment by its id if it belongs to the current user.,sqlite3,21-40,33,percent_format,web_request,parameterised_query,plain_vulnerable,cursor.execute,plain_function,,,,
+dsk_89_py_0385,deepseek-coder-v2:16b,python,CWE-89,hard_positive,1,Find duplicate accounts sharing an email address.,psycopg2,6-10,8,percent_format,database_value,type_conversion,keyword_blocklist,cursor.execute,callback_or_async,,,,

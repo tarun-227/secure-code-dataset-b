@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_22_go_0870,phi4:14b,go,CWE-22,normal,1,Read the README of a project folder.,archive_extract,6-10,7,fmt_sprintf,file_content,safe_join_library,plain_vulnerable,os.Open / os.ReadFile,helper_called_by_caller,,,,
+phi_22_go_0861,phi4:14b,go,CWE-22,hard_positive,1,Unpack a tar archive into a project folder.,os_open,41-100,52,fmt_sprintf,function_argument,validate_format,prefix_without_separator,os.Open / os.ReadFile,plain_function,,,,
+phi_22_go_0875,phi4:14b,go,CWE-22,safe,0,Serve a static file requested by a URL path.,http_servefile,11-20,20,contained_path,database_value,,standard_safe,os.Open / os.ReadFile,web_handler,,,,
+phi_22_go_0857,phi4:14b,go,CWE-22,hard_negative,0,Serve a video file by its relative path.,archive_extract,1-5,5,per_pattern,function_argument,,safe_filename_fixed_folder,os.Open / os.ReadFile,callback_or_async,,,,
+phi_22_go_0871,phi4:14b,go,CWE-22,normal,1,Download a report from the reports folder.,os_create,6-10,10,string_concatenation,web_request,safe_join_library,plain_vulnerable,os.Open / os.ReadFile,method,,,,

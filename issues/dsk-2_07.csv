@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_22_c_0023,deepseek-coder-v2:16b,c,CWE-22,safe,0,Serve a video file by its relative path.,fopen,6-10,8,contained_path,file_content,,standard_safe,fopen / unlink,helper_called_by_caller,,,,
+dsk_22_c_0017,deepseek-coder-v2:16b,c,CWE-22,normal,1,Read the metadata file for a dataset name.,fopen,21-40,21,sprintf,command_line,normalize_prefix_check,plain_vulnerable,fopen / unlink,method,,,,
+dsk_22_c_0004,deepseek-coder-v2:16b,c,CWE-22,hard_negative,0,Download a report from the reports folder.,open,21-40,28,per_pattern,function_argument,,allow_listed_name,fopen / unlink,web_handler,,,,
+dsk_22_c_0018,deepseek-coder-v2:16b,c,CWE-22,normal,1,Move a file from the inbox folder to an archive folder.,rename,21-40,28,sprintf,command_line,normalize_prefix_check,plain_vulnerable,fopen / unlink,callback_or_async,,,,
+dsk_22_c_0010,deepseek-coder-v2:16b,c,CWE-22,hard_positive,1,Read a theme stylesheet by theme name.,fopen,6-10,6,strcat,file_content,basename_only,extension_check_only,fopen / unlink,method,,,,
+dsk_22_c_0024,deepseek-coder-v2:16b,c,CWE-22,safe,0,Write a JSON export under a given name.,fopen,1-5,5,contained_path,network_message,,standard_safe,fopen / unlink,cli_entry,,,,
+dsk_22_c_0005,deepseek-coder-v2:16b,c,CWE-22,hard_negative,0,Delete a temporary file created for a job.,unlink,21-40,35,per_pattern,file_content,,basename_only,fopen / unlink,helper_called_by_caller,,,,
+dsk_22_c_0019,deepseek-coder-v2:16b,c,CWE-22,normal,1,Write cached data under a cache key.,unlink,11-20,16,strcat,file_content,validate_format,plain_vulnerable,fopen / unlink,helper_called_by_caller,,,,
+dsk_22_c_0013,deepseek-coder-v2:16b,c,CWE-22,no_code,0,Check whether a file name has an allowed extension.,none,11-20,13,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
+dsk_22_c_0006,deepseek-coder-v2:16b,c,CWE-22,hard_negative,0,Read a sound clip by its name.,fopen,11-20,18,per_pattern,web_request,,id_mapped_to_known_file,fopen / unlink,web_handler,,,,

@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_338_go_0973,phi4:14b,go,CWE-338,safe,0,Create a password for a service account.,otp,6-10,8,csprng,not_applicable,,standard_safe,math/rand,plain_function,,,,
+phi_338_go_0967,phi4:14b,go,CWE-338,normal,1,Create an identifier for an anonymous survey response link.,otp,1-5,4,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,web_handler,,,,
+phi_338_go_0954,phi4:14b,go,CWE-338,hard_negative,0,Simulate network packet loss in a test harness.,non_security,11-20,13,per_pattern,not_applicable,,non_security_simulation,math/rand,cli_entry,,,,
+phi_338_go_0968,phi4:14b,go,CWE-338,normal,1,Generate a temporary password for a new account.,key,21-40,26,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,helper_called_by_caller,,,,
+phi_338_go_0960,phi4:14b,go,CWE-338,hard_positive,1,Generate a random room code for a private chat.,token,6-10,10,go_math_rand,not_applicable,crypto_rand_text,weak_generator_in_helper,math/rand,helper_called_by_caller,,,,
+phi_338_go_0974,phi4:14b,go,CWE-338,safe,0,Create a recovery code list for two-factor login.,session,11-20,20,csprng,not_applicable,,standard_safe,math/rand,helper_called_by_caller,,,,
+phi_338_go_0955,phi4:14b,go,CWE-338,hard_negative,0,Generate a random maze for a puzzle.,non_security,11-20,19,per_pattern,not_applicable,,fixed_seed_experiment,math/rand,callback_or_async,,,,
+phi_338_go_0969,phi4:14b,go,CWE-338,normal,1,Create a salt for password hashing.,token,21-40,22,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,cli_entry,,,,
+phi_338_go_0963,phi4:14b,go,CWE-338,no_code,0,Store a hashed token with its creation time in a record.,none,6-10,6,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,
+phi_338_go_0956,phi4:14b,go,CWE-338,hard_negative,0,Sample rows for a quick data preview.,non_security,1-5,3,per_pattern,not_applicable,,non_security_shuffle_or_sample,math/rand,method,,,,

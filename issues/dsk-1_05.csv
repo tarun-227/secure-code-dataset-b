@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_78_py_0295,deepseek-coder-v2:16b,python,CWE-78,normal,1,Show the last lines of a log file chosen by the caller.,os_system,11-20,15,f_string,network_message,quote_escape,plain_vulnerable,os.system / subprocess with shell=True,helper_called_by_caller,,,,
+dsk_78_py_0286,deepseek-coder-v2:16b,python,CWE-78,hard_positive,1,Calculate the checksum of a file with a system tool.,os_popen,41-100,52,concatenation,network_message,validate_format,partial_metachar_filter,os.system / subprocess with shell=True,cli_entry,,,,
+dsk_78_py_0300,deepseek-coder-v2:16b,python,CWE-78,safe,0,Make a thumbnail of a PDF page.,os_system,6-10,6,argv,web_request,,standard_safe,os.system / subprocess with shell=True,method,,,,
+dsk_78_py_0282,deepseek-coder-v2:16b,python,CWE-78,hard_negative,0,Run a database migration for an environment name.,subprocess,11-20,13,per_pattern,database_value,,argv_list_user_data,os.system / subprocess with shell=True,web_handler,,,,
+dsk_78_py_0296,deepseek-coder-v2:16b,python,CWE-78,normal,1,Change the owner of an uploaded file.,subprocess,6-10,9,percent_format,environment,end_of_options,plain_vulnerable,os.system / subprocess with shell=True,callback_or_async,,,,

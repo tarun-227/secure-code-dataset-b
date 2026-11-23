@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_78_c_0213,deepseek-coder-v2:16b,c,CWE-78,normal,1,Send a desktop notification with a message.,system,6-10,6,sprintf,database_value,end_of_options,plain_vulnerable,system / popen,method,,,,
+dsk_78_c_0201,deepseek-coder-v2:16b,c,CWE-78,hard_negative,0,Run a linter on a source file.,execl_shell,21-40,25,per_pattern,database_value,,end_of_options_marker,system / popen,cli_entry,,,,
+dsk_78_c_0207,deepseek-coder-v2:16b,c,CWE-78,hard_positive,1,Encrypt a file with gpg for a recipient.,system,21-40,27,snprintf,network_message,argv_no_shell,validates_other_variable,system / popen,helper_called_by_caller,,,,
+dsk_78_c_0222,deepseek-coder-v2:16b,c,CWE-78,safe,0,Make a thumbnail of a PDF page.,system,11-20,12,argv,database_value,,standard_safe,system / popen,helper_called_by_caller,,,,
+dsk_78_c_0214,deepseek-coder-v2:16b,c,CWE-78,normal,1,Search a directory for files matching a pattern.,execl_shell,11-20,17,sprintf,file_content,allow_list,plain_vulnerable,system / popen,callback_or_async,,,,
+dsk_78_c_0202,deepseek-coder-v2:16b,c,CWE-78,hard_negative,0,Download a file from a URL with curl.,execl_shell,1-5,4,per_pattern,function_argument,,command_from_fixed_map,system / popen,helper_called_by_caller,,,,
+dsk_78_c_0211,deepseek-coder-v2:16b,c,CWE-78,no_code,0,Build a log line with a timestamp and a message.,none,21-40,28,none,not_applicable,,no_dangerous_call,,plain_function,,,,
+dsk_78_c_0215,deepseek-coder-v2:16b,c,CWE-78,normal,1,Kill a process by name.,system,21-40,25,snprintf,function_argument,quote_escape,plain_vulnerable,system / popen,cli_entry,,,,
+dsk_78_c_0208,deepseek-coder-v2:16b,c,CWE-78,hard_positive,1,Convert an uploaded image to PNG with an external tool.,popen,1-5,4,snprintf,file_content,argv_no_shell,quoting_wrong_context,system / popen,cli_entry,,,,
+dsk_78_c_0223,deepseek-coder-v2:16b,c,CWE-78,safe,0,Print a document to a named printer.,system,21-40,35,argv,network_message,,standard_safe,system / popen,plain_function,,,,

@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_22_py_0095,deepseek-coder-v2:16b,python,CWE-22,normal,1,Extract a zip archive into a working folder.,shutil,11-20,18,concatenation,command_line,validate_format,plain_vulnerable,open / send_file / os.remove,plain_function,,,,
+dsk_22_py_0085,deepseek-coder-v2:16b,python,CWE-22,hard_positive,1,Write cached data under a cache key.,shutil,6-10,10,path_join,function_argument,safe_join_library,single_pass_dotdot_strip,open / send_file / os.remove,web_handler,,,,
+dsk_22_py_0100,deepseek-coder-v2:16b,python,CWE-22,safe,0,Remove a draft file belonging to a user.,open,6-10,7,contained_path,command_line,,standard_safe,open / send_file / os.remove,cli_entry,,,,
+dsk_22_py_0081,deepseek-coder-v2:16b,python,CWE-22,hard_negative,0,Load a game save file for a player name.,send_file,1-5,3,per_pattern,environment,,library_confined_access,open / send_file / os.remove,plain_function,,,,
+dsk_22_py_0096,deepseek-coder-v2:16b,python,CWE-22,normal,1,Write a note to a file named after its title.,shutil,21-40,25,f_string,network_message,safe_join_library,plain_vulnerable,open / send_file / os.remove,callback_or_async,,,,

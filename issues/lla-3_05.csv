@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_cpp_0645,llama3.1:8b,cpp,CWE-78,normal,1,Convert an audio file to MP3.,popen,21-40,30,string_concatenation,file_content,argv_no_shell,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+lla_78_cpp_0635,llama3.1:8b,cpp,CWE-78,hard_positive,1,Check whether a port is open on a host.,system,11-20,18,string_concatenation,file_content,argv_no_shell,partial_metachar_filter,system / popen,cli_entry,,,,
+lla_78_cpp_0650,llama3.1:8b,cpp,CWE-78,safe,0,Set the system time zone.,boost_process,6-10,6,argv,environment,,standard_safe,system / popen,cli_entry,,,,
+lla_78_cpp_0631,llama3.1:8b,cpp,CWE-78,hard_negative,0,Create a new system user with a given name.,popen,11-20,19,per_pattern,network_message,,command_from_fixed_map,system / popen,plain_function,,,,
+lla_78_cpp_0646,llama3.1:8b,cpp,CWE-78,normal,1,Check the disk usage of a folder.,qprocess,41-100,63,ostringstream,web_request,validate_format,plain_vulnerable,system / popen,method,,,,

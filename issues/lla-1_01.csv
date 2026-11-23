@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_py_0789,llama3.1:8b,python,CWE-89,normal,1,Return events matching a list of ids.,django_raw,6-10,10,format_method,command_line,type_conversion,plain_vulnerable,cursor.execute,web_handler,,,,
+lla_89_py_0777,llama3.1:8b,python,CWE-89,hard_negative,0,"List the newest posts in a category, sorted by a chosen column.",sqlalchemy_text,21-40,23,per_pattern,file_content,,generated_placeholders,cursor.execute,callback_or_async,,,,
+lla_89_py_0783,llama3.1:8b,python,CWE-89,hard_positive,1,Delete a comment by its id if it belongs to the current user.,sqlite3,1-5,3,concatenation,file_content,allow_list,hand_written_escaping,cursor.execute,plain_function,,,,
+lla_89_py_0798,llama3.1:8b,python,CWE-89,safe,0,Reset the failed-login counter for an account.,mysql_connector,11-20,14,parameterised,environment,,standard_safe,cursor.execute,callback_or_async,,,,
+lla_89_py_0790,llama3.1:8b,python,CWE-89,normal,1,Return a page of results with a limit and an offset.,sqlalchemy_text,11-20,14,f_string,web_request,query_builder_orm,plain_vulnerable,cursor.execute,web_handler,,,,
+lla_89_py_0778,llama3.1:8b,python,CWE-89,hard_negative,0,Change the priority of a task.,sqlalchemy_text,21-40,27,per_pattern,environment,,fstring_placeholders_only,cursor.execute,callback_or_async,,,,
+lla_89_py_0791,llama3.1:8b,python,CWE-89,normal,1,Look up a user's profile by username.,sqlalchemy_text,11-20,13,f_string,command_line,parameterised_query,plain_vulnerable,cursor.execute,cli_entry,,,,
+lla_89_py_0792,llama3.1:8b,python,CWE-89,normal,1,Get the total sales amount for a region.,sqlite3,6-10,7,percent_format,file_content,query_builder_orm,plain_vulnerable,cursor.execute,web_handler,,,,
+lla_89_py_0779,llama3.1:8b,python,CWE-89,hard_negative,0,Insert a new audit-log entry with an action and a user name.,sqlite3,6-10,10,per_pattern,database_value,,integer_forced,cursor.execute,method,,,,
+lla_89_py_0784,llama3.1:8b,python,CWE-89,hard_positive,1,Fetch a configuration value by key for a tenant.,mysql_connector,11-20,20,f_string,file_content,query_builder_orm,identifier_from_input,cursor.execute,callback_or_async,,,,

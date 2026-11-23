@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_338_cpp_0548,llama3.1:8b,cpp,CWE-338,safe,0,Generate an initialisation vector for encryption.,key,1-5,5,csprng,not_applicable,,standard_safe,std::mt19937 / rand,callback_or_async,,,,
+lla_338_cpp_0542,llama3.1:8b,cpp,CWE-338,normal,1,Generate a random account number for a new wallet.,session,6-10,8,libc_rand,not_applicable,os_random_api,plain_vulnerable,std::mt19937 / rand,method,,,,
+lla_338_cpp_0529,llama3.1:8b,cpp,CWE-338,hard_negative,0,Choose a random colour for a chart series.,non_security,11-20,20,per_pattern,not_applicable,,non_security_shuffle_or_sample,std::mt19937 / rand,callback_or_async,,,,
+lla_338_cpp_0543,llama3.1:8b,cpp,CWE-338,normal,1,Create a tracking token embedded in a private link.,salt,21-40,28,cpp_std_random,not_applicable,os_random_api,plain_vulnerable,std::mt19937 / rand,method,,,,
+lla_338_cpp_0535,llama3.1:8b,cpp,CWE-338,hard_positive,1,Create a salt for password hashing.,password,6-10,9,libc_rand,not_applicable,dev_urandom,weak_generator_in_helper,std::mt19937 / rand,cli_entry,,,,
+lla_338_cpp_0549,llama3.1:8b,cpp,CWE-338,safe,0,Generate a password-reset token.,otp,11-20,19,csprng,not_applicable,,standard_safe,std::mt19937 / rand,callback_or_async,,,,
+lla_338_cpp_0530,llama3.1:8b,cpp,CWE-338,hard_negative,0,Generate random test data for a unit test.,non_security,21-40,30,per_pattern,not_applicable,,retry_jitter,std::mt19937 / rand,method,,,,
+lla_338_cpp_0544,llama3.1:8b,cpp,CWE-338,normal,1,Generate a secret for webhook signing.,token,6-10,9,libc_rand,not_applicable,os_random_api,plain_vulnerable,std::mt19937 / rand,helper_called_by_caller,,,,
+lla_338_cpp_0538,llama3.1:8b,cpp,CWE-338,no_code,0,Mask a token for display in logs.,none,21-40,30,none,not_applicable,,no_dangerous_call,,plain_function,,,,
+lla_338_cpp_0531,llama3.1:8b,cpp,CWE-338,hard_negative,0,Split a dataset into random training and test sets with a fixed seed.,non_security,21-40,36,per_pattern,not_applicable,,non_security_simulation,std::mt19937 / rand,plain_function,,,,

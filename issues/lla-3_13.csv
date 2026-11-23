@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_338_go_0566,llama3.1:8b,go,CWE-338,normal,1,Generate a backup encryption passphrase.,key,6-10,8,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,cli_entry,,,,
+lla_338_go_0553,llama3.1:8b,go,CWE-338,hard_negative,0,Split a dataset into random training and test sets with a fixed seed.,non_security,11-20,15,per_pattern,not_applicable,,non_security_simulation,math/rand,cli_entry,,,,
+lla_338_go_0567,llama3.1:8b,go,CWE-338,normal,1,Generate a CSRF token.,otp,21-40,26,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,method,,,,
+lla_338_go_0554,llama3.1:8b,go,CWE-338,hard_negative,0,Shuffle a playlist.,non_security,6-10,10,per_pattern,not_applicable,,non_security_simulation,math/rand,web_handler,,,,
+lla_338_go_0568,llama3.1:8b,go,CWE-338,normal,1,Create a random challenge for a login protocol.,otp,11-20,18,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,web_handler,,,,
+lla_338_go_0559,llama3.1:8b,go,CWE-338,hard_positive,1,Generate a temporary download token.,password,11-20,18,go_math_rand,not_applicable,crypto_rand_text,secure_sounding_name,math/rand,cli_entry,,,,
+lla_338_go_0574,llama3.1:8b,go,CWE-338,safe,0,Generate a password-reset token.,password,11-20,13,csprng,not_applicable,,standard_safe,math/rand,callback_or_async,,,,
+lla_338_go_0569,llama3.1:8b,go,CWE-338,normal,1,Generate a one-time password for a bank transfer.,otp,21-40,31,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,callback_or_async,,,,
+lla_338_go_0555,llama3.1:8b,go,CWE-338,hard_negative,0,Choose a random background image.,non_security,21-40,36,per_pattern,not_applicable,,fixed_seed_experiment,math/rand,helper_called_by_caller,,,,
+lla_338_go_0562,llama3.1:8b,go,CWE-338,no_code,0,Count how many recovery codes are still unused.,none,6-10,6,none,not_applicable,,no_dangerous_call,,plain_function,,,,

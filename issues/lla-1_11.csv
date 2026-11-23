@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_338_py_0595,llama3.1:8b,python,CWE-338,normal,1,Create a nonce for a signed request.,salt,1-5,3,python_random_module,not_applicable,secrets_module,plain_vulnerable,random.choice / random.randint,helper_called_by_caller,,,,
+lla_338_py_0585,llama3.1:8b,python,CWE-338,hard_positive,1,Generate an invitation code for a team.,session,11-20,14,python_random_module,not_applicable,os_urandom,seeded_from_clock,random.choice / random.randint,web_handler,,,,
+lla_338_py_0600,llama3.1:8b,python,CWE-338,safe,0,Generate a random account number for a new wallet.,password,11-20,17,csprng,not_applicable,,standard_safe,random.choice / random.randint,method,,,,
+lla_338_py_0581,llama3.1:8b,python,CWE-338,hard_negative,0,Generate a random maze for a puzzle.,non_security,11-20,19,per_pattern,not_applicable,,non_security_shuffle_or_sample,random.choice / random.randint,cli_entry,,,,
+lla_338_py_0596,llama3.1:8b,python,CWE-338,normal,1,Create a random PIN for a door lock.,session,1-5,5,python_random_module,not_applicable,secrets_module,plain_vulnerable,random.choice / random.randint,helper_called_by_caller,,,,

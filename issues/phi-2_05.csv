@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_c_1020,phi4:14b,c,CWE-78,normal,1,Show the git log of a branch.,execl_shell,6-10,6,strcat,function_argument,validate_format,plain_vulnerable,system / popen,cli_entry,,,,
+phi_78_c_1011,phi4:14b,c,CWE-78,hard_positive,1,Change the owner of an uploaded file.,system,11-20,20,sprintf,function_argument,end_of_options,quoting_wrong_context,system / popen,plain_function,,,,
+phi_78_c_1025,phi4:14b,c,CWE-78,safe,0,Copy a file to a remote server with scp.,execl_shell,41-100,43,argv,environment,,standard_safe,system / popen,plain_function,,,,
+phi_78_c_1007,phi4:14b,c,CWE-78,hard_negative,0,Run a database migration for an environment name.,execl_shell,11-20,14,per_pattern,command_line,,strict_parser_no_shell,system / popen,method,,,,
+phi_78_c_1021,phi4:14b,c,CWE-78,normal,1,Rotate a log file with a given suffix.,execl_shell,21-40,26,strcat,database_value,end_of_options,plain_vulnerable,system / popen,callback_or_async,,,,

@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_go_0364,deepseek-coder-v2:16b,go,CWE-89,normal,1,Change the priority of a task.,gorm_raw,11-20,17,strings_builder,environment,type_conversion,plain_vulnerable,db.Query / db.Exec,plain_function,,,,
+dsk_89_go_0351,deepseek-coder-v2:16b,go,CWE-89,hard_negative,0,Find customers whose phone number starts with a prefix.,sqlx,21-40,28,per_pattern,environment,,generated_placeholders,db.Query / db.Exec,cli_entry,,,,
+dsk_89_go_0358,deepseek-coder-v2:16b,go,CWE-89,hard_positive,1,Return the leaderboard for a game mode.,database_sql,41-100,69,strings_builder,web_request,allow_list,hand_written_escaping,db.Query / db.Exec,web_handler,,,,
+dsk_89_go_0372,deepseek-coder-v2:16b,go,CWE-89,safe,0,Remove a member from a team.,database_sql,21-40,39,parameterised,command_line,,standard_safe,db.Query / db.Exec,method,,,,
+dsk_89_go_0365,deepseek-coder-v2:16b,go,CWE-89,normal,1,List students enrolled in a course code.,sqlx,1-5,4,string_concatenation,network_message,allow_list,plain_vulnerable,db.Query / db.Exec,method,,,,
+dsk_89_go_0352,deepseek-coder-v2:16b,go,CWE-89,hard_negative,0,Filter books by author and publication year.,database_sql,11-20,15,per_pattern,file_content,,allow_listed_identifier,db.Query / db.Exec,cli_entry,,,,
+dsk_89_go_0362,deepseek-coder-v2:16b,go,CWE-89,no_code,0,Mask all but the last four digits of a card number.,none,21-40,30,none,not_applicable,,no_dangerous_call,,plain_function,,,,
+dsk_89_go_0366,deepseek-coder-v2:16b,go,CWE-89,normal,1,Update a user's email address.,gorm_raw,21-40,38,fmt_sprintf,network_message,query_builder_orm,plain_vulnerable,db.Query / db.Exec,callback_or_async,,,,
+dsk_89_go_0353,deepseek-coder-v2:16b,go,CWE-89,hard_negative,0,Fetch a configuration value by key for a tenant.,sqlx,21-40,21,per_pattern,database_value,,fstring_placeholders_only,db.Query / db.Exec,plain_function,,,,
+dsk_89_go_0359,deepseek-coder-v2:16b,go,CWE-89,hard_positive,1,Fetch a patient's appointments for a doctor.,gorm_raw,6-10,8,string_concatenation,web_request,parameterised_query,hand_written_escaping,db.Query / db.Exec,callback_or_async,,,,

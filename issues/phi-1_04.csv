@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_py_1091,phi4:14b,python,CWE-78,normal,1,Run a traceroute to a target address.,os_popen,1-5,4,join_args,database_value,end_of_options,plain_vulnerable,os.system / subprocess with shell=True,cli_entry,,,,
+phi_78_py_1078,phi4:14b,python,CWE-78,hard_negative,0,Resize a video to a given width with ffmpeg.,os_popen,6-10,6,per_pattern,function_argument,,all_args_quoted,os.system / subprocess with shell=True,method,,,,
+phi_78_py_1092,phi4:14b,python,CWE-78,normal,1,Mount a network share at a path.,subprocess,21-40,36,join_args,database_value,argv_no_shell,plain_vulnerable,os.system / subprocess with shell=True,callback_or_async,,,,
+phi_78_py_1079,phi4:14b,python,CWE-78,hard_negative,0,Show the git log of a branch.,subprocess,21-40,22,per_pattern,environment,,all_args_quoted,os.system / subprocess with shell=True,web_handler,,,,
+phi_78_py_1093,phi4:14b,python,CWE-78,normal,1,Run a database migration for an environment name.,subprocess,11-20,18,join_args,function_argument,validate_format,plain_vulnerable,os.system / subprocess with shell=True,web_handler,,,,
+phi_78_py_1084,phi4:14b,python,CWE-78,hard_positive,1,Create a database backup with a dump tool.,os_popen,21-40,31,f_string,function_argument,end_of_options,partial_metachar_filter,os.system / subprocess with shell=True,helper_called_by_caller,,,,
+phi_78_py_1099,phi4:14b,python,CWE-78,safe,0,Clone a git repository from a URL.,os_popen,6-10,6,argv,database_value,,standard_safe,os.system / subprocess with shell=True,callback_or_async,,,,
+phi_78_py_1094,phi4:14b,python,CWE-78,normal,1,Run a linter on a source file.,os_popen,1-5,3,join_args,command_line,allow_list,plain_vulnerable,os.system / subprocess with shell=True,web_handler,,,,
+phi_78_py_1080,phi4:14b,python,CWE-78,hard_negative,0,Set the system time zone.,os_popen,11-20,11,per_pattern,network_message,,constant_shell_command,os.system / subprocess with shell=True,cli_entry,,,,
+phi_78_py_1087,phi4:14b,python,CWE-78,no_code,0,Split a version string into numbers.,none,21-40,35,none,not_applicable,,no_dangerous_call,,cli_entry,,,,

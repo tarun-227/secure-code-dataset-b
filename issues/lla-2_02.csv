@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_c_0724,llama3.1:8b,c,CWE-89,safe,0,Get the total sales amount for a region.,libpq,11-20,20,parameterised,network_message,,standard_safe,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
+lla_89_c_0713,llama3.1:8b,c,CWE-89,no_code,0,Sort a list of employees by salary.,none,21-40,40,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,
+lla_89_c_0705,llama3.1:8b,c,CWE-89,hard_negative,0,Report the number of sign-ups per country in a date range.,libpq,21-40,27,per_pattern,database_value,,generated_placeholders,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
+lla_89_c_0719,llama3.1:8b,c,CWE-89,normal,1,Mark an invoice as paid by invoice number.,mysql_c,11-20,15,snprintf,network_message,type_conversion,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
+lla_89_c_0706,llama3.1:8b,c,CWE-89,hard_negative,0,Return all orders placed by a customer after a given date.,libpq,21-40,28,per_pattern,command_line,,allow_listed_identifier,sqlite3_exec / mysql_query / PQexec,plain_function,,,,
+lla_89_c_0720,llama3.1:8b,c,CWE-89,normal,1,Update a user's email address.,sqlite3_c,6-10,8,strcat,database_value,query_builder_orm,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
+lla_89_c_0711,llama3.1:8b,c,CWE-89,hard_positive,1,Find duplicate accounts sharing an email address.,libpq,41-100,56,strcat,function_argument,query_builder_orm,hand_written_escaping,sqlite3_exec / mysql_query / PQexec,plain_function,,,,
+lla_89_c_0725,llama3.1:8b,c,CWE-89,safe,0,Find employees in a department with a salary above a threshold.,sqlite3_c,1-5,5,parameterised,database_value,,standard_safe,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
+lla_89_c_0707,llama3.1:8b,c,CWE-89,hard_negative,0,Return all rows from a table chosen by the caller.,sqlite3_c,1-5,3,per_pattern,network_message,,constant_fragments_only,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
+lla_89_c_0721,llama3.1:8b,c,CWE-89,normal,1,Fetch a patient's appointments for a doctor.,sqlite3_c,21-40,38,strcat,file_content,allow_list,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,plain_function,,,,

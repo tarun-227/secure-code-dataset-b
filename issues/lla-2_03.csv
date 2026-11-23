@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_c_0614,llama3.1:8b,c,CWE-78,normal,1,Create a database backup with a dump tool.,popen,11-20,12,snprintf,environment,validate_format,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+lla_78_c_0601,llama3.1:8b,c,CWE-78,hard_negative,0,Convert an uploaded image to PNG with an external tool.,system,21-40,28,per_pattern,command_line,,constant_shell_command,system / popen,cli_entry,,,,
+lla_78_c_0608,llama3.1:8b,c,CWE-78,hard_positive,1,Kill a process by name.,system,11-20,18,strcat,command_line,allow_list,partial_metachar_filter,system / popen,web_handler,,,,
+lla_78_c_0622,llama3.1:8b,c,CWE-78,safe,0,Read the metadata of a media file with exiftool.,popen,1-5,5,argv,web_request,,standard_safe,system / popen,cli_entry,,,,
+lla_78_c_0615,llama3.1:8b,c,CWE-78,normal,1,Run a traceroute to a target address.,popen,6-10,9,strcat,file_content,argv_no_shell,plain_vulnerable,system / popen,web_handler,,,,
+lla_78_c_0602,llama3.1:8b,c,CWE-78,hard_negative,0,Show the last lines of a log file chosen by the caller.,popen,21-40,28,per_pattern,environment,,all_args_quoted,system / popen,method,,,,
+lla_78_c_0612,llama3.1:8b,c,CWE-78,no_code,0,Parse a key=value configuration file.,none,6-10,7,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
+lla_78_c_0616,llama3.1:8b,c,CWE-78,normal,1,Convert an audio file to MP3.,system,11-20,15,strcat,environment,argv_no_shell,plain_vulnerable,system / popen,method,,,,
+lla_78_c_0603,llama3.1:8b,c,CWE-78,hard_negative,0,Compress a folder into a tar.gz archive.,execl_shell,41-100,59,per_pattern,database_value,,end_of_options_marker,system / popen,plain_function,,,,
+lla_78_c_0609,llama3.1:8b,c,CWE-78,hard_positive,1,Install a package by name with the package manager.,execl_shell,6-10,8,strcat,environment,quote_escape,partial_metachar_filter,system / popen,helper_called_by_caller,,,,

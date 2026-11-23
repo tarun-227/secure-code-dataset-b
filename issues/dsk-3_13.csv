@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_338_go_0173,deepseek-coder-v2:16b,go,CWE-338,safe,0,Generate a one-time password for a bank transfer.,otp,41-100,65,csprng,not_applicable,,standard_safe,math/rand,method,,,,
+dsk_338_go_0167,deepseek-coder-v2:16b,go,CWE-338,normal,1,Create a key for signing cookies.,session,21-40,28,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,web_handler,,,,
+dsk_338_go_0154,deepseek-coder-v2:16b,go,CWE-338,hard_negative,0,Create a six-digit one-time login code.,key,11-20,15,per_pattern,not_applicable,,secure_secret_random_elsewhere,math/rand,method,,,,
+dsk_338_go_0168,deepseek-coder-v2:16b,go,CWE-338,normal,1,Generate a random account number for a new wallet.,session,21-40,37,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,callback_or_async,,,,
+dsk_338_go_0160,deepseek-coder-v2:16b,go,CWE-338,hard_positive,1,Generate a backup encryption passphrase.,password,1-5,3,go_math_rand,not_applicable,crypto_rand_int,seeded_from_clock,math/rand,helper_called_by_caller,,,,
+dsk_338_go_0174,deepseek-coder-v2:16b,go,CWE-338,safe,0,Create a voucher code for a gift card.,key,21-40,29,csprng,not_applicable,,standard_safe,math/rand,cli_entry,,,,
+dsk_338_go_0155,deepseek-coder-v2:16b,go,CWE-338,hard_negative,0,Generate a random encryption key.,token,6-10,7,per_pattern,not_applicable,,secure_secret_random_elsewhere,math/rand,plain_function,,,,
+dsk_338_go_0169,deepseek-coder-v2:16b,go,CWE-338,normal,1,Create a device pairing PIN.,key,11-20,16,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,cli_entry,,,,
+dsk_338_go_0163,deepseek-coder-v2:16b,go,CWE-338,no_code,0,Parse a cookie header into a dictionary.,none,6-10,8,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
+dsk_338_go_0156,deepseek-coder-v2:16b,go,CWE-338,hard_negative,0,Generate a temporary download token.,session,11-20,20,per_pattern,not_applicable,,secure_secret_random_elsewhere,math/rand,plain_function,,,,

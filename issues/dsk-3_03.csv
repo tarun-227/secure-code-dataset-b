@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_78_cpp_0239,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Convert an uploaded image to PNG with an external tool.,boost_process,41-100,46,std_format,database_value,quote_escape,plain_vulnerable,system / popen,method,,,,
+dsk_78_cpp_0226,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Create a new system user with a given name.,boost_process,1-5,4,per_pattern,function_argument,,argv_list_user_data,system / popen,callback_or_async,,,,
+dsk_78_cpp_0233,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Send a desktop notification with a message.,boost_process,6-10,9,ostringstream,web_request,quote_escape,validator_too_permissive,system / popen,helper_called_by_caller,,,,
+dsk_78_cpp_0247,deepseek-coder-v2:16b,cpp,CWE-78,safe,0,Change the owner of an uploaded file.,popen,6-10,7,argv,command_line,,standard_safe,system / popen,callback_or_async,,,,
+dsk_78_cpp_0240,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Convert an audio file to MP3.,system,11-20,18,std_format,file_content,validate_format,plain_vulnerable,system / popen,callback_or_async,,,,
+dsk_78_cpp_0227,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Encrypt a file with gpg for a recipient.,popen,6-10,8,per_pattern,file_content,,strict_parser_no_shell,system / popen,plain_function,,,,
+dsk_78_cpp_0237,deepseek-coder-v2:16b,cpp,CWE-78,no_code,0,Validate that a host name has a legal format.,none,41-100,47,none,not_applicable,,no_dangerous_call,,method,,,,
+dsk_78_cpp_0241,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Check the disk usage of a folder.,popen,11-20,19,ostringstream,file_content,validate_format,plain_vulnerable,system / popen,callback_or_async,,,,
+dsk_78_cpp_0228,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Kill a process by name.,system,21-40,24,per_pattern,database_value,,command_from_fixed_map,system / popen,cli_entry,,,,
+dsk_78_cpp_0234,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Clone a git repository from a URL.,boost_process,21-40,25,string_concatenation,web_request,argv_no_shell,partial_metachar_filter,system / popen,web_handler,,,,

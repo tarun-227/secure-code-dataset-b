@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_338_c_0523,llama3.1:8b,c,CWE-338,safe,0,Create a random API key for a new client.,password,6-10,10,csprng,not_applicable,,standard_safe,rand / srand,web_handler,,,,
+lla_338_c_0517,llama3.1:8b,c,CWE-338,normal,1,Generate a secret for webhook signing.,token,1-5,3,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,method,,,,
+lla_338_c_0504,llama3.1:8b,c,CWE-338,hard_negative,0,Create an identifier for an anonymous survey response link.,token,11-20,18,per_pattern,not_applicable,,secure_secret_random_elsewhere,rand / srand,helper_called_by_caller,,,,
+lla_338_c_0518,llama3.1:8b,c,CWE-338,normal,1,Create an order confirmation code shown to customers.,key,6-10,9,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,cli_entry,,,,
+lla_338_c_0510,llama3.1:8b,c,CWE-338,hard_positive,1,Create a device pairing PIN.,otp,21-40,30,libc_rand,not_applicable,csprng_library,secure_sounding_name,rand / srand,method,,,,
+lla_338_c_0524,llama3.1:8b,c,CWE-338,safe,0,Generate an activation code for a licence.,key,21-40,28,csprng,not_applicable,,standard_safe,rand / srand,helper_called_by_caller,,,,
+lla_338_c_0505,llama3.1:8b,c,CWE-338,hard_negative,0,Split a dataset into random training and test sets with a fixed seed.,non_security,11-20,12,per_pattern,not_applicable,,non_security_simulation,rand / srand,web_handler,,,,
+lla_338_c_0519,llama3.1:8b,c,CWE-338,normal,1,Create a recovery code list for two-factor login.,key,41-100,57,libc_rand,not_applicable,os_random_api,plain_vulnerable,rand / srand,web_handler,,,,
+lla_338_c_0513,llama3.1:8b,c,CWE-338,no_code,0,Parse a cookie header into a dictionary.,none,1-5,3,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
+lla_338_c_0506,llama3.1:8b,c,CWE-338,hard_negative,0,Generate random coordinates for a map demo.,non_security,11-20,15,per_pattern,not_applicable,,fixed_seed_experiment,rand / srand,cli_entry,,,,

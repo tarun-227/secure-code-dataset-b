@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_22_go_0464,llama3.1:8b,go,CWE-22,normal,1,Read a sound clip by its name.,os_open,1-5,3,string_concatenation,web_request,safe_join_library,plain_vulnerable,os.Open / os.ReadFile,callback_or_async,,,,
+lla_22_go_0451,llama3.1:8b,go,CWE-22,hard_negative,0,Read a recipe file from a collection.,os_create,21-40,21,per_pattern,database_value,,resolve_then_contain_with_separator,os.Open / os.ReadFile,plain_function,,,,
+lla_22_go_0458,llama3.1:8b,go,CWE-22,hard_positive,1,Read a firmware image by version string.,os_open,41-100,54,filepath_join,command_line,id_to_file_map,prefix_without_separator,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0472,llama3.1:8b,go,CWE-22,safe,0,Return the size of a file in the uploads folder.,os_open,11-20,15,contained_path,database_value,,standard_safe,os.Open / os.ReadFile,plain_function,,,,
+lla_22_go_0465,llama3.1:8b,go,CWE-22,normal,1,Read a schedule file for a given week.,archive_extract,21-40,31,fmt_sprintf,database_value,normalize_prefix_check,plain_vulnerable,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0452,llama3.1:8b,go,CWE-22,hard_negative,0,Read a template by name and fill in values.,os_create,6-10,10,per_pattern,environment,,resolve_then_contain_with_separator,os.Open / os.ReadFile,method,,,,
+lla_22_go_0462,llama3.1:8b,go,CWE-22,no_code,0,Compute a storage quota percentage.,none,6-10,9,none,not_applicable,,no_dangerous_call,,web_handler,,,,
+lla_22_go_0466,llama3.1:8b,go,CWE-22,normal,1,Read the metadata file for a dataset name.,http_servefile,41-100,66,string_concatenation,web_request,id_to_file_map,plain_vulnerable,os.Open / os.ReadFile,plain_function,,,,
+lla_22_go_0453,llama3.1:8b,go,CWE-22,hard_negative,0,Load a game save file for a player name.,archive_extract,21-40,33,per_pattern,file_content,,library_confined_access,os.Open / os.ReadFile,method,,,,
+lla_22_go_0459,llama3.1:8b,go,CWE-22,hard_positive,1,Load a user's avatar image.,archive_extract,6-10,9,string_concatenation,function_argument,basename_only,single_pass_dotdot_strip,os.Open / os.ReadFile,helper_called_by_caller,,,,

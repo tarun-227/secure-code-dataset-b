@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_22_go_0470,llama3.1:8b,go,CWE-22,normal,1,List the files in a sub-folder of the share.,os_open,11-20,20,filepath_join,environment,normalize_prefix_check,plain_vulnerable,os.Open / os.ReadFile,method,,,,
+lla_22_go_0461,llama3.1:8b,go,CWE-22,hard_positive,1,Write a note to a file named after its title.,os_readfile,11-20,14,filepath_join,database_value,basename_only,check_before_normalise,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0475,llama3.1:8b,go,CWE-22,safe,0,Delete a temporary file created for a job.,os_create,41-100,47,contained_path,file_content,,standard_safe,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0457,llama3.1:8b,go,CWE-22,hard_negative,0,Append a line to a user's history file.,os_readfile,6-10,10,per_pattern,command_line,,id_mapped_to_known_file,os.Open / os.ReadFile,callback_or_async,,,,
+lla_22_go_0471,llama3.1:8b,go,CWE-22,normal,1,Write a generated invoice PDF under a customer folder.,archive_extract,21-40,21,string_concatenation,web_request,basename_only,plain_vulnerable,os.Open / os.ReadFile,cli_entry,,,,

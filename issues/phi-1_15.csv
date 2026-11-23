@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_go_1063,phi4:14b,go,CWE-78,normal,1,Change the owner of an uploaded file.,exec_command_sh,21-40,30,fmt_sprintf,environment,allow_list,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",web_handler,,,,
+phi_78_go_1051,phi4:14b,go,CWE-78,hard_negative,0,Show the git log of a branch.,exec_command,1-5,5,per_pattern,web_request,,argv_list_user_data,"exec.Command(""sh"", ""-c"", ...)",helper_called_by_caller,,,,
+phi_78_go_1057,phi4:14b,go,CWE-78,hard_positive,1,Open a file in the user's editor.,exec_command_sh,6-10,10,string_concatenation,database_value,quote_escape,quoting_wrong_context,"exec.Command(""sh"", ""-c"", ...)",method,,,,
+phi_78_go_1072,phi4:14b,go,CWE-78,safe,0,Create a database backup with a dump tool.,exec_command_sh,6-10,7,argv,function_argument,,standard_safe,"exec.Command(""sh"", ""-c"", ...)",web_handler,,,,
+phi_78_go_1064,phi4:14b,go,CWE-78,normal,1,Copy a file to a remote server with scp.,exec_command_sh,11-20,12,string_concatenation,file_content,quote_escape,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+phi_78_go_1052,phi4:14b,go,CWE-78,hard_negative,0,Run a traceroute to a target address.,exec_command,11-20,18,per_pattern,file_content,,all_args_quoted,"exec.Command(""sh"", ""-c"", ...)",method,,,,
+phi_78_go_1061,phi4:14b,go,CWE-78,no_code,0,Build a list of command-line flags from a settings dictionary.,none,21-40,21,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
+phi_78_go_1065,phi4:14b,go,CWE-78,normal,1,Mount a network share at a path.,exec_command,21-40,25,fmt_sprintf,function_argument,allow_list,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+phi_78_go_1058,phi4:14b,go,CWE-78,hard_positive,1,Convert an audio file to MP3.,exec_command,21-40,22,fmt_sprintf,network_message,validate_format,validator_too_permissive,"exec.Command(""sh"", ""-c"", ...)",web_handler,,,,
+phi_78_go_1073,phi4:14b,go,CWE-78,safe,0,Send a desktop notification with a message.,exec_command_sh,6-10,7,argv,file_content,,standard_safe,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,

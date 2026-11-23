@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_py_0695,llama3.1:8b,python,CWE-78,normal,1,Download a file from a URL with curl.,os_system,6-10,6,percent_format,command_line,validate_format,plain_vulnerable,os.system / subprocess with shell=True,callback_or_async,,,,
+lla_78_py_0686,llama3.1:8b,python,CWE-78,hard_positive,1,Send a desktop notification with a message.,subprocess,11-20,20,percent_format,database_value,quote_escape,partial_metachar_filter,os.system / subprocess with shell=True,cli_entry,,,,
+lla_78_py_0700,llama3.1:8b,python,CWE-78,safe,0,Compress a folder into a tar.gz archive.,os_system,6-10,7,argv,network_message,,standard_safe,os.system / subprocess with shell=True,callback_or_async,,,,
+lla_78_py_0682,llama3.1:8b,python,CWE-78,hard_negative,0,Convert an audio file to MP3.,os_system,11-20,16,per_pattern,environment,,constant_shell_command,os.system / subprocess with shell=True,helper_called_by_caller,,,,
+lla_78_py_0696,llama3.1:8b,python,CWE-78,normal,1,Encrypt a file with gpg for a recipient.,subprocess,21-40,32,concatenation,web_request,end_of_options,plain_vulnerable,os.system / subprocess with shell=True,cli_entry,,,,

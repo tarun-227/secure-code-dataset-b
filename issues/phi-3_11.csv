@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_338_cpp_0945,phi4:14b,cpp,CWE-338,normal,1,Create a nonce for a signed request.,salt,21-40,34,libc_rand,not_applicable,csprng_library,plain_vulnerable,std::mt19937 / rand,method,,,,
+phi_338_cpp_0936,phi4:14b,cpp,CWE-338,hard_positive,1,Generate a backup encryption passphrase.,password,21-40,22,cpp_std_random,not_applicable,csprng_library,weak_generator_in_helper,std::mt19937 / rand,helper_called_by_caller,,,,
+phi_338_cpp_0950,phi4:14b,cpp,CWE-338,safe,0,Create a random PIN for a door lock.,password,6-10,8,csprng,not_applicable,,standard_safe,std::mt19937 / rand,callback_or_async,,,,
+phi_338_cpp_0932,phi4:14b,cpp,CWE-338,hard_negative,0,Pick a random greeting message.,non_security,21-40,34,per_pattern,not_applicable,,non_security_shuffle_or_sample,std::mt19937 / rand,plain_function,,,,
+phi_338_cpp_0946,phi4:14b,cpp,CWE-338,normal,1,Create a key for signing cookies.,session,11-20,20,cpp_std_random,not_applicable,os_random_api,plain_vulnerable,std::mt19937 / rand,plain_function,,,,

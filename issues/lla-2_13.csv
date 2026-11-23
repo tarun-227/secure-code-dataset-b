@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_22_go_0473,llama3.1:8b,go,CWE-22,safe,0,Extract a zip archive into a working folder.,os_readfile,21-40,30,contained_path,command_line,,standard_safe,os.Open / os.ReadFile,helper_called_by_caller,,,,
+lla_22_go_0467,llama3.1:8b,go,CWE-22,normal,1,Load a plugin file by name.,archive_extract,11-20,11,string_concatenation,environment,validate_format,plain_vulnerable,os.Open / os.ReadFile,plain_function,,,,
+lla_22_go_0454,llama3.1:8b,go,CWE-22,hard_negative,0,Move a file from the inbox folder to an archive folder.,http_servefile,1-5,4,per_pattern,web_request,,basename_only,os.Open / os.ReadFile,method,,,,
+lla_22_go_0468,llama3.1:8b,go,CWE-22,normal,1,Remove a draft file belonging to a user.,os_readfile,6-10,10,string_concatenation,file_content,basename_only,plain_vulnerable,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0460,llama3.1:8b,go,CWE-22,hard_positive,1,Read a markdown page for a wiki slug.,os_open,11-20,20,filepath_join,network_message,validate_format,misses_absolute_path,os.Open / os.ReadFile,web_handler,,,,
+lla_22_go_0474,llama3.1:8b,go,CWE-22,safe,0,Read a certificate file for a host name.,http_servefile,6-10,7,contained_path,function_argument,,standard_safe,os.Open / os.ReadFile,plain_function,,,,
+lla_22_go_0455,llama3.1:8b,go,CWE-22,hard_negative,0,Return the contents of a document by its file name.,os_create,11-20,15,per_pattern,function_argument,,allow_listed_name,os.Open / os.ReadFile,helper_called_by_caller,,,,
+lla_22_go_0469,llama3.1:8b,go,CWE-22,normal,1,Serve a video file by its relative path.,os_open,11-20,11,fmt_sprintf,environment,basename_only,plain_vulnerable,os.Open / os.ReadFile,cli_entry,,,,
+lla_22_go_0463,llama3.1:8b,go,CWE-22,no_code,0,Build a breadcrumb list from a path string.,none,21-40,24,none,not_applicable,,no_dangerous_call,,web_handler,,,,
+lla_22_go_0456,llama3.1:8b,go,CWE-22,hard_negative,0,Return a font file by family name.,http_servefile,6-10,10,per_pattern,database_value,,safe_filename_fixed_folder,os.Open / os.ReadFile,cli_entry,,,,

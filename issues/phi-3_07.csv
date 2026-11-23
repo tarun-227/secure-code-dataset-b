@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_22_cpp_0841,phi4:14b,cpp,CWE-22,normal,1,Rename a file inside a storage folder.,fopen,41-100,62,string_concatenation,database_value,basename_only,plain_vulnerable,std::ifstream / std::filesystem,plain_function,,,,
+phi_22_cpp_0828,phi4:14b,cpp,CWE-22,hard_negative,0,Fetch a printable label file by order number.,fstream,21-40,29,per_pattern,web_request,,allow_listed_name,std::ifstream / std::filesystem,helper_called_by_caller,,,,
+phi_22_cpp_0842,phi4:14b,cpp,CWE-22,normal,1,Delete a temporary file created for a job.,fopen,21-40,27,ostringstream,command_line,safe_join_library,plain_vulnerable,std::ifstream / std::filesystem,web_handler,,,,
+phi_22_cpp_0829,phi4:14b,cpp,CWE-22,hard_negative,0,Load a plugin file by name.,std_filesystem,41-100,61,per_pattern,command_line,,resolve_then_contain_with_separator,std::ifstream / std::filesystem,helper_called_by_caller,,,,
+phi_22_cpp_0843,phi4:14b,cpp,CWE-22,normal,1,Return a thumbnail for an image path.,fopen,6-10,7,path_operator,web_request,basename_only,plain_vulnerable,std::ifstream / std::filesystem,callback_or_async,,,,
+phi_22_cpp_0834,phi4:14b,cpp,CWE-22,hard_positive,1,Read a template by name and fill in values.,std_filesystem,11-20,11,ostringstream,function_argument,validate_format,check_before_normalise,std::ifstream / std::filesystem,method,,,,
+phi_22_cpp_0849,phi4:14b,cpp,CWE-22,safe,0,Read a markdown page for a wiki slug.,fopen,11-20,14,contained_path,environment,,standard_safe,std::ifstream / std::filesystem,callback_or_async,,,,
+phi_22_cpp_0844,phi4:14b,cpp,CWE-22,normal,1,Read the metadata file for a dataset name.,fstream,6-10,8,ostringstream,file_content,validate_format,plain_vulnerable,std::ifstream / std::filesystem,method,,,,
+phi_22_cpp_0830,phi4:14b,cpp,CWE-22,hard_negative,0,Copy a backup file to a restore folder.,fstream,21-40,32,per_pattern,database_value,,safe_filename_fixed_folder,std::ifstream / std::filesystem,plain_function,,,,
+phi_22_cpp_0837,phi4:14b,cpp,CWE-22,no_code,0,Guess a content type from a file extension.,none,11-20,19,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,

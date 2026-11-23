@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_go_1066,phi4:14b,go,CWE-78,normal,1,Compress a folder into a tar.gz archive.,exec_command,11-20,17,string_concatenation,network_message,quote_escape,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+phi_78_go_1053,phi4:14b,go,CWE-78,hard_negative,0,Show network interface details for an interface name.,exec_command,21-40,26,per_pattern,function_argument,,argv_list_user_data,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+phi_78_go_1067,phi4:14b,go,CWE-78,normal,1,Ping a host given by the user and return the output.,exec_command,21-40,29,string_concatenation,environment,end_of_options,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",web_handler,,,,
+phi_78_go_1054,phi4:14b,go,CWE-78,hard_negative,0,Make a thumbnail of a PDF page.,exec_command_sh,1-5,4,per_pattern,environment,,strict_parser_no_shell,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+phi_78_go_1068,phi4:14b,go,CWE-78,normal,1,Clone a git repository from a URL.,exec_command_sh,6-10,6,string_concatenation,database_value,quote_escape,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+phi_78_go_1059,phi4:14b,go,CWE-78,hard_positive,1,Check the disk usage of a folder.,exec_command,11-20,18,string_concatenation,function_argument,end_of_options,partial_metachar_filter,"exec.Command(""sh"", ""-c"", ...)",callback_or_async,,,,
+phi_78_go_1074,phi4:14b,go,CWE-78,safe,0,Generate a PDF from an HTML file.,exec_command,21-40,38,argv,web_request,,standard_safe,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+phi_78_go_1069,phi4:14b,go,CWE-78,normal,1,Check whether a port is open on a host.,exec_command_sh,11-20,16,string_concatenation,function_argument,validate_format,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+phi_78_go_1055,phi4:14b,go,CWE-78,hard_negative,0,Show the last lines of a log file chosen by the caller.,exec_command_sh,41-100,57,per_pattern,file_content,,command_from_fixed_map,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+phi_78_go_1062,phi4:14b,go,CWE-78,no_code,0,Convert seconds to an hours:minutes:seconds string.,none,41-100,43,none,not_applicable,,no_dangerous_call,,method,,,,

@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_78_go_0270,deepseek-coder-v2:16b,go,CWE-78,normal,1,Look up DNS records for a domain name.,exec_command_sh,6-10,6,string_concatenation,environment,validate_format,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",callback_or_async,,,,
+dsk_78_go_0261,deepseek-coder-v2:16b,go,CWE-78,hard_positive,1,Calculate the checksum of a file with a system tool.,exec_command,21-40,26,string_concatenation,database_value,argv_no_shell,quoting_wrong_context,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+dsk_78_go_0275,deepseek-coder-v2:16b,go,CWE-78,safe,0,Encrypt a file with gpg for a recipient.,exec_command_sh,41-100,51,argv,database_value,,standard_safe,"exec.Command(""sh"", ""-c"", ...)",method,,,,
+dsk_78_go_0257,deepseek-coder-v2:16b,go,CWE-78,hard_negative,0,Clone a git repository from a URL.,exec_command_sh,21-40,27,per_pattern,environment,,end_of_options_marker,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,
+dsk_78_go_0271,deepseek-coder-v2:16b,go,CWE-78,normal,1,Convert an uploaded image to PNG with an external tool.,exec_command,21-40,22,fmt_sprintf,network_message,validate_format,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",callback_or_async,,,,

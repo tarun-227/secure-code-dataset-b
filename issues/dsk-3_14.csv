@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_338_go_0170,deepseek-coder-v2:16b,go,CWE-338,normal,1,Generate a coupon code that grants a discount.,key,11-20,16,go_math_rand,not_applicable,crypto_rand_int,plain_vulnerable,math/rand,cli_entry,,,,
+dsk_338_go_0161,deepseek-coder-v2:16b,go,CWE-338,hard_positive,1,Generate a CSRF token.,token,21-40,32,go_math_rand,not_applicable,crypto_rand_int,weak_value_hashed,math/rand,cli_entry,,,,
+dsk_338_go_0175,deepseek-coder-v2:16b,go,CWE-338,safe,0,Create a tracking token embedded in a private link.,key,1-5,4,csprng,not_applicable,,standard_safe,math/rand,helper_called_by_caller,,,,
+dsk_338_go_0157,deepseek-coder-v2:16b,go,CWE-338,hard_negative,0,Choose a random colour for a chart series.,non_security,11-20,15,per_pattern,not_applicable,,non_security_shuffle_or_sample,math/rand,web_handler,,,,
+dsk_338_go_0171,deepseek-coder-v2:16b,go,CWE-338,normal,1,Create a nonce for a signed request.,session,41-100,46,go_math_rand,not_applicable,crypto_rand_text,plain_vulnerable,math/rand,web_handler,,,,

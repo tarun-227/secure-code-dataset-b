@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_338_go_0570,llama3.1:8b,go,CWE-338,normal,1,Create a voucher code for a gift card.,otp,21-40,29,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,method,,,,
+lla_338_go_0560,llama3.1:8b,go,CWE-338,hard_positive,1,Generate a lottery ticket number for a paid draw.,key,11-20,17,go_math_rand,not_applicable,crypto_rand_text,weak_value_hashed,math/rand,method,,,,
+lla_338_go_0575,llama3.1:8b,go,CWE-338,safe,0,Generate a bearer token for an internal service.,salt,6-10,7,csprng,not_applicable,,standard_safe,math/rand,plain_function,,,,
+lla_338_go_0556,llama3.1:8b,go,CWE-338,hard_negative,0,Pick a random sample of log lines for debugging.,non_security,11-20,12,per_pattern,not_applicable,,retry_jitter,math/rand,method,,,,
+lla_338_go_0571,llama3.1:8b,go,CWE-338,normal,1,Create a tracking token embedded in a private link.,salt,41-100,51,go_math_rand,not_applicable,crypto_rand_read,plain_vulnerable,math/rand,web_handler,,,,

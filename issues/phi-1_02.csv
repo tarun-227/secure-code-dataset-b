@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_89_py_1199,phi4:14b,python,CWE-89,safe,0,Return all orders placed by a customer after a given date.,sqlalchemy_text,11-20,11,parameterised,file_content,,standard_safe,cursor.execute,helper_called_by_caller,,,,
+phi_89_py_1188,phi4:14b,python,CWE-89,no_code,0,Compute the average of a list of ratings.,none,21-40,21,none,not_applicable,,no_dangerous_call,,plain_function,,,,
+phi_89_py_1180,phi4:14b,python,CWE-89,hard_negative,0,Look up a user's profile by username.,django_raw,6-10,8,per_pattern,function_argument,,allow_listed_identifier,cursor.execute,cli_entry,,,,
+phi_89_py_1194,phi4:14b,python,CWE-89,normal,1,Archive messages older than a given number of days.,mysql_connector,21-40,34,format_method,function_argument,type_conversion,plain_vulnerable,cursor.execute,plain_function,,,,
+phi_89_py_1181,phi4:14b,python,CWE-89,hard_negative,0,Get the total sales amount for a region.,sqlalchemy_text,41-100,55,per_pattern,web_request,,generated_placeholders,cursor.execute,cli_entry,,,,
+phi_89_py_1195,phi4:14b,python,CWE-89,normal,1,Get the stock price history for a ticker symbol.,django_raw,6-10,8,f_string,database_value,allow_list,plain_vulnerable,cursor.execute,callback_or_async,,,,
+phi_89_py_1186,phi4:14b,python,CWE-89,hard_positive,1,Find employees in a department with a salary above a threshold.,sqlalchemy_text,41-100,60,percent_format,web_request,allow_list,param_in_one_branch_only,cursor.execute,plain_function,,,,
+phi_89_py_1200,phi4:14b,python,CWE-89,safe,0,Return all bookings for a room on a given day.,sqlite3,21-40,21,parameterised,web_request,,standard_safe,cursor.execute,plain_function,,,,
+phi_89_py_1182,phi4:14b,python,CWE-89,hard_negative,0,"List files uploaded by a user, ordered by size.",psycopg2,1-5,5,per_pattern,environment,,generated_placeholders,cursor.execute,method,,,,
+phi_89_py_1196,phi4:14b,python,CWE-89,normal,1,Return a user's permissions for a resource name.,mysql_connector,11-20,17,concatenation,network_message,allow_list,plain_vulnerable,cursor.execute,web_handler,,,,

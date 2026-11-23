@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_cpp_0641,llama3.1:8b,cpp,CWE-78,normal,1,Look up DNS records for a domain name.,boost_process,41-100,53,ostringstream,function_argument,allow_list,plain_vulnerable,system / popen,plain_function,,,,
+lla_78_cpp_0628,llama3.1:8b,cpp,CWE-78,hard_negative,0,Read the metadata of a media file with exiftool.,qprocess,1-5,4,per_pattern,database_value,,command_from_fixed_map,system / popen,web_handler,,,,
+lla_78_cpp_0642,llama3.1:8b,cpp,CWE-78,normal,1,Copy a file to a remote server with scp.,popen,21-40,38,string_concatenation,database_value,end_of_options,plain_vulnerable,system / popen,callback_or_async,,,,
+lla_78_cpp_0629,llama3.1:8b,cpp,CWE-78,hard_negative,0,Ping a host given by the user and return the output.,boost_process,21-40,28,per_pattern,function_argument,,all_args_quoted,system / popen,helper_called_by_caller,,,,
+lla_78_cpp_0643,llama3.1:8b,cpp,CWE-78,normal,1,Run a traceroute to a target address.,system,6-10,9,std_format,environment,end_of_options,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+lla_78_cpp_0634,llama3.1:8b,cpp,CWE-78,hard_positive,1,Show the last lines of a log file chosen by the caller.,boost_process,21-40,33,ostringstream,command_line,end_of_options,argument_injection_dash,system / popen,helper_called_by_caller,,,,
+lla_78_cpp_0649,llama3.1:8b,cpp,CWE-78,safe,0,Clone a git repository from a URL.,system,21-40,31,argv,database_value,,standard_safe,system / popen,cli_entry,,,,
+lla_78_cpp_0644,llama3.1:8b,cpp,CWE-78,normal,1,Convert an uploaded image to PNG with an external tool.,qprocess,11-20,13,ostringstream,network_message,end_of_options,plain_vulnerable,system / popen,web_handler,,,,
+lla_78_cpp_0630,llama3.1:8b,cpp,CWE-78,hard_negative,0,Extract a zip archive into a folder.,qprocess,6-10,10,per_pattern,web_request,,all_args_quoted,system / popen,web_handler,,,,
+lla_78_cpp_0637,llama3.1:8b,cpp,CWE-78,no_code,0,Count the words in a text.,none,11-20,16,none,not_applicable,,no_dangerous_call,,cli_entry,,,,

@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_338_c_0916,phi4:14b,c,CWE-338,normal,1,Generate a random encryption key.,password,6-10,10,libc_rand,not_applicable,csprng_library,plain_vulnerable,rand / srand,cli_entry,,,,
+phi_338_c_0903,phi4:14b,c,CWE-338,hard_negative,0,Choose a random background image.,non_security,1-5,5,per_pattern,not_applicable,,fixed_seed_experiment,rand / srand,web_handler,,,,
+phi_338_c_0917,phi4:14b,c,CWE-338,normal,1,Create a seed for a key-derivation function.,password,41-100,58,libc_rand,not_applicable,csprng_library,plain_vulnerable,rand / srand,plain_function,,,,
+phi_338_c_0904,phi4:14b,c,CWE-338,hard_negative,0,Simulate network packet loss in a test harness.,non_security,11-20,19,per_pattern,not_applicable,,fixed_seed_experiment,rand / srand,web_handler,,,,
+phi_338_c_0918,phi4:14b,c,CWE-338,normal,1,Generate a lottery ticket number for a paid draw.,session,21-40,36,libc_rand,not_applicable,dev_urandom,plain_vulnerable,rand / srand,callback_or_async,,,,
+phi_338_c_0909,phi4:14b,c,CWE-338,hard_positive,1,Create a key for signing cookies.,session,11-20,19,libc_rand,not_applicable,csprng_library,secure_seed_for_weak_generator,rand / srand,web_handler,,,,
+phi_338_c_0924,phi4:14b,c,CWE-338,safe,0,Generate a coupon code that grants a discount.,otp,41-100,50,csprng,not_applicable,,standard_safe,rand / srand,cli_entry,,,,
+phi_338_c_0919,phi4:14b,c,CWE-338,normal,1,Generate a temporary password for a new account.,otp,6-10,7,libc_rand,not_applicable,dev_urandom,plain_vulnerable,rand / srand,plain_function,,,,
+phi_338_c_0905,phi4:14b,c,CWE-338,hard_negative,0,Sample rows for a quick data preview.,non_security,11-20,13,per_pattern,not_applicable,,non_security_simulation,rand / srand,callback_or_async,,,,
+phi_338_c_0912,phi4:14b,c,CWE-338,no_code,0,Store a hashed token with its creation time in a record.,none,21-40,25,none,not_applicable,,no_dangerous_call,,method,,,,

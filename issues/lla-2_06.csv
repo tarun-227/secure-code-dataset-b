@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_22_c_0413,llama3.1:8b,c,CWE-22,normal,1,Write a note to a file named after its title.,rename,6-10,6,snprintf,file_content,validate_format,plain_vulnerable,fopen / unlink,web_handler,,,,
+lla_22_c_0401,llama3.1:8b,c,CWE-22,hard_negative,0,Load a plugin file by name.,rename,6-10,9,per_pattern,file_content,,safe_filename_fixed_folder,fopen / unlink,web_handler,,,,
+lla_22_c_0407,llama3.1:8b,c,CWE-22,hard_positive,1,Read the metadata file for a dataset name.,open,11-20,20,snprintf,file_content,id_to_file_map,extension_check_only,fopen / unlink,method,,,,
+lla_22_c_0422,llama3.1:8b,c,CWE-22,safe,0,Serve a static file requested by a URL path.,rename,21-40,25,contained_path,command_line,,standard_safe,fopen / unlink,method,,,,
+lla_22_c_0414,llama3.1:8b,c,CWE-22,normal,1,Return a font file by family name.,rename,1-5,3,strcat,environment,basename_only,plain_vulnerable,fopen / unlink,method,,,,
+lla_22_c_0402,llama3.1:8b,c,CWE-22,hard_negative,0,List the files in a sub-folder of the share.,fopen,11-20,13,per_pattern,environment,,basename_only,fopen / unlink,web_handler,,,,
+lla_22_c_0411,llama3.1:8b,c,CWE-22,no_code,0,Guess a content type from a file extension.,none,1-5,4,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
+lla_22_c_0415,llama3.1:8b,c,CWE-22,normal,1,Fetch a printable label file by order number.,unlink,11-20,20,sprintf,database_value,validate_format,plain_vulnerable,fopen / unlink,plain_function,,,,
+lla_22_c_0408,llama3.1:8b,c,CWE-22,hard_positive,1,Move a file from the inbox folder to an archive folder.,rename,21-40,40,snprintf,command_line,id_to_file_map,single_pass_dotdot_strip,fopen / unlink,method,,,,
+lla_22_c_0423,llama3.1:8b,c,CWE-22,safe,0,Return a thumbnail for an image path.,open,11-20,16,contained_path,function_argument,,standard_safe,fopen / unlink,method,,,,

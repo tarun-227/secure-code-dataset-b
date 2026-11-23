@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_89_go_1173,phi4:14b,go,CWE-89,safe,0,Add a tag to an article.,database_sql,11-20,19,parameterised,function_argument,,standard_safe,db.Query / db.Exec,web_handler,,,,
+phi_89_go_1167,phi4:14b,go,CWE-89,normal,1,Return the inventory rows for a warehouse code.,database_sql,11-20,18,string_concatenation,environment,allow_list,plain_vulnerable,db.Query / db.Exec,web_handler,,,,
+phi_89_go_1154,phi4:14b,go,CWE-89,hard_negative,0,Get the total sales amount for a region.,sqlx,6-10,8,per_pattern,environment,,integer_forced,db.Query / db.Exec,helper_called_by_caller,,,,
+phi_89_go_1168,phi4:14b,go,CWE-89,normal,1,Get the stock price history for a ticker symbol.,gorm_raw,11-20,14,strings_builder,web_request,query_builder_orm,plain_vulnerable,db.Query / db.Exec,helper_called_by_caller,,,,
+phi_89_go_1160,phi4:14b,go,CWE-89,hard_positive,1,Find duplicate accounts sharing an email address.,database_sql,6-10,6,strings_builder,command_line,query_builder_orm,keyword_blocklist,db.Query / db.Exec,cli_entry,,,,
+phi_89_go_1174,phi4:14b,go,CWE-89,safe,0,Delete a comment by its id if it belongs to the current user.,gorm_raw,1-5,3,parameterised,network_message,,standard_safe,db.Query / db.Exec,method,,,,
+phi_89_go_1155,phi4:14b,go,CWE-89,hard_negative,0,Search products whose name contains a search term.,database_sql,11-20,13,per_pattern,function_argument,,integer_forced,db.Query / db.Exec,cli_entry,,,,
+phi_89_go_1169,phi4:14b,go,CWE-89,normal,1,Return all bookings for a room on a given day.,gorm_raw,41-100,42,string_concatenation,function_argument,allow_list,plain_vulnerable,db.Query / db.Exec,method,,,,
+phi_89_go_1163,phi4:14b,go,CWE-89,no_code,0,Compute the average of a list of ratings.,none,11-20,17,none,not_applicable,,no_dangerous_call,,web_handler,,,,
+phi_89_go_1156,phi4:14b,go,CWE-89,hard_negative,0,Insert a new audit-log entry with an action and a user name.,database_sql,41-100,54,per_pattern,environment,,allow_listed_identifier,db.Query / db.Exec,method,,,,

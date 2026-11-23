@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_py_0799,llama3.1:8b,python,CWE-89,safe,0,Return the leaderboard for a game mode.,django_raw,21-40,36,parameterised,file_content,,standard_safe,cursor.execute,helper_called_by_caller,,,,
+lla_89_py_0787,llama3.1:8b,python,CWE-89,no_code,0,Mask all but the last four digits of a card number.,none,41-100,43,none,not_applicable,,no_dangerous_call,,method,,,,
+lla_89_py_0793,llama3.1:8b,python,CWE-89,normal,1,"List files uploaded by a user, ordered by size.",psycopg2,21-40,28,concatenation,command_line,parameterised_query,plain_vulnerable,cursor.execute,plain_function,,,,
+lla_89_py_0794,llama3.1:8b,python,CWE-89,normal,1,Return the inventory rows for a warehouse code.,mysql_connector,21-40,34,format_method,command_line,allow_list,plain_vulnerable,cursor.execute,callback_or_async,,,,
+lla_89_py_0780,llama3.1:8b,python,CWE-89,hard_negative,0,Fetch a patient's appointments for a doctor.,mysql_connector,11-20,20,per_pattern,command_line,,constant_fragments_only,cursor.execute,helper_called_by_caller,,,,
+lla_89_py_0795,llama3.1:8b,python,CWE-89,normal,1,Filter books by author and publication year.,psycopg2,6-10,10,format_method,function_argument,query_builder_orm,plain_vulnerable,cursor.execute,method,,,,
+lla_89_py_0785,llama3.1:8b,python,CWE-89,hard_positive,1,Look up a session record by session token.,mysql_connector,1-5,4,format_method,environment,type_conversion,param_in_one_branch_only,cursor.execute,helper_called_by_caller,,,,
+lla_89_py_0800,llama3.1:8b,python,CWE-89,safe,0,Find duplicate accounts sharing an email address.,sqlalchemy_text,11-20,19,parameterised,network_message,,standard_safe,cursor.execute,cli_entry,,,,
+lla_89_py_0781,llama3.1:8b,python,CWE-89,hard_negative,0,Report the number of sign-ups per country in a date range.,django_raw,21-40,35,per_pattern,database_value,,integer_forced,cursor.execute,web_handler,,,,
+lla_89_py_0796,llama3.1:8b,python,CWE-89,normal,1,Return the average rating of a product.,django_raw,6-10,6,format_method,network_message,parameterised_query,plain_vulnerable,cursor.execute,helper_called_by_caller,,,,

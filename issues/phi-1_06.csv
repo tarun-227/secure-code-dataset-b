@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_22_py_0889,phi4:14b,python,CWE-22,normal,1,Unpack a tar archive into a project folder.,pathlib,21-40,30,concatenation,function_argument,basename_only,plain_vulnerable,open / send_file / os.remove,web_handler,,,,
+phi_22_py_0876,phi4:14b,python,CWE-22,hard_negative,0,Read a template by name and fill in values.,open,6-10,10,per_pattern,file_content,,basename_only,open / send_file / os.remove,helper_called_by_caller,,,,
+phi_22_py_0883,phi4:14b,python,CWE-22,hard_positive,1,Append a line to a user's history file.,shutil,21-40,40,concatenation,network_message,safe_join_library,misses_absolute_path,open / send_file / os.remove,method,,,,
+phi_22_py_0897,phi4:14b,python,CWE-22,safe,0,Read a schedule file for a given week.,os_remove,11-20,20,contained_path,database_value,,standard_safe,open / send_file / os.remove,method,,,,
+phi_22_py_0890,phi4:14b,python,CWE-22,normal,1,Read a certificate file for a host name.,archive_extract,6-10,8,pathlib_div,function_argument,id_to_file_map,plain_vulnerable,open / send_file / os.remove,plain_function,,,,
+phi_22_py_0877,phi4:14b,python,CWE-22,hard_negative,0,Read the metadata file for a dataset name.,archive_extract,11-20,15,per_pattern,environment,,safe_filename_fixed_folder,open / send_file / os.remove,callback_or_async,,,,
+phi_22_py_0887,phi4:14b,python,CWE-22,no_code,0,Build a display path from folder and file names.,none,41-100,50,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,
+phi_22_py_0891,phi4:14b,python,CWE-22,normal,1,Read a theme stylesheet by theme name.,open,11-20,17,pathlib_div,web_request,basename_only,plain_vulnerable,open / send_file / os.remove,web_handler,,,,
+phi_22_py_0878,phi4:14b,python,CWE-22,hard_negative,0,Serve a video file by its relative path.,archive_extract,21-40,24,per_pattern,file_content,,library_confined_access,open / send_file / os.remove,helper_called_by_caller,,,,
+phi_22_py_0884,phi4:14b,python,CWE-22,hard_positive,1,Write a JSON export under a given name.,send_file,6-10,6,pathlib_div,file_content,normalize_prefix_check,check_before_normalise,open / send_file / os.remove,callback_or_async,,,,

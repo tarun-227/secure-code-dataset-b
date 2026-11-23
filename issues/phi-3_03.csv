@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_78_cpp_1039,phi4:14b,cpp,CWE-78,normal,1,Encrypt a file with gpg for a recipient.,boost_process,41-100,46,std_format,file_content,argv_no_shell,plain_vulnerable,system / popen,callback_or_async,,,,
+phi_78_cpp_1026,phi4:14b,cpp,CWE-78,hard_negative,0,Open a file in the user's editor.,system,21-40,31,per_pattern,environment,,strict_parser_no_shell,system / popen,method,,,,
+phi_78_cpp_1033,phi4:14b,cpp,CWE-78,hard_positive,1,Run a database migration for an environment name.,boost_process,11-20,14,string_concatenation,environment,argv_no_shell,quoting_wrong_context,system / popen,callback_or_async,,,,
+phi_78_cpp_1047,phi4:14b,cpp,CWE-78,safe,0,Print a document to a named printer.,boost_process,11-20,18,argv,network_message,,standard_safe,system / popen,helper_called_by_caller,,,,
+phi_78_cpp_1040,phi4:14b,cpp,CWE-78,normal,1,Kill a process by name.,qprocess,6-10,10,string_concatenation,network_message,allow_list,plain_vulnerable,system / popen,web_handler,,,,
+phi_78_cpp_1027,phi4:14b,cpp,CWE-78,hard_negative,0,List the processes matching a name.,qprocess,21-40,28,per_pattern,environment,,strict_parser_no_shell,system / popen,web_handler,,,,
+phi_78_cpp_1037,phi4:14b,cpp,CWE-78,no_code,0,Check whether a file extension is in an allowed list.,none,11-20,15,none,not_applicable,,no_dangerous_call,,method,,,,
+phi_78_cpp_1041,phi4:14b,cpp,CWE-78,normal,1,Create a database backup with a dump tool.,popen,6-10,7,ostringstream,network_message,allow_list,plain_vulnerable,system / popen,method,,,,
+phi_78_cpp_1028,phi4:14b,cpp,CWE-78,hard_negative,0,Compress a folder into a tar.gz archive.,system,21-40,28,per_pattern,command_line,,constant_shell_command,system / popen,web_handler,,,,
+phi_78_cpp_1034,phi4:14b,cpp,CWE-78,hard_positive,1,Restart a named system service.,popen,1-5,4,std_format,command_line,allow_list,validates_other_variable,system / popen,cli_entry,,,,

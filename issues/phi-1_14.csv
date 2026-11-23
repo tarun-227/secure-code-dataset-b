@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_89_go_1170,phi4:14b,go,CWE-89,normal,1,Return the average rating of a product.,sqlx,11-20,13,string_concatenation,environment,parameterised_query,plain_vulnerable,db.Query / db.Exec,callback_or_async,,,,
+phi_89_go_1161,phi4:14b,go,CWE-89,hard_positive,1,Check whether a login name and password hash match a stored account.,gorm_raw,1-5,3,fmt_sprintf,web_request,parameterised_query,hand_written_escaping,db.Query / db.Exec,helper_called_by_caller,,,,
+phi_89_go_1175,phi4:14b,go,CWE-89,safe,0,Return all orders placed by a customer after a given date.,gorm_raw,6-10,10,parameterised,web_request,,standard_safe,db.Query / db.Exec,helper_called_by_caller,,,,
+phi_89_go_1157,phi4:14b,go,CWE-89,hard_negative,0,Return a page of results with a limit and an offset.,sqlx,11-20,14,per_pattern,file_content,,query_builder_bound,db.Query / db.Exec,plain_function,,,,
+phi_89_go_1171,phi4:14b,go,CWE-89,normal,1,Return a user's permissions for a resource name.,database_sql,41-100,44,strings_builder,database_value,type_conversion,plain_vulnerable,db.Query / db.Exec,helper_called_by_caller,,,,

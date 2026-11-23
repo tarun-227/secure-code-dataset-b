@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_go_0766,llama3.1:8b,go,CWE-89,normal,1,Search products whose name contains a search term.,database_sql,11-20,16,fmt_sprintf,command_line,type_conversion,plain_vulnerable,db.Query / db.Exec,plain_function,,,,
+lla_89_go_0753,llama3.1:8b,go,CWE-89,hard_negative,0,Return the recipes that contain a given ingredient.,database_sql,41-100,66,per_pattern,function_argument,,fstring_placeholders_only,db.Query / db.Exec,helper_called_by_caller,,,,
+lla_89_go_0767,llama3.1:8b,go,CWE-89,normal,1,Insert a new audit-log entry with an action and a user name.,sqlx,6-10,10,string_concatenation,network_message,type_conversion,plain_vulnerable,db.Query / db.Exec,web_handler,,,,
+lla_89_go_0754,llama3.1:8b,go,CWE-89,hard_negative,0,Fetch the latest sensor readings for a device id.,sqlx,21-40,24,per_pattern,function_argument,,fstring_placeholders_only,db.Query / db.Exec,cli_entry,,,,
+lla_89_go_0768,llama3.1:8b,go,CWE-89,normal,1,Return a page of results with a limit and an offset.,gorm_raw,21-40,38,fmt_sprintf,database_value,parameterised_query,plain_vulnerable,db.Query / db.Exec,web_handler,,,,
+lla_89_go_0759,llama3.1:8b,go,CWE-89,hard_positive,1,Rename a project owned by a given user.,sqlx,11-20,15,string_concatenation,file_content,type_conversion,keyword_blocklist,db.Query / db.Exec,plain_function,,,,
+lla_89_go_0774,llama3.1:8b,go,CWE-89,safe,0,Fetch a patient's appointments for a doctor.,database_sql,11-20,19,parameterised,database_value,,standard_safe,db.Query / db.Exec,plain_function,,,,
+lla_89_go_0769,llama3.1:8b,go,CWE-89,normal,1,Change the priority of a task.,database_sql,21-40,40,strings_builder,database_value,query_builder_orm,plain_vulnerable,db.Query / db.Exec,web_handler,,,,
+lla_89_go_0755,llama3.1:8b,go,CWE-89,hard_negative,0,"List the newest posts in a category, sorted by a chosen column.",database_sql,11-20,11,per_pattern,database_value,,generated_placeholders,db.Query / db.Exec,web_handler,,,,
+lla_89_go_0762,llama3.1:8b,go,CWE-89,no_code,0,Group a list of user records by country.,none,21-40,24,none,not_applicable,,no_dangerous_call,,cli_entry,,,,

@@ -1,0 +1,6 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_cpp_0338,deepseek-coder-v2:16b,cpp,CWE-89,normal,1,Find vehicles by licence-plate fragment.,sqlite3_c,1-5,3,std_format,file_content,type_conversion,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,cli_entry,,,,
+dsk_89_cpp_0326,deepseek-coder-v2:16b,cpp,CWE-89,hard_negative,0,Fetch a configuration value by key for a tenant.,mysql_connector_cpp,21-40,33,per_pattern,command_line,,fstring_placeholders_only,sqlite3_exec / QSqlQuery::exec,method,,,,
+dsk_89_cpp_0333,deepseek-coder-v2:16b,cpp,CWE-89,hard_positive,1,Add a tag to an article.,sqlite3_c,6-10,9,ostringstream,network_message,allow_list,identifier_from_input,sqlite3_exec / QSqlQuery::exec,web_handler,,,,
+dsk_89_cpp_0348,deepseek-coder-v2:16b,cpp,CWE-89,safe,0,List students enrolled in a course code.,qt_qsqlquery,11-20,11,parameterised,command_line,,standard_safe,sqlite3_exec / QSqlQuery::exec,plain_function,,,,
+dsk_89_cpp_0336,deepseek-coder-v2:16b,cpp,CWE-89,no_code,0,Truncate a long description to a maximum length.,none,6-10,10,none,not_applicable,,no_dangerous_call,,plain_function,,,,

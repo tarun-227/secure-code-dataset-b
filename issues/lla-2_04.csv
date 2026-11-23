@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_78_c_0623,llama3.1:8b,c,CWE-78,safe,0,Clone a git repository from a URL.,system,21-40,39,argv,command_line,,standard_safe,system / popen,method,,,,
+lla_78_c_0617,llama3.1:8b,c,CWE-78,normal,1,Restart a named system service.,system,11-20,14,snprintf,web_request,quote_escape,plain_vulnerable,system / popen,method,,,,
+lla_78_c_0604,llama3.1:8b,c,CWE-78,hard_negative,0,Make a thumbnail of a PDF page.,execl_shell,21-40,40,per_pattern,database_value,,strict_parser_no_shell,system / popen,plain_function,,,,
+lla_78_c_0618,llama3.1:8b,c,CWE-78,normal,1,Resize a video to a given width with ffmpeg.,execl_shell,6-10,7,sprintf,network_message,argv_no_shell,plain_vulnerable,system / popen,callback_or_async,,,,
+lla_78_c_0610,llama3.1:8b,c,CWE-78,hard_positive,1,Ping a host given by the user and return the output.,execl_shell,1-5,4,snprintf,command_line,validate_format,validates_other_variable,system / popen,web_handler,,,,
+lla_78_c_0624,llama3.1:8b,c,CWE-78,safe,0,Look up DNS records for a domain name.,system,21-40,23,argv,database_value,,standard_safe,system / popen,plain_function,,,,
+lla_78_c_0605,llama3.1:8b,c,CWE-78,hard_negative,0,Print a document to a named printer.,popen,41-100,54,per_pattern,web_request,,end_of_options_marker,system / popen,cli_entry,,,,
+lla_78_c_0619,llama3.1:8b,c,CWE-78,normal,1,Run a database migration for an environment name.,popen,6-10,8,sprintf,file_content,end_of_options,plain_vulnerable,system / popen,cli_entry,,,,
+lla_78_c_0613,llama3.1:8b,c,CWE-78,no_code,0,Parse the output of a ping command into round-trip times.,none,41-100,60,none,not_applicable,,no_dangerous_call,,method,,,,
+lla_78_c_0606,llama3.1:8b,c,CWE-78,hard_negative,0,Set the system time zone.,system,21-40,36,per_pattern,database_value,,all_args_quoted,system / popen,callback_or_async,,,,

@@ -1,0 +1,11 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_89_c_1114,phi4:14b,c,CWE-89,normal,1,Return all bookings for a room on a given day.,sqlite3_c,21-40,23,strcat,environment,parameterised_query,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
+phi_89_c_1102,phi4:14b,c,CWE-89,hard_negative,0,Insert a new audit-log entry with an action and a user name.,libpq,11-20,12,per_pattern,network_message,,query_builder_bound,sqlite3_exec / mysql_query / PQexec,helper_called_by_caller,,,,
+phi_89_c_1108,phi4:14b,c,CWE-89,hard_positive,1,Search products whose name contains a search term.,libpq,1-5,3,strcat,database_value,query_builder_orm,hand_written_escaping,sqlite3_exec / mysql_query / PQexec,method,,,,
+phi_89_c_1123,phi4:14b,c,CWE-89,safe,0,Get the stock price history for a ticker symbol.,mysql_c,6-10,9,parameterised,function_argument,,standard_safe,sqlite3_exec / mysql_query / PQexec,plain_function,,,,
+phi_89_c_1115,phi4:14b,c,CWE-89,normal,1,Return a user's permissions for a resource name.,mysql_c,11-20,18,sprintf,file_content,query_builder_orm,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,helper_called_by_caller,,,,
+phi_89_c_1103,phi4:14b,c,CWE-89,hard_negative,0,Rename a project owned by a given user.,libpq,6-10,8,per_pattern,function_argument,,generated_placeholders,sqlite3_exec / mysql_query / PQexec,method,,,,
+phi_89_c_1116,phi4:14b,c,CWE-89,normal,1,Count how many tickets have a given status.,libpq,11-20,18,strcat,web_request,parameterised_query,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,callback_or_async,,,,
+phi_89_c_1117,phi4:14b,c,CWE-89,normal,1,Return events matching a list of ids.,libpq,21-40,27,snprintf,web_request,parameterised_query,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
+phi_89_c_1104,phi4:14b,c,CWE-89,hard_negative,0,Check whether a login name and password hash match a stored account.,mysql_c,21-40,27,per_pattern,web_request,,integer_forced,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
+phi_89_c_1109,phi4:14b,c,CWE-89,hard_positive,1,Find customers whose phone number starts with a prefix.,libpq,41-100,67,sprintf,web_request,allow_list,hand_written_escaping,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
