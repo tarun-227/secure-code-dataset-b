@@ -16,7 +16,7 @@ def get_newest_posts(cursor, category, column):
         raise ValueError(f""Invalid column: {column}"")
     query = ""SELECT * FROM posts WHERE category = %s ORDER BY %s DESC LIMIT 10;""
     cursor.execute(query, (category,))
-    return cursor.fetchall()","[4, 5]",AUTO-CHECK: no line was marked with the @@ comment; vulnerable_lines guessed from the fix; check them
+    return cursor.fetchall()","[4, 5]","checked: vulnerable_lines [4, 5] are right (guessed from the fix)"
 lla_89_py_0776,llama3.1:8b,python,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,mysql_connector,41-100,68,per_pattern,database_value,,integer_forced,cursor.execute,web_handler,"import mysql.connector
 from mysql.connector import Error
 import logging
@@ -85,14 +85,90 @@ def main():
     except Exception as e:
         logger.error(f""Error processing threshold: {e}"")",,,
 lla_89_py_0783,llama3.1:8b,python,CWE-89,hard_positive,1,Reset the failed-login counter for an account name.,sqlite3,21-40,33,percent_format,web_request,parameterised_query,hand_written_escaping,cursor.execute,web_handler,"import sqlite3
+import logging
+from urllib.parse import parse_qs
 
-def reset_failed_login_counter(cursor, account_name):
-    query = ""UPDATE accounts SET failed_logins = 0 WHERE name = '%s'"" % account_name
-    cursor.execute(query)","import sqlite3
+def reset_failed_login(conn, query_string):
+    params = parse_qs(query_string)
+    account_name = params.get('account_name', [None])[0]
 
-def reset_failed_login_counter(cursor, account_name):
-    query = ""UPDATE accounts SET failed_logins = 0 WHERE name = ?""
-    cursor.execute(query, (account_name,))","[4, 5]","AUTO-CHECK: 3 lines of code, but it must be 21-40 (make it longer with realistic input checks, error handling, logging or a helper); no line was marked with the @@ comment; vulnerable_lines guessed from the fix; check them"
+    if account_name is None:
+        return 'Missing account name'
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM accounts WHERE name = %s' % account_name)
+    result = cursor.fetchone()
+
+    if result is None:
+        return 'Account not found'
+
+    cursor.execute('UPDATE accounts SET failed_logins = 0 WHERE name = %s' % account_name)
+    conn.commit()
+
+    return 'Failed login counter reset'
+
+def handle_request(request):
+    query_string = request.GET.get('account_name')
+    if query_string is not None:
+        return reset_failed_login(request.conn, query_string)
+    return 'Invalid request'
+
+def handle_json_body(request):
+    if request.json:
+        return reset_failed_login(request.conn, request.json['account_name'])
+    return 'Invalid request'
+
+def handle_url_path(request):
+    path = request.path.strip('/')
+    return reset_failed_login(request.conn, 'account_name=' + path)
+
+def handle_form_field(request):
+    form = request.form
+    if form.get('account_name'):
+        return reset_failed_login(request.conn, 'account_name=' + form['account_name'])
+    return 'Invalid request'","import sqlite3
+import logging
+from urllib.parse import parse_qs
+
+def reset_failed_login(conn, query_string):
+    params = parse_qs(query_string)
+    account_name = params.get('account_name', [None])[0]
+
+    if account_name is None:
+        return 'Missing account name'
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM accounts WHERE name = ?', (account_name,))
+    result = cursor.fetchone()
+
+    if result is None:
+        return 'Account not found'
+
+    cursor.execute('UPDATE accounts SET failed_logins = 0 WHERE name = ?', (account_name,))
+    conn.commit()
+
+    return 'Failed login counter reset'
+
+def handle_request(request):
+    query_string = request.GET.get('account_name')
+    if query_string is not None:
+        return reset_failed_login(request.conn, query_string)
+    return 'Invalid request'
+
+def handle_json_body(request):
+    if request.json:
+        return reset_failed_login(request.conn, request.json['account_name'])
+    return 'Invalid request'
+
+def handle_url_path(request):
+    path = request.path.strip('/')
+    return reset_failed_login(request.conn, 'account_name=' + path)
+
+def handle_form_field(request):
+    form = request.form
+    if form.get('account_name'):
+        return reset_failed_login(request.conn, 'account_name=' + form['account_name'])
+    return 'Invalid request'","[13, 19]","FAILED: after 6 tries the model never adds hand-written escaping, so this is a plain vulnerable query, not a hard positive"
 lla_89_py_0800,llama3.1:8b,python,CWE-89,safe,0,Return the leaderboard for a game mode name.,mysql_connector,6-10,10,parameterised,command_line,,standard_safe,cursor.execute,method,"import mysql.connector
 
 class GameModeLeaderboard:
