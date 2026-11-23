@@ -54,13 +54,15 @@ def code_problems(r, code, marks):
     p = syntax_problems(code, r["language"])
     n = len(code.split("\n"))
     lo, hi = BAND_RANGE[r["band"]]
-    if not lo <= n <= hi:
-        p.append(f"{n} lines, but it must be {lo}-{hi} lines")
+    if n > hi:
+        p.append(f"{n} lines, but it must be {lo}-{hi} lines (make it shorter: leave out setup, printing and extras)")
+    elif n < lo:
+        p.append(f"{n} lines, but it must be {lo}-{hi} lines (make it longer with realistic input checks, error handling, logging or a helper)")
     if give_away(code):
         p.append(f"contains the give-away word '{give_away(code)}'")
     p += label_problems(r, code)
     if r["label"] == "1" and not marks:
-        p.append("no line was marked with @@")
+        p.append("no line was marked with the @@ comment")
     return p
 
 
@@ -76,11 +78,17 @@ def fix_problems(r, code, fixed):
     return p
 
 
+def again(text, probs):
+    if not probs:
+        return text
+    return text + "\n\nYour previous answer had these problems. Write it again and fix them:\n" + "\n".join("- " + p for p in probs)
+
+
 def best_of(make, check, label):
-    """Ask up to TRIES times; return the first answer without problems, else the one with the fewest."""
-    best = None
+    """Ask up to TRIES times, telling the model what was wrong; return the first clean answer, else the one with the fewest problems."""
+    best, probs = None, []
     for t in range(TRIES):
-        ans = make(0.4 if t == 0 else 0.7)
+        ans = make(0.4 if t == 0 else 0.7, probs)
         probs = check(ans)
         if best is None or len(probs) < len(best[1]):
             best = (ans, probs)
@@ -93,14 +101,13 @@ def best_of(make, check, label):
 def do_row(r):
     model = r["generator"]
 
-    def make_code(temp):
-        code, marks = take_markers(extract_code(ask(model, prompt(r), temp)))
-        return code, marks
+    def make_code(temp, probs):
+        return take_markers(extract_code(ask(model, again(prompt(r), probs), temp)))
 
     (code, marks), probs = best_of(make_code, lambda a: code_problems(r, *a), "code")
     fixed, vlines = "", []
     if r["label"] == "1":
-        fixed, fprobs = best_of(lambda temp: take_markers(extract_code(ask(model, fix_prompt(r, code), temp)))[0],
+        fixed, fprobs = best_of(lambda temp, pr: take_markers(extract_code(ask(model, again(fix_prompt(r, code), pr), temp)))[0],
                                 lambda f: fix_problems(r, code, f), "fix")
         probs += fprobs
         vlines = marks or diff_lines(code, fixed)

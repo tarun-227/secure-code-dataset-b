@@ -211,11 +211,20 @@ def flagged(code: str, lang: str, cwe: str) -> bool:
     return {"CWE-89": _89, "CWE-78": _78, "CWE-22": _22, "CWE-338": _338}[cwe](code, lang)
 
 
+# hard rows whose pattern makes the rough check clear-cut
+HARD_NEG_CLEAN = {"query_builder_bound", "argv_list_user_data", "strict_parser_no_shell", "end_of_options_marker",
+                  "command_from_fixed_map", "resolve_then_contain_with_separator", "basename_only", "safe_filename_fixed_folder"}
+HARD_POS_FLAGGED_CWE = {"CWE-89", "CWE-338"}
+
+
 def label_problems(r, code: str, fixed: str = ""):
-    """Problems where the rough check clearly disagrees with the row's case type. Hard rows are not judged."""
+    """Problems where the rough check clearly disagrees with the row's case type and pattern."""
     out, ct, cwe, lang = [], r["case_type"], r["cwe"], r["language"]
-    if ct == "normal" and not flagged(code, lang, cwe):
-        out.append("the code does not seem to contain the dangerous form; a 'normal' row must be plainly vulnerable")
+    must_flag = ct == "normal" or (ct == "hard_positive" and cwe in HARD_POS_FLAGGED_CWE)
+    if must_flag and not flagged(code, lang, cwe):
+        out.append(f"the code does not seem to contain the dangerous form; a '{ct}' row must really be vulnerable")
+    if ct == "hard_negative" and r["pattern"] in HARD_NEG_CLEAN and flagged(code, lang, cwe):
+        out.append("the code seems to contain the dangerous form; a 'hard_negative' row must be completely safe")
     if ct == "safe" and flagged(code, lang, cwe):
         out.append("the code seems to contain the dangerous form; a 'safe' row must be safe")
     if fixed and r["fix_type"] in REMOVES and flagged(fixed, lang, cwe):

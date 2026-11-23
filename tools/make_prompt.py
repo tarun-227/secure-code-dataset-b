@@ -86,6 +86,12 @@ def prompt(r) -> str:
     if r["source"] != "not_applicable" and ct != "no_code":
         L.append(f"The input comes from {SOURCE[r['source']]}.")
     L.append(f"Length: about {r['target_lines']} lines in total, at least {lo} and at most {hi}, counting imports and blank lines.")
+    if hi <= 10:
+        L.append("This is short: write only what the task needs.")
+    elif lo >= 41:
+        L.append("This is a longer piece of code: include realistic surrounding logic such as reading and checking the input, error handling, logging and a small helper.")
+    if cwe == "CWE-89" and r["shape"] != "cli_entry" and lo < 41 and ct != "no_code":
+        L.append("Take an already open database connection (or cursor) as a parameter instead of connecting yourself.")
     L += ["", "What the code must be:"]
     build = BUILD.get(r["build_style"], r["build_style"].replace("_", " "))
     how = (f"Make the secret value with {build}." if cwe == "CWE-338"
