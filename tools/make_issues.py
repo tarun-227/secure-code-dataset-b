@@ -19,6 +19,7 @@ import sys
 import pandas as pd
 
 from common import FILLED, ROOT, SPEC, read_rows, write_rows
+from make_prompt import prompt
 from vocab import CWE_NAME, LANG_NAME
 
 REPO = "tarun-227/secure-code-dataset-b"
@@ -130,6 +131,17 @@ def body(row, rows: pd.DataFrame) -> str:
         "",
         *t,
         "",
+        "### Prompts",
+        "Each prompt below is exactly what `tools/generate.py` sends to the model. You can also paste one into `ollama run " + row.generator + "` yourself.",
+        "",
+        *[line for i, r in enumerate(rows.to_dict("records"), 1) for line in (
+            f"<details><summary>Row {i}: <code>{r['sample_id']}</code> ({r['case_type']})</summary>", "", "```text", prompt(r), "```", "", "</details>", "")],
+        "### What a finished row looks like",
+        "- `code`: the complete function, nothing else (no explanation text).",
+        "- `fixed_code` (only when `label` is 1): the same function with the fewest lines changed.",
+        "- `vulnerable_lines` (only when `label` is 1): line numbers in `code`, counted from 1, for example `[3, 4]`.",
+        "- Safe rows (`label` 0) leave `fixed_code` and `vulnerable_lines` empty.",
+        "",
         "### Steps",
         f"1. `python tools/generate.py issues/{row.issue_id}.csv` (or `python tools/make_prompt.py issues/{row.issue_id}.csv --row N` and paste into Ollama).",
         f"2. Open `filled/{row.issue_id}.csv`, read every row, correct the code, and **recount `vulnerable_lines`** against the numbered code.",
@@ -165,11 +177,29 @@ def open_issues(slot, count, assignee):
     write_rows(idx, INDEX)
 
 
+def open_test(src, assignee):
+    """A test issue: a copy of an existing issue CSV under issues/test-<src>.csv, assigned to the maintainer."""
+    idx = pd.read_csv(INDEX, dtype=str, keep_default_na=False)
+    row = idx[idx.issue_id == src].iloc[0].copy()
+    tid = f"test-{src}"
+    rows = read_rows(ROOT / "issues" / f"{src}.csv")
+    write_rows(rows, ROOT / "issues" / f"{tid}.csv")
+    row["issue_id"] = tid
+    gh("label", "create", "test", "--color", "ededed", "--force", "--repo", REPO)
+    title = f"[TEST {tid}] {LANG_NAME[row.language]} {row.cwe}, {row.n_rows} rows ({row.generator})"
+    note = "**Test run of the workflow.** These rows are a copy of `" + src + "`; the result is not added to the dataset.\n\n"
+    lab = ",".join([MODEL_LABEL[row.generator], f"cwe:{row.cwe.split('-')[1]}", f"lang:{row.language}", "test", "status:in-progress"])
+    url = gh("issue", "create", "--repo", REPO, "--title", title, "--body", note + body(row, rows), "--label", lab, "--assignee", assignee)
+    print("opened", tid, url)
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["split", "labels", "open"])
+    ap.add_argument("mode", choices=["split", "labels", "open", "test"])
+    ap.add_argument("--src")
     ap.add_argument("--slot")
     ap.add_argument("--count", type=int, default=1)
     ap.add_argument("--assignee")
     a = ap.parse_args()
-    {"split": split, "labels": labels, "open": lambda: open_issues(a.slot, a.count, a.assignee)}[a.mode]()
+    {"split": split, "labels": labels, "open": lambda: open_issues(a.slot, a.count, a.assignee),
+     "test": lambda: open_test(a.src, a.assignee)}[a.mode]()
