@@ -11,3 +11,4 @@ Closes #<issue number>
 - [ ] No comment, name or string gives away the label
 - [ ] `python tools/validate.py submissions/<issue_id>.csv` says OK
 - [ ] Code written only by my team's model (small manual corrections noted in `notes`)
+- [ ] I will not merge this pull request myself; the project lead merges it

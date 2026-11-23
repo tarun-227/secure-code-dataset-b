@@ -66,6 +66,7 @@ You only ever edit `code`, `fixed_code`, `vulnerable_lines` and `notes`. Never c
 
 ## Rules
 
+- **Never merge a pull request and never push to `main`.** Only the project lead merges. Work only on your `issue/<id>` branch. This includes your own pull request, even after it is approved.
 - **Use only your team's model** for the code. Small manual corrections are fine; rewriting a row entirely by hand is not. If the model cannot do a row after three tries, say so in `notes` and in the issue.
 - **No give-away words** in comments, names or strings: vulnerable, insecure, unsafe, sanitize, exploit, inject, attack, fixed, CWE, and so on.
 - **Keep the length inside the band.** `target_lines` is a target; the line count must stay within `band`.

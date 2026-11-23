@@ -149,7 +149,7 @@ def body(row, rows: pd.DataFrame) -> str:
         f"4. `python tools/validate.py submissions/{row.issue_id}.csv` until it says OK.",
         f"5. Commit and push: `git add submissions/{row.issue_id}.csv`, then `git commit -m \"Rows for {row.issue_id}\"`, then `git push -u origin issue/{row.issue_id}`",
         f"6. Open a pull request from `issue/{row.issue_id}` into `main` and write **Closes #<this issue number>** in its description. Change this issue's label to `status:needs-review`.",
-        "7. If the reviewer asks for changes, fix them on the same branch, commit and push again; the pull request updates itself.",
+        "7. If the reviewer asks for changes, fix them on the same branch, commit and push again; the pull request updates itself. **Never merge it yourself** and never push to `main`; only the project lead merges.",
         "",
         "### Checklist",
         "- [ ] Every row does what its case type says (vulnerable rows really are exploitable; safe rows really are safe).",

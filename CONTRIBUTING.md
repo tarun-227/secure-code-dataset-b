@@ -113,12 +113,14 @@ Only add your one `submissions/...csv` file.
 
 **Step 9. Wait for the review.**
 - If the lead asks for changes: stay on the same branch, fix the rows, run the checker, then `git add`, `git commit` and `git push` again. The pull request updates by itself.
+- Do not press **Merge** yourself, even though GitHub shows the button. Only the lead merges.
 - When the lead merges the pull request, the issue closes and your rows are accepted. You will get your next issues (10 rows each).
 
 **Next issue:** start again from Step 3 with a new branch named after the new issue.
 
 ## Rules in one place
 
+- **Never merge a pull request and never push to `main`.** Only the project lead merges, including your own pull request. You work only on your `issue/<id>` branch.
 - Use **only your team's model**. Do not use ChatGPT, Gemini, Claude or another model for these rows.
 - Change only `code`, `fixed_code`, `vulnerable_lines` and `notes`. Never edit the other columns.
 - Keep each function within its `band` (number of lines).
