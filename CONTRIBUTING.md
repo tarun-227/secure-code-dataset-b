@@ -74,7 +74,10 @@ The issue names its file, for example `issues/phi-2_00.csv`. Run:
 ```
 python tools/generate.py issues/phi-2_00.csv
 ```
-This sends each row's prompt (you can read them inside the issue) to your model and saves a draft in `submissions/phi-2_00.csv`. It prints each answer with line numbers.
+This sends each row's prompt (you can read them inside the issue) to your model and saves a draft in `submissions/phi-2_00.csv`. For vulnerable rows it also asks the model for the fix. It then:
+- checks every answer by itself (the code parses, imports are there, the length fits, no give-away words, the case type looks right, the fix is small) and asks the model again, up to 3 times, if something is wrong;
+- fills `vulnerable_lines` from the lines the model marked, and prints the code with those lines marked `>`;
+- writes any problem it could not solve into the row's `notes`, starting with `AUTO-CHECK:`. Fix those rows (by hand or with `--only`), then delete that note.
 
 **Step 5. Check every row yourself.**
 Open `submissions/phi-2_00.csv` in LibreOffice, VS Code or Excel. For each row ask:
@@ -137,6 +140,7 @@ Only add your one `submissions/...csv` file.
 | `generate.py` says the model is not found | Run the `ollama pull` command for your team |
 | Generation is very slow | Normal without a big graphics card. Let it run; it saves after every row |
 | The model writes an explanation instead of code | Run that row again with `--only N` |
+| `notes` says `AUTO-CHECK: ...` | The model failed that check 3 times. Fix it by hand or run `--only N` again, then delete the note |
 | Excel breaks the code's line breaks | Use LibreOffice or VS Code, or a text editor that handles CSV |
 | `git pull` or `git checkout` complains about your changes | Commit them on your issue branch first (`git add`, `git commit`), then try again |
 | You worked on `main` by mistake | Run `git checkout -b issue/<id>` now; your changes move to the new branch. Then commit there |

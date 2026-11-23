@@ -74,7 +74,7 @@ PATTERN = {
 
 FIX = {
     "parameterised_query": "use bound parameters instead of building the query text",
-    "allow_list": "accept only values from a fixed list",
+    "allow_list": "accept only allowed values: a fixed list of values, or only allowed characters",
     "type_conversion": "convert the input to the expected type (for example an integer) before use",
     "query_builder_orm": "use the ORM or query builder so values are bound",
     "argv_no_shell": "run the program with an argument list and no shell",

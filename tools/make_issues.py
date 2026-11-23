@@ -132,7 +132,8 @@ def body(row, rows: pd.DataFrame) -> str:
         *t,
         "",
         "### Prompts",
-        "Each prompt below is exactly what `tools/generate.py` sends to the model. You can also paste one into `ollama run " + row.generator + "` yourself.",
+        "Each prompt below is exactly what `tools/generate.py` first sends to the model to write the code. For vulnerable rows it then sends a second prompt that asks the model to fix that code (see `python tools/make_prompt.py issues/" + row.issue_id + ".csv --row N`). "
+        "`generate.py` checks every answer automatically and asks again up to 3 times; the model marks dangerous lines with `@@`, which become `vulnerable_lines`.",
         "",
         *[line for i, r in enumerate(rows.to_dict("records"), 1) for line in (
             f"<details><summary>Row {i}: <code>{r['sample_id']}</code> ({r['case_type']})</summary>", "", "```text", prompt(r), "```", "", "</details>", "")],

@@ -13,9 +13,9 @@ import re
 import sys
 from pathlib import Path
 
+from checks import HINT, label_problems, syntax_problems
 from common import BAND_RANGE, COLUMNS, FILLED, ROOT, SPEC, parse_lines, read_rows
 
-HINT = re.compile(r"(?i)vulnerab|insecure|\bunsafe\b|sanitiz|sanitis|exploit|inject|\bcwe[-_ ]?\d|\bfix(ed|es)?\b|attack|malicious|\bhack|\bsecure version\b|\bsafe version\b|\bbad\b.*\binput\b")
 COMMENT = {"python": r"#.*|\"\"\"[\s\S]*?\"\"\"|'''[\s\S]*?'''", "c": r"//.*|/\*[\s\S]*?\*/", "cpp": r"//.*|/\*[\s\S]*?\*/", "go": r"//.*|/\*[\s\S]*?\*/"}
 
 
@@ -70,17 +70,24 @@ def check_row(r, errors, warnings):
         words = re.sub(r"([a-z])([A-Z])", r"\1 \2", text).replace("_", " ") if text else ""
         if words and HINT.search(words):
             e(f"{name} contains a word that gives away the label: '{HINT.search(words).group(0)}' (remove it from comments, names and strings)")
-    if lang == "python":
-        for name, text in (("code", code), ("fixed_code", r["fixed_code"])):
-            if text:
-                try:
-                    ast.parse(text)
-                except SyntaxError as x:
-                    e(f"{name} is not valid Python: line {x.lineno}: {x.msg}")
-    else:
-        for name, text in (("code", code), ("fixed_code", r["fixed_code"])):
-            if text and not braces_ok(text):
+    for name, text in (("code", code), ("fixed_code", r["fixed_code"])):
+        if not text:
+            continue
+        if "@@" in text:
+            e(f"{name} still contains an @@ marker; delete it")
+        probs = syntax_problems(text, lang)
+        if lang in ("python", "go"):
+            for m in probs:
+                e(f"{name}: {m}")
+        else:
+            if not braces_ok(text):
                 e(f"{name} has unbalanced braces or brackets")
+            for m in probs:
+                w(f"{name}: {m} (your compiler may differ; check it)")
+    for m in label_problems(r, code, r["fixed_code"]):
+        w(m + " (rough automatic check; make sure the row is right)")
+    if "AUTO-CHECK:" in r["notes"]:
+        w("notes still lists AUTO-CHECK problems from generate.py; fix them, then delete that note")
     try:
         vl = parse_lines(r["vulnerable_lines"])
     except Exception:
