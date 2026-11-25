@@ -1,5 +1,5 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_89_go_0770,llama3.1:8b,go,CWE-89,normal,1,Fetch a configuration value by key for a tenant name.,database_sql,21-40,34,string_concatenation,file_content,allow_list,plain_vulnerable,db.Query / db.Exec,callback_or_async,,,,
+lla_89_go_0770,llama3.1:8b,go,CWE-89,normal,1,Fetch a configuration value by key for a tenant name.,database_sql,21-40,34,string_concatenation,file_content,parameterised_query,plain_vulnerable,db.Query / db.Exec,callback_or_async,,,,
 lla_89_go_0760,llama3.1:8b,go,CWE-89,hard_positive,1,Return the recipes that contain a given ingredient.,sqlx,11-20,14,fmt_sprintf,web_request,parameterised_query,hand_written_escaping,db.Select / db.Get / db.Queryx,callback_or_async,,,,
 lla_89_go_0775,llama3.1:8b,go,CWE-89,safe,0,Return a user's permissions for a resource name.,sqlx,6-10,6,parameterised,command_line,,standard_safe,db.Select / db.Get / db.Queryx,helper_called_by_caller,,,,
 lla_89_go_0756,llama3.1:8b,go,CWE-89,hard_negative,0,Return the price history for a stock ticker symbol.,database_sql,21-40,31,per_pattern,file_content,,query_builder_bound,db.Query / db.Exec,plain_function,,,,

@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
 lla_78_cpp_0645,llama3.1:8b,cpp,CWE-78,normal,1,Look up WHOIS information for a domain.,qprocess,21-40,36,string_concatenation,command_line,validate_format,plain_vulnerable,"QProcess::start(""sh"", {""-c"", ...})",cli_entry,,,,
 lla_78_cpp_0635,llama3.1:8b,cpp,CWE-78,hard_positive,1,Make a thumbnail of the first page of a PDF.,popen,11-20,16,string_concatenation,database_value,argv_no_shell,validates_other_variable,popen,web_handler,,,,
-lla_78_cpp_0650,llama3.1:8b,cpp,CWE-78,safe,0,Resize a video to a given width in pixels with ffmpeg.,system,21-40,39,argv,function_argument,,standard_safe,system,helper_called_by_caller,,,,
+lla_78_cpp_0650,llama3.1:8b,cpp,CWE-78,safe,0,Resize a video to a given width in pixels with ffmpeg.,boost_process,21-40,39,argv,function_argument,,standard_safe,boost::process::system with a shell command line,helper_called_by_caller,,,,
 lla_78_cpp_0631,llama3.1:8b,cpp,CWE-78,hard_negative,0,"Run one of the maintenance jobs: backup, cleanup or reindex.",boost_process,11-20,11,per_pattern,network_message,,command_from_fixed_map,boost::process::system with a shell command line,method,,,,
 lla_78_cpp_0646,llama3.1:8b,cpp,CWE-78,normal,1,Show the last lines of a log file chosen by the caller.,popen,6-10,9,std_format,network_message,validate_format,plain_vulnerable,popen,plain_function,,,,

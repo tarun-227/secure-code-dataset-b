@@ -1,5 +1,5 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_89_go_0370,deepseek-coder-v2:16b,go,CWE-89,normal,1,Look up a shipment by tracking number.,gorm_raw,21-40,27,strings_builder,network_message,parameterised_query,plain_vulnerable,db.Raw / db.Exec,callback_or_async,,,,
+dsk_89_go_0370,deepseek-coder-v2:16b,go,CWE-89,normal,1,Look up a shipment by tracking number.,gorm_raw,21-40,27,strings_builder,network_message,allow_list,plain_vulnerable,db.Raw / db.Exec,callback_or_async,,,,
 dsk_89_go_0361,deepseek-coder-v2:16b,go,CWE-89,hard_positive,1,Return all rows of a report table whose name the caller chooses.,sqlx,6-10,9,string_concatenation,command_line,allow_list,identifier_from_input,db.Select / db.Get / db.Queryx,helper_called_by_caller,,,,
 dsk_89_go_0375,deepseek-coder-v2:16b,go,CWE-89,safe,0,"Change the priority of a task, given its numeric id and the new priority.",database_sql,6-10,7,parameterised,environment,,standard_safe,db.Query / db.Exec,plain_function,,,,
 dsk_89_go_0357,deepseek-coder-v2:16b,go,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,database_sql,21-40,30,per_pattern,database_value,,fstring_placeholders_only,db.Query / db.Exec,cli_entry,,,,

@@ -6,6 +6,6 @@ lla_89_go_0754,llama3.1:8b,go,CWE-89,hard_negative,0,Return the products whose S
 lla_89_go_0768,llama3.1:8b,go,CWE-89,normal,1,Fetch a patient's appointments by patient number.,gorm_raw,21-40,30,string_concatenation,file_content,type_conversion,plain_vulnerable,db.Raw / db.Exec,cli_entry,,,,
 lla_89_go_0759,llama3.1:8b,go,CWE-89,hard_positive,1,Filter books by an optional author and an optional publication year.,sqlx,11-20,15,fmt_sprintf,database_value,parameterised_query,param_in_one_branch_only,db.Select / db.Get / db.Queryx,web_handler,,,,
 lla_89_go_0774,llama3.1:8b,go,CWE-89,safe,0,Mark an invoice as paid by its invoice number (a text code such as INV-2041).,sqlx,11-20,12,parameterised,network_message,,standard_safe,db.Select / db.Get / db.Queryx,helper_called_by_caller,,,,
-lla_89_go_0769,llama3.1:8b,go,CWE-89,normal,1,Count how many tickets have a given status.,database_sql,21-40,24,fmt_sprintf,environment,parameterised_query,plain_vulnerable,db.Query / db.Exec,plain_function,,,,
+lla_89_go_0769,llama3.1:8b,go,CWE-89,normal,1,Count how many tickets have a given status.,database_sql,21-40,24,fmt_sprintf,environment,allow_list,plain_vulnerable,db.Query / db.Exec,plain_function,,,,
 lla_89_go_0755,llama3.1:8b,go,CWE-89,hard_negative,0,Return the leaderboard for a game mode name.,gorm_raw,6-10,10,per_pattern,command_line,,query_builder_bound,db.Raw / db.Exec,cli_entry,,,,
 lla_89_go_0762,llama3.1:8b,go,CWE-89,no_code,0,Format a list of order records as CSV text.,none,21-40,21,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,,,,

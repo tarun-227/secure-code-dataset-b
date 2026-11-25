@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
 phi_78_cpp_1045,phi4:14b,cpp,CWE-78,normal,1,Run a traceroute to a target address.,system,6-10,10,string_concatenation,file_content,validate_format,plain_vulnerable,system,method,,,,
-phi_78_cpp_1036,phi4:14b,cpp,CWE-78,hard_positive,1,Count the lines in a file with a system tool.,qprocess,11-20,16,string_concatenation,web_request,validate_format,argument_injection_dash,"QProcess::start(""sh"", {""-c"", ...})",web_handler,,,,
-phi_78_cpp_1050,phi4:14b,cpp,CWE-78,safe,0,Look up DNS records for a domain name.,system,11-20,18,argv,network_message,,standard_safe,system,plain_function,,,,
+phi_78_cpp_1036,phi4:14b,cpp,CWE-78,hard_positive,1,Count the lines in a file with a system tool.,qprocess,11-20,16,argv_list,web_request,validate_format,argument_injection_dash,"QProcess::start(program, arguments)",web_handler,,,,
+phi_78_cpp_1050,phi4:14b,cpp,CWE-78,safe,0,Look up DNS records for a domain name.,boost_process,11-20,18,argv,network_message,,standard_safe,boost::process::system with a shell command line,plain_function,,,,
 phi_78_cpp_1032,phi4:14b,cpp,CWE-78,hard_negative,0,Ping a host given by the user and return the output.,boost_process,41-100,43,per_pattern,database_value,,end_of_options_marker,boost::process::system with a shell command line,cli_entry,,,,
 phi_78_cpp_1046,phi4:14b,cpp,CWE-78,normal,1,Show the certificate of a remote HTTPS host with openssl.,boost_process,6-10,7,ostringstream,function_argument,argv_no_shell,plain_vulnerable,boost::process::system with a shell command line,callback_or_async,,,,

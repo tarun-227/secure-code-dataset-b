@@ -43,6 +43,7 @@ BUILD = {
     "python_random_module": "the random module (random.choice, random.randint, ...)",
     "go_math_rand": "math/rand",
     "cpp_std_random": "std::mt19937 or rand()",
+    "argv_list": "an argument list (no shell)",
 }
 SAFE_WAY = {
     "CWE-89": "bound parameters (placeholders) for every value",
@@ -56,7 +57,7 @@ NAMES = {"mysql_connector": "mysql.connector", "sqlalchemy_text": "SQLAlchemy te
          "libpq": "libpq", "mysql_c": "the MySQL C API", "sqlite3_c": "the SQLite C API", "mysql_connector_cpp": "MySQL Connector/C++",
          "qt_qsqlquery": "Qt QSqlQuery", "database_sql": "database/sql", "gorm_raw": "GORM raw SQL", "os_system": "os.system",
          "os_popen": "os.popen", "system": "system()", "popen": "popen()", "execl_shell": 'execl("/bin/sh", "sh", "-c", ...)',
-         "boost_process": "Boost.Process", "qprocess": "Qt QProcess", "exec_command": "exec.Command",
+         "boost_process": "Boost.Process", "qprocess": "Qt QProcess", "exec_command": "exec.Command", "execvp": "execvp / posix_spawn",
          "exec_command_sh": 'exec.Command("sh", "-c", ...)', "http_servefile": "http.ServeFile", "send_file": "Flask send_file",
          "os_open": "os.Open", "os_readfile": "os.ReadFile", "os_create": "os.Create", "os_remove": "os.Remove",
          "std_filesystem": "std::filesystem", "fstream": "std::fstream", "archive_extract": "archive extraction"}
@@ -72,6 +73,14 @@ def _pattern(r) -> str:
     return PATTERN[r["pattern"]]
 
 
+NO_SHELL_PATTERNS = {"argv_list_user_data", "strict_parser_no_shell", "end_of_options_marker", "argument_injection_dash"}
+
+
+def ct_no_shell(r) -> bool:
+    """CWE-78 rows whose code runs the program without a shell (same rule as build_plan.shell_need)."""
+    return r["case_type"] == "safe" or r["pattern"] in NO_SHELL_PATTERNS
+
+
 def _detail(r) -> str:
     cwe, d = r["cwe"], r["cwe_detail"]
     if d in ("none", "") or r["case_type"] == "no_code":
@@ -79,7 +88,9 @@ def _detail(r) -> str:
     if cwe == "CWE-338":
         return "" if d == "non_security" else f"The random value is used as a {VALUE[d]}."
     name = NAMES.get(d, d.replace("_", " "))
-    return {"CWE-89": f"Database library: {name}.", "CWE-78": f"Run the program using {name} (or its safe form where the code must be safe).",
+    no_shell = ct_no_shell(r)
+    return {"CWE-89": f"Database library: {name}.",
+            "CWE-78": f"Run the program using {name}" + (", with an argument list and no shell." if no_shell else "."),
             "CWE-22": f"File operation: {name}."}[cwe]
 
 
@@ -105,6 +116,8 @@ def prompt(r) -> str:
     L += ["", "What the code must be:"]
     build = BUILD.get(r["build_style"], r["build_style"].replace("_", " "))
     how = (f"Make the secret value with {build}." if cwe == "CWE-338"
+           else f"Pass the input as one element of an argument list to {r['suggested_sink']}, with no shell; the program "
+                f"must still read a value that starts with a dash as an option." if r["pattern"] == "argument_injection_dash"
            else f"Build the {obj} from the input using {build}, and pass it to {r['suggested_sink']}.")
     if ct == "normal":
         L.append(f"- It is open to {CWE_NAME[cwe]} ({cwe}). {how}")

@@ -7,5 +7,5 @@ dsk_22_go_0064,deepseek-coder-v2:16b,go,CWE-22,normal,1,Extract a zip archive in
 dsk_22_go_0052,deepseek-coder-v2:16b,go,CWE-22,hard_negative,0,Rename a file inside a storage folder.,os_rename,21-40,30,per_pattern,web_request,,safe_filename_fixed_folder,os.Rename,web_handler,,,,
 dsk_22_go_0061,deepseek-coder-v2:16b,go,CWE-22,no_code,0,Build a display path from folder and file names.,none,41-100,48,none,not_applicable,,no_dangerous_call,,plain_function,,,,
 dsk_22_go_0065,deepseek-coder-v2:16b,go,CWE-22,normal,1,Load a user's avatar image.,os_readfile,11-20,15,string_concatenation,function_argument,basename_only,plain_vulnerable,os.ReadFile,helper_called_by_caller,,,,
-dsk_22_go_0058,deepseek-coder-v2:16b,go,CWE-22,hard_positive,1,Copy a backup file to the restore folder.,os_rename,21-40,22,string_concatenation,environment,validate_format,check_before_normalise,os.Rename,cli_entry,,,,
+dsk_22_go_0058,deepseek-coder-v2:16b,go,CWE-22,hard_positive,1,Move a backup file to the restore folder.,os_rename,21-40,22,string_concatenation,environment,validate_format,check_before_normalise,os.Rename,cli_entry,,,,
 dsk_22_go_0073,deepseek-coder-v2:16b,go,CWE-22,safe,0,Read a language file for a locale code.,os_readfile,1-5,3,contained_path,environment,,standard_safe,os.ReadFile,method,,,,

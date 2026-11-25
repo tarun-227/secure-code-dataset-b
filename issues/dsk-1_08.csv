@@ -3,4 +3,4 @@ dsk_22_py_0095,deepseek-coder-v2:16b,python,CWE-22,normal,1,Read a schedule file
 dsk_22_py_0085,deepseek-coder-v2:16b,python,CWE-22,hard_positive,1,Read a template by name and fill in values.,pathlib,21-40,23,f_string,web_request,id_to_file_map,prefix_without_separator,pathlib.Path.open / read_text,web_handler,,,,
 dsk_22_py_0100,deepseek-coder-v2:16b,python,CWE-22,safe,0,Serve a static file requested by a URL path.,send_file,21-40,40,contained_path,network_message,,standard_safe,Flask send_file,helper_called_by_caller,,,,
 dsk_22_py_0081,deepseek-coder-v2:16b,python,CWE-22,hard_negative,0,Load a game save file for a player name.,open,41-100,53,per_pattern,command_line,,library_confined_access,open,cli_entry,,,,
-dsk_22_py_0096,deepseek-coder-v2:16b,python,CWE-22,normal,1,Copy a backup file to the restore folder.,shutil,11-20,12,path_join,environment,basename_only,plain_vulnerable,shutil.copy / shutil.move / shutil.rmtree,cli_entry,,,,
+dsk_22_py_0096,deepseek-coder-v2:16b,python,CWE-22,normal,1,Move a backup file to the restore folder.,shutil,11-20,12,path_join,environment,basename_only,plain_vulnerable,shutil.copy / shutil.move / shutil.rmtree,cli_entry,,,,

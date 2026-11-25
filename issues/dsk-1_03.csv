@@ -1,8 +1,8 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
 dsk_78_py_0289,deepseek-coder-v2:16b,python,CWE-78,normal,1,Count the lines in a file with a system tool.,subprocess,41-100,44,concatenation,network_message,quote_escape,plain_vulnerable,subprocess.run / subprocess.call with shell=True,callback_or_async,,,,
-dsk_78_py_0276,deepseek-coder-v2:16b,python,CWE-78,hard_negative,0,Speak a message with a text-to-speech tool.,os_popen,11-20,19,per_pattern,network_message,,argv_list_user_data,os.popen,helper_called_by_caller,,,,
+dsk_78_py_0276,deepseek-coder-v2:16b,python,CWE-78,hard_negative,0,Speak a message with a text-to-speech tool.,subprocess,11-20,19,per_pattern,network_message,,argv_list_user_data,subprocess.run / subprocess.call with shell=True,helper_called_by_caller,,,,
 dsk_78_py_0283,deepseek-coder-v2:16b,python,CWE-78,hard_positive,1,Show the git log of a branch.,os_popen,6-10,10,join_args,function_argument,quote_escape,quoting_wrong_context,os.popen,method,,,,
-dsk_78_py_0297,deepseek-coder-v2:16b,python,CWE-78,safe,0,Compress a folder into a tar.gz archive.,os_system,1-5,5,argv,network_message,,standard_safe,os.system,callback_or_async,,,,
+dsk_78_py_0297,deepseek-coder-v2:16b,python,CWE-78,safe,0,Compress a folder into a tar.gz archive.,subprocess,1-5,5,argv,network_message,,standard_safe,subprocess.run / subprocess.call with shell=True,callback_or_async,,,,
 dsk_78_py_0290,deepseek-coder-v2:16b,python,CWE-78,normal,1,Convert an audio file to MP3.,os_system,11-20,20,concatenation,function_argument,end_of_options,plain_vulnerable,os.system,method,,,,
 dsk_78_py_0277,deepseek-coder-v2:16b,python,CWE-78,hard_negative,0,"Run a database migration for an environment name (dev, staging, prod).",os_popen,6-10,9,per_pattern,environment,,all_args_quoted,os.popen,method,,,,
 dsk_78_py_0287,deepseek-coder-v2:16b,python,CWE-78,no_code,0,Format a byte count as a human-readable size.,none,6-10,7,none,not_applicable,,no_dangerous_call,,plain_function,,,,

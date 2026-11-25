@@ -4,7 +4,7 @@ dsk_89_c_0313,deepseek-coder-v2:16b,c,CWE-89,no_code,0,Sort a list of employees 
 dsk_89_c_0305,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Return the products whose SKUs are in a given list.,mysql_c,6-10,8,per_pattern,function_argument,,generated_placeholders,mysql_query,callback_or_async,,,,
 dsk_89_c_0319,deepseek-coder-v2:16b,c,CWE-89,normal,1,Delete a comment by its numeric id if it belongs to the current user.,mysql_c,11-20,18,sprintf,environment,type_conversion,plain_vulnerable,mysql_query,plain_function,,,,
 dsk_89_c_0306,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,"Search orders by an optional status, customer name and start date.",libpq,6-10,7,per_pattern,database_value,,constant_fragments_only,PQexec,web_handler,,,,
-dsk_89_c_0320,deepseek-coder-v2:16b,c,CWE-89,normal,1,Add a tag name to an article.,mysql_c,6-10,7,snprintf,database_value,allow_list,plain_vulnerable,mysql_query,web_handler,,,,
+dsk_89_c_0320,deepseek-coder-v2:16b,c,CWE-89,normal,1,Add a tag name to an article.,mysql_c,6-10,7,snprintf,database_value,parameterised_query,plain_vulnerable,mysql_query,web_handler,,,,
 dsk_89_c_0311,deepseek-coder-v2:16b,c,CWE-89,hard_positive,1,Return all rows of a report table whose name the caller chooses.,mysql_c,41-100,44,strcat,web_request,allow_list,identifier_from_input,mysql_query,web_handler,,,,
 dsk_89_c_0325,deepseek-coder-v2:16b,c,CWE-89,safe,0,Insert a new audit-log entry with an action and a user name.,libpq,6-10,10,parameterised,command_line,,standard_safe,PQexec,method,,,,
 dsk_89_c_0307,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,sqlite3_c,21-40,26,per_pattern,file_content,,integer_forced,sqlite3_exec / sqlite3_prepare_v2,plain_function,,,,

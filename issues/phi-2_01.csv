@@ -5,7 +5,7 @@ phi_89_c_1108,phi4:14b,c,CWE-89,hard_positive,1,Return the price history for a s
 phi_89_c_1122,phi4:14b,c,CWE-89,safe,0,"Search orders by an optional status, customer name and start date.",libpq,1-5,3,parameterised,environment,,standard_safe,PQexec,plain_function,,,,
 phi_89_c_1115,phi4:14b,c,CWE-89,normal,1,Return the leaderboard for a game mode name.,libpq,41-100,48,sprintf,database_value,allow_list,plain_vulnerable,PQexec,web_handler,,,,
 phi_89_c_1103,phi4:14b,c,CWE-89,hard_negative,0,Count the rows of a lookup table chosen by name.,mysql_c,11-20,15,per_pattern,web_request,,allow_listed_identifier,mysql_query,web_handler,,,,
-phi_89_c_1116,phi4:14b,c,CWE-89,normal,1,Return the products whose SKUs are in a given list.,sqlite3_c,21-40,37,strcat,file_content,parameterised_query,plain_vulnerable,sqlite3_exec / sqlite3_prepare_v2,cli_entry,,,,
+phi_89_c_1116,phi4:14b,c,CWE-89,normal,1,Return the products whose SKUs are in a given list.,sqlite3_c,21-40,37,strcat,file_content,allow_list,plain_vulnerable,sqlite3_exec / sqlite3_prepare_v2,cli_entry,,,,
 phi_89_c_1117,phi4:14b,c,CWE-89,normal,1,Fetch a patient's appointments by patient number.,libpq,11-20,16,sprintf,web_request,type_conversion,plain_vulnerable,PQexec,method,,,,
 phi_89_c_1104,phi4:14b,c,CWE-89,hard_negative,0,Return the top N scores of a game.,libpq,6-10,9,per_pattern,network_message,,integer_forced,PQexec,callback_or_async,,,,
 phi_89_c_1109,phi4:14b,c,CWE-89,hard_positive,1,Look up a shipment by tracking number.,mysql_c,21-40,30,strcat,database_value,allow_list,keyword_blocklist,mysql_query,plain_function,,,,
