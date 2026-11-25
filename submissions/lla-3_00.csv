@@ -1,0 +1,224 @@
+﻿sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_cpp_0739,llama3.1:8b,cpp,CWE-89,normal,1,Return the inventory rows for a warehouse code.,sqlite3_c,1-5,5,std_format,function_argument,parameterised_query,plain_vulnerable,sqlite3_exec / QSqlQuery::exec,callback_or_async,"#include <sqlite3.h>
+#include <string>
+
+void getInventoryRows(sqlite3* db, const std::string& warehouseCode) {
+    std::string query = ""SELECT * FROM inventory WHERE warehouse_code = "" + std::string(warehouseCode) + "";"";
+    sqlite3_exec(db, query.c_str(), nullptr, nullptr, nullptr);
+}","#include <sqlite3.h>
+#include <string>
+#include <sqlite3.h>
+
+void getInventoryRows(sqlite3* db, const std::string& warehouseCode) {
+    std::string query = ""SELECT * FROM inventory WHERE warehouse_code = ?;"";
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr);
+    sqlite3_bind_text(stmt, 1, warehouseCode.c_str(), -1, SQLITE_STATIC);
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+}",[5],
+lla_89_cpp_0726,llama3.1:8b,cpp,CWE-89,hard_negative,0,"List a user's uploaded files, ordered by a field the caller picks.",sqlite3_c,21-40,32,per_pattern,environment,,allow_listed_identifier,sqlite3_exec / QSqlQuery::exec,method,"#include <sqlite3.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <cctype>
+
+class CodeDataset {
+public:
+    void listUploadedFiles(sqlite3* db, const char* tableName, const char* columnName, const char* orderBy) {
+        const char* query = ""SELECT * FROM ? WHERE ? = ? ORDER BY ?"";
+        sqlite3_stmt* stmt;
+
+        if (sqlite3_prepare_v2(db, query, -1, &stmt, 0) != SQLITE_OK) {
+            fprintf(stderr, ""SQL error: %s\n"", sqlite3_errmsg(db));
+            exit(1);
+        }
+
+        const char* allowedTables[] = {""uploads"", ""files""};
+        const char* allowedColumns[] = {""filename"", ""size"", ""type""};
+
+        sqlite3_bind_text(stmt, 1, tableName, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 2, columnName, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 3, orderBy, -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 4, orderBy, -1, SQLITE_STATIC);
+
+        if (sqlite3_step(stmt) != SQLITE_ROW) {
+            fprintf(stderr, ""No results found\n"");
+            sqlite3_finalize(stmt);
+            return;
+        }
+
+        while (true) {
+            const char* filename = (const char*)sqlite3_column_text(stmt, 1);
+            printf(""%s\n"", filename);
+
+            if (sqlite3_step(stmt) == SQLITE_DONE) {
+                break;
+            }
+        }
+
+        sqlite3_finalize(stmt);
+    }
+};",,,
+lla_89_cpp_0733,llama3.1:8b,cpp,CWE-89,hard_positive,1,Find vehicles by licence-plate fragment.,qt_qsqlquery,41-100,45,ostringstream,web_request,parameterised_query,hand_written_escaping,sqlite3_exec / QSqlQuery::exec,web_handler,"#include <QSqlQuery>
+#include <QSqlError>
+#include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QByteArray>
+#include <QSqlDatabase>
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QDateTime>
+#include <QVariant>
+#include <QTextStream>
+#include <iostream>
+
+void findVehicles(const QString &input) {
+    QSqlDatabase db = QSqlDatabase::addDatabase(""QSQLITE"");
+    db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + ""/database.db"");
+    if (!db.open()) {
+        qWarning() << ""Failed to open database"" << db.lastError().text();
+        return;
+    }
+
+    QString query;
+    std::ostringstream oss;
+    oss << ""SELECT * FROM vehicles WHERE licence_plate LIKE '%"" << input << ""%'"";
+    query = oss.str();
+
+    QSqlQuery q(query);
+    if (!q.exec()) {
+        qWarning() << ""Failed to execute query"" << q.lastError().text();
+        return;
+    }
+
+    while (q.next()) {
+        QTextStream out(&std::cout);
+        out << q.value(""licence_plate"").toString() << ""\n"";
+    }
+}
+
+void handleRequest(const QString &input) {
+    if (input.startsWith(""{"")) {
+        QJsonDocument json = QJsonDocument::fromJson(input.toUtf8());
+        QJsonObject obj = json.object();
+        if (obj.contains(""licence_plate"")) {
+            findVehicles(obj.value(""licence_plate"").toString());
+        }
+    } else {
+        QUrlQuery query(input);
+        if (query.queryItemValue(""licence_plate"").isEmpty()) {
+            qWarning() << ""Missing licence_plate parameter"";
+            return;
+        }
+        findVehicles(query.queryItemValue(""licence_plate"").toString());
+    }
+}
+
+int main() {
+    QString input = ""licence_plate=ABC123"";
+    handleRequest(input);
+    return 0;
+}","#include <QSqlQuery>
+#include <QSqlError>
+#include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QByteArray>
+#include <QSqlDatabase>
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QDateTime>
+#include <QVariant>
+#include <QTextStream>
+#include <iostream>
+#include <QSqlQueryModel>
+
+void findVehicles(const QString &input) {
+    QSqlDatabase db = QSqlDatabase::addDatabase(""QSQLITE"");
+    db.setDatabaseName(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + ""/database.db"");
+    if (!db.open()) {
+        qWarning() << ""Failed to open database"" << db.lastError().text();
+        return;
+    }
+
+    QSqlQuery q;
+    q.prepare(""SELECT * FROM vehicles WHERE licence_plate LIKE :licence_plate"");
+    q.bindValue("":licence_plate"", ""%"" + input + ""%"");
+
+    if (!q.exec()) {
+        qWarning() << ""Failed to execute query"" << q.lastError().text();
+        return;
+    }
+
+    while (q.next()) {
+        QTextStream out(&std::cout);
+        out << q.value(""licence_plate"").toString() << ""\n"";
+    }
+}
+
+void handleRequest(const QString &input) {
+    if (input.startsWith(""{"")) {
+        QJsonDocument json = QJsonDocument::fromJson(input.toUtf8());
+        QJsonObject obj = json.object();
+        if (obj.contains(""licence_plate"")) {
+            findVehicles(obj.value(""licence_plate"").toString());
+        }
+    } else {
+        QUrlQuery query(input);
+        if (query.queryItemValue(""licence_plate"").isEmpty()) {
+            qWarning() << ""Missing licence_plate parameter"";
+            return;
+        }
+        findVehicles(query.queryItemValue(""licence_plate"").toString());
+    }
+}
+
+int main() {
+    QString input = ""licence_plate=ABC123"";
+    handleRequest(input);
+    return 0;
+}",[26],
+lla_89_cpp_0748,llama3.1:8b,cpp,CWE-89,safe,0,Add a tag name to an article.,sqlite3_c,6-10,9,parameterised,function_argument,,standard_safe,sqlite3_exec / QSqlQuery::exec,callback_or_async,"#include <sqlite3.h>
+#include <string>
+
+void add_tag_to_article(sqlite3* db, int article_id, int tag_id) {
+    sqlite3_stmt* stmt;
+    const char* sql = ""INSERT INTO article_tags (article_id, tag_id) VALUES (?, ?)"";
+    sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
+    sqlite3_bind_int(stmt, 1, article_id);
+    sqlite3_bind_int(stmt, 2, tag_id);
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+}",,,
+lla_89_cpp_0738,llama3.1:8b,cpp,CWE-89,no_code,0,"Merge two lists of product records, removing duplicates.",none,11-20,16,none,not_applicable,,no_dangerous_call,,cli_entry,"#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+struct Product {
+    int id;
+    std::string name;
+    double price;
+};
+
+int main(int argc, char* argv[]) {
+    std::vector<Product> list1 = {{1, ""Product 1"", 10.0}, {2, ""Product 2"", 20.0}};
+    std::vector<Product> list2 = {{2, ""Product 2"", 20.0}, {3, ""Product 3"", 30.0}};
+
+    std::set<int> ids1(list1.begin(), list1.end());
+    std::set<int> ids2(list2.begin(), list2.end());
+
+    ids1.insert(ids2.begin(), ids2.end());
+    ids1.erase(std::remove_if(ids1.begin(), ids1.end(), [&](int id){return id < 2;}), ids1.end());
+
+    for (int id : ids1) {
+        Product product = {id, """", 0.0};
+        // Add product to database or perform other operation
+    }
+
+    return 0;
+}",,,
