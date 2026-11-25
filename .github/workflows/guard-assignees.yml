@@ -1,0 +1,30 @@
+# Only the repository owner assigns issues. GitHub lets every collaborator with write access assign, so this workflow
+# undoes any assign / unassign made by someone else and leaves a short comment explaining why.
+name: Guard issue assignees
+
+on:
+  issues:
+    types: [assigned, unassigned]
+
+permissions:
+  issues: write
+
+jobs:
+  revert:
+    if: github.event.sender.login != github.repository_owner && github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.issue.number;
+            const who = context.payload.assignee.login;
+            const by = context.payload.sender.login;
+            if (context.payload.action === 'assigned') {
+              await github.rest.issues.removeAssignees({ owner, repo, issue_number, assignees: [who] });
+            } else {
+              await github.rest.issues.addAssignees({ owner, repo, issue_number, assignees: [who] });
+            }
+            await github.rest.issues.createComment({ owner, repo, issue_number,
+              body: `@${by} only the project lead assigns issues, so this change was undone. If you think an issue should go to someone else, say so in a comment here.` });
