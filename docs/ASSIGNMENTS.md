@@ -18,14 +18,14 @@ Each model has a team of three. Every slot owns a fixed set of cells (weakness Ã
 
 | Slot | GitHub username | Name |
 |---|---|---|
-| `lla-1` | @sabarishd007-star | |
-| `lla-2` | @Sabarish-A-2006 | |
-| `lla-3` | @rajverse-dev | |
-| `phi-1` | @rochanmb0447 | |
+| `lla-1` | @rochanmb0447 | |
+| `lla-2` | @DineshMoorthy007 | |
+| `lla-3` | @dharshanvp2006-ship-it | |
+| `phi-1` | @sabarishd007-star | |
 | `phi-2` | @Nithish-codes | |
 | `phi-3` | @K-VIGNESH07 | |
-| `dsk-1` | @dharshanvp2006-ship-it | |
-| `dsk-2` | @DineshMoorthy007 | |
+| `dsk-1` | @rajverse-dev | |
+| `dsk-2` | @Sabarish-A-2006 | |
 | `dsk-3` | @Moni-stack | |
 
 Every slot starts with a 5-row pilot issue (`<slot>_00`), then issues of up to 10 rows (`<slot>_01`, `<slot>_02`, ...).

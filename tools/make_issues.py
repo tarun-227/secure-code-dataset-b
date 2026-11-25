@@ -19,7 +19,7 @@ import sys
 import pandas as pd
 
 from common import FILLED, ROOT, SPEC, read_rows, write_rows
-from make_prompt import prompt
+from make_prompt import fix_prompt, prompt
 from vocab import CWE_NAME, LANG_NAME
 
 REPO = "tarun-227/secure-code-dataset-b"
@@ -115,6 +115,20 @@ def labels():
     print("labels and milestones ready")
 
 
+PASTE = "<<< PASTE THE CODE FROM PROMPT 1 HERE, WITHOUT THE @@ MARKERS >>>"
+
+
+def row_prompts(i, r) -> list[str]:
+    """One collapsible block per row: prompt 1 (write the code) and, for vulnerable rows, prompt 2 (write the fix) with a
+    placeholder where the contributor pastes the code. Four-backtick fences, because the prompts contain ``` lines."""
+    out = [f"<details><summary>Row {i}: <code>{r['sample_id']}</code> ({r['case_type']})</summary>", "",
+           "**Prompt 1: write the code**", "", "````text", prompt(r), "````", ""]
+    if str(r["label"]) == "1":
+        out += ["**Prompt 2: write the fixed code** (replace the PASTE line with the code from prompt 1)", "",
+                "````text", fix_prompt(r, PASTE), "````", ""]
+    return out + ["</details>", ""]
+
+
 def body(row, rows: pd.DataFrame) -> str:
     link = f"https://github.com/{REPO}/blob/main/issues/{row.issue_id}.csv"
     t = ["| # | sample_id | case | task | lines | pattern | fix type | input from | shape |", "|---|---|---|---|---|---|---|---|---|"]
@@ -132,11 +146,11 @@ def body(row, rows: pd.DataFrame) -> str:
         *t,
         "",
         "### Prompts",
-        "Each prompt below is exactly what `tools/generate.py` first sends to the model to write the code. For vulnerable rows it then sends a second prompt that asks the model to fix that code (see `python tools/make_prompt.py issues/" + row.issue_id + ".csv --row N`). "
-        "`generate.py` checks every answer automatically and asks again up to 3 times; the model marks dangerous lines with `@@`, which become `vulnerable_lines`.",
+        "These are exactly the prompts `tools/generate.py` sends for you (it also checks every answer and asks again up to 3 times). To do a row by hand, use them in order:",
+        "1. **Prompt 1** writes the code. The model marks the dangerous lines with `@@`; those line numbers are `vulnerable_lines`.",
+        "2. **Prompt 2** (vulnerable rows only) writes `fixed_code`. Replace the line `" + PASTE + "` with the code from prompt 1, **with the `@@` markers removed**, then send it.",
         "",
-        *[line for i, r in enumerate(rows.to_dict("records"), 1) for line in (
-            f"<details><summary>Row {i}: <code>{r['sample_id']}</code> ({r['case_type']})</summary>", "", "```text", prompt(r), "```", "", "</details>", "")],
+        *[line for i, r in enumerate(rows.to_dict("records"), 1) for line in row_prompts(i, r)],
         "### What a finished row looks like",
         "- `code`: the complete function, nothing else (no explanation text).",
         "- `fixed_code` (only when `label` is 1): the same function with the fewest lines changed.",
@@ -145,7 +159,7 @@ def body(row, rows: pd.DataFrame) -> str:
         "",
         "### Steps",
         f"1. Start a branch for this issue: `git checkout main`, `git pull`, `git checkout -b issue/{row.issue_id}`",
-        f"2. Draft the rows: `python tools/generate.py issues/{row.issue_id}.csv` (or paste a prompt above into `ollama run {row.generator}` yourself).",
+        f"2. Draft the rows: `python tools/generate.py issues/{row.issue_id}.csv` (or, for one row by hand, paste its prompt 1 and then its prompt 2 into `ollama run {row.generator}`).",
         f"3. Open `submissions/{row.issue_id}.csv`, read every row, correct the code, and **recount `vulnerable_lines`** against the numbered code.",
         f"4. `python tools/validate.py submissions/{row.issue_id}.csv` until it says OK.",
         f"5. Commit and push: `git add submissions/{row.issue_id}.csv`, then `git commit -m \"Rows for {row.issue_id}\"`, then `git push -u origin issue/{row.issue_id}`",
