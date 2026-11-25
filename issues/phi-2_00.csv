@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_89_c_1113,phi4:14b,c,CWE-89,normal,1,"Update a user's email address, given the username.",mysql_c,1-5,4,strcat,network_message,parameterised_query,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,method,,,,
-phi_89_c_1101,phi4:14b,c,CWE-89,hard_negative,0,Mark a list of messages as read.,libpq,11-20,11,per_pattern,command_line,,generated_placeholders,sqlite3_exec / mysql_query / PQexec,cli_entry,,,,
-phi_89_c_1107,phi4:14b,c,CWE-89,hard_positive,1,Filter books by an optional author and an optional publication year.,mysql_c,21-40,26,sprintf,command_line,parameterised_query,param_in_one_branch_only,sqlite3_exec / mysql_query / PQexec,helper_called_by_caller,,,,
-phi_89_c_1123,phi4:14b,c,CWE-89,safe,0,"Delete several notifications, given a list of their ids.",mysql_c,6-10,8,parameterised,function_argument,,standard_safe,sqlite3_exec / mysql_query / PQexec,callback_or_async,,,,
+phi_89_c_1113,phi4:14b,c,CWE-89,normal,1,"Update a user's email address, given the username.",mysql_c,1-5,4,strcat,network_message,parameterised_query,plain_vulnerable,mysql_query,method,,,,
+phi_89_c_1101,phi4:14b,c,CWE-89,hard_negative,0,Mark a list of messages as read.,libpq,11-20,11,per_pattern,command_line,,generated_placeholders,PQexec,cli_entry,,,,
+phi_89_c_1107,phi4:14b,c,CWE-89,hard_positive,1,Filter books by an optional author and an optional publication year.,mysql_c,21-40,26,sprintf,command_line,parameterised_query,param_in_one_branch_only,mysql_query,helper_called_by_caller,,,,
+phi_89_c_1123,phi4:14b,c,CWE-89,safe,0,"Delete several notifications, given a list of their ids.",mysql_c,6-10,8,parameterised,function_argument,,standard_safe,mysql_query,callback_or_async,,,,
 phi_89_c_1111,phi4:14b,c,CWE-89,no_code,0,Compute the average of a list of ratings.,none,21-40,37,none,not_applicable,,no_dangerous_call,,web_handler,,,,

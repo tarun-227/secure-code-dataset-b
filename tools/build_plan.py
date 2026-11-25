@@ -83,6 +83,37 @@ SINK = {
     "CWE-338": {"python": "random.choice / random.randint", "c": "rand / srand", "cpp": "std::mt19937 / rand", "go": "math/rand"},
 }
 
+# The dangerous call for the row's own library / operation (cwe_detail). SINK above is only the fallback for rows without
+# one (no_code, non-security). Before 2026-11-25 every row got SINK[cwe][lang], which could contradict cwe_detail
+# (e.g. MySQL Connector/C++ rows were told to use sqlite3_exec).
+SINK_DETAIL = {
+    "CWE-89": {"sqlite3": "cursor.execute (sqlite3)", "psycopg2": "cursor.execute (psycopg2)", "mysql_connector": "cursor.execute (mysql.connector)",
+               "sqlalchemy_text": "session.execute(text(...))", "django_raw": "Model.objects.raw / connection.cursor().execute",
+               "sqlite3_c": "sqlite3_exec / sqlite3_prepare_v2", "mysql_c": "mysql_query", "libpq": "PQexec",
+               "qt_qsqlquery": "QSqlQuery::exec", "mysql_connector_cpp": "sql::Statement::executeQuery / execute",
+               "database_sql": "db.Query / db.Exec", "sqlx": "db.Select / db.Get / db.Queryx", "gorm_raw": "db.Raw / db.Exec"},
+    "CWE-78": {"os_system": "os.system", "subprocess": "subprocess.run / subprocess.call with shell=True", "os_popen": "os.popen",
+               "system": "system", "popen": "popen", "execl_shell": 'execl("/bin/sh", "sh", "-c", ...)',
+               "qprocess": 'QProcess::start("sh", {"-c", ...})', "boost_process": "boost::process::system with a shell command line",
+               "exec_command_sh": 'exec.Command("sh", "-c", ...)', "exec_command": "exec.Command"},
+    "CWE-22": {"open": "open", "pathlib": "pathlib.Path.open / read_text", "shutil": "shutil.copy / shutil.move / shutil.rmtree",
+               "send_file": "Flask send_file", "archive_extract": "archive extraction (each member written to the target folder)",
+               "os_remove": "os.remove", "fopen": "fopen", "unlink": "unlink", "rename": "rename",
+               "fstream": "std::ifstream / std::ofstream", "std_filesystem": "std::filesystem (copy, remove, ...)",
+               "os_open": "os.Open", "os_readfile": "os.ReadFile", "os_create": "os.Create", "http_servefile": "http.ServeFile",
+               "os_rename": "os.Rename"},
+}
+# CWE-89 libraries that have an ORM or query builder. Elsewhere the fix type query_builder_orm becomes parameterised_query
+# (always fits when query_builder_orm fits: both need a value, not an identifier).
+ORM_LIBS = {"sqlalchemy_text", "django_raw", "gorm_raw"}
+
+
+def sink_for(cwe: str, lang: str, detail: str) -> str:
+    """CWE-22 archive_extract differs by language (Python tarfile/zipfile, Go archive/zip)."""
+    if cwe == "CWE-22" and detail == "archive_extract":
+        return {"python": "tarfile / zipfile extractall", "go": "archive/zip or archive/tar, then os.Create per member"}.get(lang, SINK[cwe][lang])
+    return SINK_DETAIL.get(cwe, {}).get(detail, SINK[cwe][lang])
+
 
 def split(total: int, parts: int, offset: int) -> list[int]:
     """Split `total` into `parts` near-equal integers; which parts get the extra one rotates with `offset`."""
@@ -309,7 +340,20 @@ def try_cell(cwe, lang, ci, rng):
             det[r["cwe_detail"]] += 1
         lo, hi = BAND_RANGE[r["band"]]
         r.update(cwe=cwe, language=lang, label=LABEL[r["case_type"]], target_lines=rng.randint(lo, hi),
-                 suggested_sink="" if r["case_type"] == "no_code" else SINK[cwe][lang])
+                 suggested_sink="" if r["case_type"] == "no_code" else sink_for(cwe, lang, r["cwe_detail"]))
+    # after all random draws, so every other column stays as planned: query_builder_orm only where the library has an ORM;
+    # elsewhere parameterised_query while that stays within the 40% cap, else the fitting fix type least used in this cell
+    if cwe == "CWE-89":
+        n = Counter(r["fix_type"] for r in cell if r.get("fix_type"))
+        cap = int(0.40 * sum(n.values()))
+        for r in cell:
+            if r.get("fix_type") == "query_builder_orm" and r["cwe_detail"] not in ORM_LIBS:
+                ok = [f for f in FIX[cwe] if f != "query_builder_orm" and fix_fits(cwe, r["task_description"], r["pattern"], f)]
+                new = ("parameterised_query" if "parameterised_query" in ok and n["parameterised_query"] < cap
+                       else min(ok, key=lambda f: (n[f], FIX[cwe].index(f))))
+                n[r["fix_type"]] -= 1
+                n[new] += 1
+                r["fix_type"] = new
     return cell
 
 

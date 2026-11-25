@@ -20,7 +20,7 @@ Every issue CSV has the same 20 columns. The first 16 are filled in already; **d
 | `source` | where the untrusted input comes from | `web_request` |
 | `fix_type` | how `fixed_code` must fix it (vulnerable rows only) | `normalize_prefix_check` |
 | `pattern` | the trick for hard rows; `plain_vulnerable`, `standard_safe` or `no_dangerous_call` otherwise | `resolve_then_contain_with_separator` |
-| `suggested_sink` | typical dangerous call for this weakness and language | `std::ifstream / std::filesystem` |
+| `suggested_sink` | the dangerous call for this weakness in the row's library or operation (`cwe_detail`) | `std::ifstream / std::filesystem` |
 | `shape` | how the code is organised | `web_handler` |
 
 ## Columns you fill in
@@ -104,7 +104,7 @@ Every issue CSV has the same 20 columns. The first 16 are filled in already; **d
 | `parameterised_query` | use bound parameters instead of building the query text |
 | `allow_list` | accept only allowed values: a fixed list of values, or only allowed characters |
 | `type_conversion` | convert the input to the expected type (for example an integer) before use |
-| `query_builder_orm` | use the ORM or query builder so values are bound |
+| `query_builder_orm` | use the ORM or query builder so values are bound (only for libraries that have one: SQLAlchemy, Django, GORM) |
 | `argv_no_shell` | run the program with an argument list and no shell |
 | `quote_escape` | quote every value correctly for the shell |
 | `validate_format` | accept only input that matches a strict format |

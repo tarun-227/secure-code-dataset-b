@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_78_c_0220,deepseek-coder-v2:16b,c,CWE-78,normal,1,Encrypt a file with gpg for a recipient.,system,11-20,12,snprintf,web_request,argv_no_shell,plain_vulnerable,system / popen,helper_called_by_caller,,,,
-dsk_78_c_0210,deepseek-coder-v2:16b,c,CWE-78,hard_positive,1,Clone a git repository from a URL.,execl_shell,11-20,19,snprintf,web_request,validate_format,validator_too_permissive,system / popen,method,,,,
-dsk_78_c_0225,deepseek-coder-v2:16b,c,CWE-78,safe,0,Compress a folder into a tar.gz archive.,popen,21-40,35,argv,network_message,,standard_safe,system / popen,helper_called_by_caller,,,,
-dsk_78_c_0206,deepseek-coder-v2:16b,c,CWE-78,hard_negative,0,Look up DNS records for a domain name.,execl_shell,6-10,7,per_pattern,file_content,,strict_parser_no_shell,system / popen,callback_or_async,,,,
-dsk_78_c_0221,deepseek-coder-v2:16b,c,CWE-78,normal,1,Install a package by name with the package manager.,popen,6-10,6,strcat,command_line,end_of_options,plain_vulnerable,system / popen,plain_function,,,,
+dsk_78_c_0220,deepseek-coder-v2:16b,c,CWE-78,normal,1,Encrypt a file with gpg for a recipient.,system,11-20,12,snprintf,web_request,argv_no_shell,plain_vulnerable,system,helper_called_by_caller,,,,
+dsk_78_c_0210,deepseek-coder-v2:16b,c,CWE-78,hard_positive,1,Clone a git repository from a URL.,execl_shell,11-20,19,snprintf,web_request,validate_format,validator_too_permissive,"execl(""/bin/sh"", ""sh"", ""-c"", ...)",method,,,,
+dsk_78_c_0225,deepseek-coder-v2:16b,c,CWE-78,safe,0,Compress a folder into a tar.gz archive.,popen,21-40,35,argv,network_message,,standard_safe,popen,helper_called_by_caller,,,,
+dsk_78_c_0206,deepseek-coder-v2:16b,c,CWE-78,hard_negative,0,Look up DNS records for a domain name.,execl_shell,6-10,7,per_pattern,file_content,,strict_parser_no_shell,"execl(""/bin/sh"", ""sh"", ""-c"", ...)",callback_or_async,,,,
+dsk_78_c_0221,deepseek-coder-v2:16b,c,CWE-78,normal,1,Install a package by name with the package manager.,popen,6-10,6,strcat,command_line,end_of_options,plain_vulnerable,popen,plain_function,,,,

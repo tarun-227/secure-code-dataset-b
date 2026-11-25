@@ -62,6 +62,16 @@ NAMES = {"mysql_connector": "mysql.connector", "sqlalchemy_text": "SQLAlchemy te
          "std_filesystem": "std::filesystem", "fstream": "std::fstream", "archive_extract": "archive extraction"}
 
 
+ORM_LIBS = {"sqlalchemy_text", "django_raw", "gorm_raw"}  # same as build_plan.ORM_LIBS
+
+
+def _pattern(r) -> str:
+    """Pattern text; query_builder_bound on a library without an ORM means a hand-written query-building helper."""
+    if r["pattern"] == "query_builder_bound" and r["cwe_detail"] not in ORM_LIBS:
+        return "a small helper function builds the query with one placeholder per value and binds every value"
+    return PATTERN[r["pattern"]]
+
+
 def _detail(r) -> str:
     cwe, d = r["cwe"], r["cwe_detail"]
     if d in ("none", "") or r["case_type"] == "no_code":
@@ -101,13 +111,13 @@ def prompt(r) -> str:
         if cwe != "CWE-338":
             L.append(f"- Do NOT protect it in any way: no {AVOID[cwe]}, no checks, no escaping.")
     elif ct == "hard_positive":
-        L.append(f"- It is open to {CWE_NAME[cwe]} ({cwe}), but it looks protected: {PATTERN[r['pattern']]}.")
+        L.append(f"- It is open to {CWE_NAME[cwe]} ({cwe}), but it looks protected: {_pattern(r)}.")
         L.append(f"- {how} The protection must NOT really work.")
     elif ct == "safe":
         way = SAFE_WAY[cwe][r["language"]] if cwe == "CWE-338" else SAFE_WAY[cwe]
         L.append(f"- It is safe from {CWE_NAME[cwe]}, written the standard way: use {way}.")
     elif ct == "hard_negative":
-        L.append(f"- It is completely safe from {CWE_NAME[cwe]}, although it looks risky: {PATTERN[r['pattern']]}.")
+        L.append(f"- It is completely safe from {CWE_NAME[cwe]}, although it looks risky: {_pattern(r)}.")
     else:
         L.append(f"- {CASE['no_code'].capitalize()}: {PATTERN['no_dangerous_call']}.")
     L += ["", "Rules:",

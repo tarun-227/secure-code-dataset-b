@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_89_go_1170,phi4:14b,go,CWE-89,normal,1,"Delete several notifications, given a list of their ids.",gorm_raw,21-40,31,string_concatenation,web_request,query_builder_orm,plain_vulnerable,db.Query / db.Exec,callback_or_async,,,,
-phi_89_go_1161,phi4:14b,go,CWE-89,hard_positive,1,Add a tag name to an article.,sqlx,41-100,43,string_concatenation,function_argument,parameterised_query,keyword_blocklist,db.Query / db.Exec,plain_function,,,,
+phi_89_go_1170,phi4:14b,go,CWE-89,normal,1,"Delete several notifications, given a list of their ids.",gorm_raw,21-40,31,string_concatenation,web_request,query_builder_orm,plain_vulnerable,db.Raw / db.Exec,callback_or_async,,,,
+phi_89_go_1161,phi4:14b,go,CWE-89,hard_positive,1,Add a tag name to an article.,sqlx,41-100,43,string_concatenation,function_argument,parameterised_query,keyword_blocklist,db.Select / db.Get / db.Queryx,plain_function,,,,
 phi_89_go_1175,phi4:14b,go,CWE-89,safe,0,Find vehicles by licence-plate fragment.,database_sql,6-10,6,parameterised,command_line,,standard_safe,db.Query / db.Exec,method,,,,
-phi_89_go_1157,phi4:14b,go,CWE-89,hard_negative,0,Search apartments by an optional city and an optional maximum rent.,sqlx,21-40,31,per_pattern,file_content,,constant_fragments_only,db.Query / db.Exec,cli_entry,,,,
-phi_89_go_1171,phi4:14b,go,CWE-89,normal,1,Search products whose name contains a search term.,gorm_raw,11-20,12,string_concatenation,environment,parameterised_query,plain_vulnerable,db.Query / db.Exec,helper_called_by_caller,,,,
+phi_89_go_1157,phi4:14b,go,CWE-89,hard_negative,0,Search apartments by an optional city and an optional maximum rent.,sqlx,21-40,31,per_pattern,file_content,,constant_fragments_only,db.Select / db.Get / db.Queryx,cli_entry,,,,
+phi_89_go_1171,phi4:14b,go,CWE-89,normal,1,Search products whose name contains a search term.,gorm_raw,11-20,12,string_concatenation,environment,parameterised_query,plain_vulnerable,db.Raw / db.Exec,helper_called_by_caller,,,,
