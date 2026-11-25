@@ -114,7 +114,7 @@ TASKS = {
             T("Convert an uploaded image to PNG with an external tool.", kind="file"),
             T("Show the last lines of a log file chosen by the caller.", kind="file"),
             T("Count the lines in a file with a system tool.", kind="file"),
-            T("Extract a zip archive into a folder.", kind="file"),
+            T("Unpack a zip archive into a folder with the unzip tool.", kind="file"),
             T("Generate a PDF from an HTML file.", kind="file"),
             T("Convert an audio file to MP3.", kind="file"),
             T("Calculate the checksum of a file with a system tool.", kind="file"),
@@ -200,6 +200,7 @@ TASKS = {
             T("Open an attachment by message id and file name.", op="serve", name="flat"),
             T("Download one of the monthly statements by month name.", op="serve", name="choice", ext=True),
             T("Serve the installer for an operating system name (windows, mac, linux).", op="serve", name="choice"),
+            # write / delete / rename, name chosen from a few
             T("Write the daily export for a report type (sales, stock, returns).", op="write", name="choice", ext=True),
             T("Delete the cached copy of a dashboard chosen by name.", op="delete", name="choice"),
             T("Reset a settings file by profile name (default, compact, wide).", op="write", name="choice"),
@@ -221,7 +222,7 @@ TASKS = {
             # rename / move / copy
             T("Rename a file inside a storage folder.", op="rename", name="flat"),
             T("Move a file from the inbox folder to an archive folder.", op="rename", name="flat"),
-            T("Copy a backup file to the restore folder.", op="rename", name="flat", ext=True),
+            T("Move a backup file to the restore folder.", op="rename", name="flat", ext=True),
             T("Move an uploaded document into a project sub-folder.", op="rename", name="nested"),
             # extract
             T("Extract a zip archive into a working folder.", op="extract", name="nested"),

@@ -83,6 +83,45 @@ SINK = {
     "CWE-338": {"python": "random.choice / random.randint", "c": "rand / srand", "cpp": "std::mt19937 / rand", "go": "math/rand"},
 }
 
+# The dangerous call for the row's own library / operation (cwe_detail). SINK above is only the fallback for rows without
+# one (no_code, non-security). Before 2026-11-25 every row got SINK[cwe][lang], which could contradict cwe_detail
+# (e.g. MySQL Connector/C++ rows were told to use sqlite3_exec).
+SINK_DETAIL = {
+    "CWE-89": {"sqlite3": "cursor.execute (sqlite3)", "psycopg2": "cursor.execute (psycopg2)", "mysql_connector": "cursor.execute (mysql.connector)",
+               "sqlalchemy_text": "session.execute(text(...))", "django_raw": "Model.objects.raw / connection.cursor().execute",
+               "sqlite3_c": "sqlite3_exec / sqlite3_prepare_v2", "mysql_c": "mysql_query", "libpq": "PQexec",
+               "qt_qsqlquery": "QSqlQuery::exec", "mysql_connector_cpp": "sql::Statement::executeQuery / execute",
+               "database_sql": "db.Query / db.Exec", "sqlx": "db.Select / db.Get / db.Queryx", "gorm_raw": "db.Raw / db.Exec"},
+    "CWE-78": {"os_system": "os.system", "subprocess": "subprocess.run / subprocess.call with shell=True", "os_popen": "os.popen",
+               "system": "system", "popen": "popen", "execl_shell": 'execl("/bin/sh", "sh", "-c", ...)',
+               "qprocess": 'QProcess::start("sh", {"-c", ...})', "boost_process": "boost::process::system with a shell command line",
+               "exec_command_sh": 'exec.Command("sh", "-c", ...)', "exec_command": "exec.Command"},
+    "CWE-22": {"open": "open", "pathlib": "pathlib.Path.open / read_text", "shutil": "shutil.copy / shutil.move / shutil.rmtree",
+               "send_file": "Flask send_file", "archive_extract": "archive extraction (each member written to the target folder)",
+               "os_remove": "os.remove", "fopen": "fopen", "unlink": "unlink", "rename": "rename",
+               "fstream": "std::ifstream / std::ofstream", "std_filesystem": "std::filesystem (copy, remove, ...)",
+               "os_open": "os.Open", "os_readfile": "os.ReadFile", "os_create": "os.Create", "http_servefile": "http.ServeFile",
+               "os_rename": "os.Rename"},
+}
+# CWE-89 libraries that have an ORM or query builder. Elsewhere the fix type query_builder_orm becomes parameterised_query
+# (always fits when query_builder_orm fits: both need a value, not an identifier).
+ORM_LIBS = {"sqlalchemy_text", "django_raw", "gorm_raw"}
+
+
+NO_SHELL_SINK = {"subprocess": "subprocess.run with an argument list", "qprocess": "QProcess::start(program, arguments)",
+                 "boost_process": "boost::process::child with separate arguments", "exec_command": "exec.Command",
+                 "execvp": "execvp / posix_spawn"}
+
+
+def sink_for(cwe: str, lang: str, detail: str, pattern: str = "", case_type: str = "") -> str:
+    """CWE-22 archive_extract differs by language (Python tarfile/zipfile, Go archive/zip). CWE-78 rows that run the
+    program without a shell (argument_injection_dash, or a no-shell-only API) get the no-shell call."""
+    if cwe == "CWE-78" and (pattern == "argument_injection_dash" or detail in NO_SHELL_ONLY) and detail in NO_SHELL_SINK:
+        return NO_SHELL_SINK[detail]
+    if cwe == "CWE-22" and detail == "archive_extract":
+        return {"python": "tarfile / zipfile extractall", "go": "archive/zip or archive/tar, then os.Create per member"}.get(lang, SINK[cwe][lang])
+    return SINK_DETAIL.get(cwe, {}).get(detail, SINK[cwe][lang])
+
 
 def split(total: int, parts: int, offset: int) -> list[int]:
     """Split `total` into `parts` near-equal integers; which parts get the extra one rotates with `offset`."""
@@ -309,7 +348,20 @@ def try_cell(cwe, lang, ci, rng):
             det[r["cwe_detail"]] += 1
         lo, hi = BAND_RANGE[r["band"]]
         r.update(cwe=cwe, language=lang, label=LABEL[r["case_type"]], target_lines=rng.randint(lo, hi),
-                 suggested_sink="" if r["case_type"] == "no_code" else SINK[cwe][lang])
+                 suggested_sink="" if r["case_type"] == "no_code" else sink_for(cwe, lang, r["cwe_detail"]))
+    # after all random draws, so every other column stays as planned: query_builder_orm only where the library has an ORM;
+    # elsewhere parameterised_query while that stays within the 40% cap, else the fitting fix type least used in this cell
+    if cwe == "CWE-89":
+        n = Counter(r["fix_type"] for r in cell if r.get("fix_type"))
+        cap = int(0.40 * sum(n.values()))
+        for r in cell:
+            if r.get("fix_type") == "query_builder_orm" and r["cwe_detail"] not in ORM_LIBS:
+                ok = [f for f in FIX[cwe] if f != "query_builder_orm" and fix_fits(cwe, r["task_description"], r["pattern"], f)]
+                new = ("parameterised_query" if "parameterised_query" in ok and n["parameterised_query"] < cap
+                       else min(ok, key=lambda f: (n[f], FIX[cwe].index(f))))
+                n[r["fix_type"]] -= 1
+                n[new] += 1
+                r["fix_type"] = new
     return cell
 
 
@@ -328,7 +380,134 @@ def build() -> pd.DataFrame:
     d["sample_id"] = [f"{p}_{SHORT[c]}_{SHORT[l]}_{i:04d}" for i, (p, c, l) in enumerate(zip(d.prefix, d.cwe, d.language), 1)]
     cols = ["sample_id", "generator", "language", "cwe", "case_type", "label", "task_description", "cwe_detail", "band", "target_lines",
             "build_style", "source", "fix_type", "pattern", "suggested_sink", "shape"]
-    return d[cols]
+    FROZEN.update(frozen_ids())
+    return repair(d[cols].copy(), FROZEN)
+
+
+# ---------- repairs (2026-11-25 audit), applied after every random draw so all other rows stay as planned ----------
+# Rows in issues already opened on GitHub are frozen: contributors are working on them.
+# CWE-78: the library must match whether the row needs a shell. Vulnerable rows inject shell syntax, so they need a shell
+# API, except argument_injection_dash (no shell by definition); safe rows and the no-shell hard negatives need an API that
+# can run a program without a shell. C had no such API in DETAIL, so execvp (execvp / posix_spawn) is added here.
+SHELL_ONLY = {"os_system", "os_popen", "system", "popen", "execl_shell", "exec_command_sh"}
+NO_SHELL_ONLY = {"exec_command", "execvp"}
+API78 = {"python": ["os_system", "subprocess", "os_popen"], "c": ["system", "popen", "execl_shell", "execvp"],
+         "cpp": ["system", "popen", "qprocess", "boost_process"], "go": ["exec_command_sh", "exec_command"]}
+NEEDS_NO_SHELL = {"argv_list_user_data", "strict_parser_no_shell", "end_of_options_marker", "argument_injection_dash"}
+NEEDS_SHELL = {"constant_shell_command", "all_args_quoted"}
+# C, C++ and Go have no standard shell-quoting function: hand-written quoting is often subtly wrong, which would make a
+# row labelled safe really vulnerable. Quoting as a fix or as a hard-negative pattern is Python only (shlex.quote).
+QUOTING_LANGS = {"python"}
+# CWE-89 tasks whose value has a strict format or comes from a short closed set: only there is an allow-list fix natural.
+# For free text (names, search terms, e-mail) allow-listing characters changes behaviour; those rows use bound parameters.
+ALLOW_LIST_VALUES = {"Return the inventory rows for a warehouse code.",
+                     "Mark an invoice as paid by its invoice number (a text code such as INV-2041).",
+                     "Look up a session record by session token.", "List the students enrolled in a course code.",
+                     "Look up a shipment by tracking number.", "Count how many tickets have a given status.",
+                     "Return the price history for a stock ticker symbol.", "Return the leaderboard for a game mode name."}
+NO_CONFINED_LIB = {"c", "cpp"}  # no standard call that confines file access to one folder
+
+
+FROZEN: set = set()  # filled by build(); fits() skips the new rules for these rows
+
+
+def frozen_ids() -> set:
+    idx = ROOT / "issues" / "index.csv"
+    if not idx.exists():
+        return set()
+    i = pd.read_csv(idx, dtype=str, keep_default_na=False)
+    out = set()
+    for issue_id in i[i.gh_issue != ""].issue_id:
+        f = ROOT / "issues" / f"{issue_id}.csv"
+        if f.exists():
+            out |= set(pd.read_csv(f, dtype=str, keep_default_na=False).sample_id)
+    return out
+
+
+def shell_need(r) -> str:
+    """'shell', 'no_shell' or 'any' for a CWE-78 row."""
+    if r["case_type"] == "safe" or r["pattern"] in NEEDS_NO_SHELL:
+        return "no_shell"
+    if r["case_type"] in ("normal", "hard_positive") or r["pattern"] in NEEDS_SHELL:
+        return "shell"
+    return "any"
+
+
+def api_fits(detail: str, need: str) -> bool:
+    return need == "any" or (need == "shell" and detail not in NO_SHELL_ONLY) or (need == "no_shell" and detail not in SHELL_ONLY)
+
+
+def allow_list_fits(cwe, text) -> bool:
+    t = TAGS[cwe]["main"][text]
+    return cwe != "CWE-89" or t["kind"] in ("identifier", "number", "list") or text in ALLOW_LIST_VALUES
+
+
+def repair(d: pd.DataFrame, frozen: set) -> pd.DataFrame:
+    d = d.copy()
+    d["label"] = d.label.astype(int)
+    for (cwe, lang), g in d.groupby(["cwe", "language"]):
+        free = [i for i in g.index if d.at[i, "sample_id"] not in frozen]
+        if cwe == "CWE-78":
+            hn = Counter(d.loc[g.index][d.loc[g.index].case_type == "hard_negative"].pattern)
+            fx = Counter(d.loc[g.index].fix_type[d.loc[g.index].fix_type != ""])
+            for i in free:
+                r = d.loc[i]
+                t = r.task_description
+                if lang not in QUOTING_LANGS and r.pattern == "all_args_quoted":
+                    ok = [p for p, _ in HN[cwe] if p != "all_args_quoted" and task_fits(cwe, lang, "main", t, p)]
+                    new = min(ok, key=lambda p: (hn[p], [q for q, _ in HN[cwe]].index(p)))
+                    hn[r.pattern] -= 1
+                    hn[new] += 1
+                    d.at[i, "pattern"] = new
+                if lang not in QUOTING_LANGS and r.fix_type == "quote_escape":
+                    ok = [f for f in FIX[cwe] if f != "quote_escape" and fix_fits(cwe, t, d.at[i, "pattern"], f)]
+                    new = min(ok, key=lambda f: (fx[f], FIX[cwe].index(f)))
+                    fx["quote_escape"] -= 1
+                    fx[new] += 1
+                    d.at[i, "fix_type"] = new
+            used = Counter(d.loc[g.index].cwe_detail)
+            for i in free:
+                if d.at[i, "case_type"] == "no_code":
+                    continue
+                need = shell_need(d.loc[i])
+                if not api_fits(d.at[i, "cwe_detail"], need):
+                    ok = [a for a in API78[lang] if api_fits(a, need)]
+                    new = min(ok, key=lambda a: (used[a], API78[lang].index(a)))
+                    used[d.at[i, "cwe_detail"]] -= 1
+                    used[new] += 1
+                    d.at[i, "cwe_detail"] = new
+                if d.at[i, "pattern"] == "argument_injection_dash":
+                    d.at[i, "build_style"] = "argv_list"
+        if cwe == "CWE-89":
+            # swap fix types inside the cell (keeps every count): a free-text row with allow_list takes parameterised_query
+            # (or the ORM where the library has one) from a row where an allow-list is natural
+            vul = [i for i in free if d.at[i, "label"] == 1]
+            for i in vul:
+                if d.at[i, "fix_type"] != "allow_list" or allow_list_fits(cwe, d.at[i, "task_description"]):
+                    continue
+                partner = next((j for j in vul if d.at[j, "fix_type"] in ("parameterised_query", "query_builder_orm")
+                                and allow_list_fits(cwe, d.at[j, "task_description"])
+                                and fix_fits(cwe, d.at[j, "task_description"], d.at[j, "pattern"], "allow_list")
+                                and fix_fits(cwe, d.at[i, "task_description"], d.at[i, "pattern"], d.at[j, "fix_type"])
+                                and (d.at[j, "fix_type"] != "query_builder_orm" or d.at[i, "cwe_detail"] in ORM_LIBS)), None)
+                if partner is None:
+                    d.at[i, "fix_type"] = "query_builder_orm" if d.at[i, "cwe_detail"] in ORM_LIBS else "parameterised_query"
+                else:
+                    d.at[i, "fix_type"], d.at[partner, "fix_type"] = d.at[partner, "fix_type"], "allow_list"
+        if cwe == "CWE-22" and lang in NO_CONFINED_LIB:
+            hn = Counter(d.loc[g.index][d.loc[g.index].case_type == "hard_negative"].pattern)
+            for i in free:
+                if d.at[i, "pattern"] == "library_confined_access":
+                    t = d.at[i, "task_description"]
+                    ok = [p for p, _ in HN[cwe] if p != "library_confined_access" and task_fits(cwe, lang, "main", t, p)]
+                    new = min(ok, key=lambda p: (hn[p], [q for q, _ in HN[cwe]].index(p)))
+                    hn["library_confined_access"] -= 1
+                    hn[new] += 1
+                    d.at[i, "pattern"] = new
+    for i in d.index:
+        if d.at[i, "case_type"] != "no_code" and d.at[i, "sample_id"] not in frozen:
+            d.at[i, "suggested_sink"] = sink_for(d.at[i, "cwe"], d.at[i, "language"], d.at[i, "cwe_detail"], d.at[i, "pattern"], d.at[i, "case_type"])
+    return d
 
 
 def fits(r) -> list:
@@ -348,6 +527,16 @@ def fits(r) -> list:
         bad.append("detail/op")
     if cwe == "CWE-338" and pool == "main" and TAGS[cwe]["main"][r.task_description]["value"] != r.cwe_detail:
         bad.append("detail/value")
+    if r.sample_id in FROZEN:
+        return bad
+    if cwe == "CWE-78" and ct != "no_code" and not api_fits(r.cwe_detail, shell_need(r._asdict())):
+        bad.append("api/shell")
+    if lang not in QUOTING_LANGS and (r.fix_type == "quote_escape" or r.pattern == "all_args_quoted"):
+        bad.append("quoting outside Python")
+    if cwe == "CWE-89" and r.fix_type == "allow_list" and not allow_list_fits(cwe, r.task_description):
+        bad.append("allow_list on free text")
+    if cwe == "CWE-22" and lang in NO_CONFINED_LIB and r.pattern == "library_confined_access":
+        bad.append("no confining library")
     return bad
 
 
@@ -367,7 +556,9 @@ def check(d: pd.DataFrame) -> bool:
         need(g.case_type.value_counts().to_dict() == CASES, f"{c} {l} case types {g.case_type.value_counts().to_dict()}")
         need(g.band.value_counts().to_dict() == BANDS, f"{c} {l} bands")
         v = g[g.label == 1].fix_type.value_counts(normalize=True)
-        need(len(v) >= 3 and v.max() <= 0.40, f"{c} {l} fix types {v.round(2).to_dict()}")
+        # CWE-89: bound parameters are the only correct fix for free-text values, so they may reach 55%
+        cap = {"parameterised_query": 0.55} if c == "CWE-89" else {}
+        need(len(v) >= 3 and all(s <= cap.get(f, 0.40) for f, s in v.items()), f"{c} {l} fix types {v.round(2).to_dict()}")
         h = g[g.case_type.isin(["hard_negative", "hard_positive"])]
         for ct, x in h.groupby("case_type"):
             need(x.pattern.value_counts(normalize=True).max() <= 0.25, f"{c} {l} {ct} pattern share")

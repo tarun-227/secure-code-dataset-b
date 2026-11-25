@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_22_py_0895,phi4:14b,python,CWE-22,normal,1,Return a font file by family name.,send_file,11-20,14,pathlib_div,network_message,safe_join_library,plain_vulnerable,open / send_file / os.remove,plain_function,,,,
-phi_22_py_0886,phi4:14b,python,CWE-22,hard_positive,1,Read a recipe file from a collection folder.,pathlib,11-20,11,path_join,network_message,normalize_prefix_check,check_before_normalise,open / send_file / os.remove,method,,,,
-phi_22_py_0900,phi4:14b,python,CWE-22,safe,0,"Serve the installer for an operating system name (windows, mac, linux).",send_file,21-40,24,contained_path,environment,,standard_safe,open / send_file / os.remove,method,,,,
-phi_22_py_0882,phi4:14b,python,CWE-22,hard_negative,0,Return the size of a file in the uploads folder.,open,11-20,13,per_pattern,web_request,,resolve_then_contain_with_separator,open / send_file / os.remove,web_handler,,,,
-phi_22_py_0896,phi4:14b,python,CWE-22,normal,1,Download one of the monthly statements by month name.,send_file,6-10,9,concatenation,environment,id_to_file_map,plain_vulnerable,open / send_file / os.remove,method,,,,
+phi_22_py_0895,phi4:14b,python,CWE-22,normal,1,Return a font file by family name.,send_file,11-20,14,pathlib_div,network_message,safe_join_library,plain_vulnerable,Flask send_file,plain_function,,,,
+phi_22_py_0886,phi4:14b,python,CWE-22,hard_positive,1,Read a recipe file from a collection folder.,pathlib,11-20,11,path_join,network_message,normalize_prefix_check,check_before_normalise,pathlib.Path.open / read_text,method,,,,
+phi_22_py_0900,phi4:14b,python,CWE-22,safe,0,"Serve the installer for an operating system name (windows, mac, linux).",send_file,21-40,24,contained_path,environment,,standard_safe,Flask send_file,method,,,,
+phi_22_py_0882,phi4:14b,python,CWE-22,hard_negative,0,Return the size of a file in the uploads folder.,open,11-20,13,per_pattern,web_request,,resolve_then_contain_with_separator,open,web_handler,,,,
+phi_22_py_0896,phi4:14b,python,CWE-22,normal,1,Download one of the monthly statements by month name.,send_file,6-10,9,concatenation,environment,id_to_file_map,plain_vulnerable,Flask send_file,method,,,,

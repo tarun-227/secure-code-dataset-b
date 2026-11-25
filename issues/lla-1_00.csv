@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_89_py_0788,llama3.1:8b,python,CWE-89,normal,1,"List the newest posts in a category, sorted by a column the caller chooses.",sqlalchemy_text,1-5,4,percent_format,network_message,allow_list,plain_vulnerable,cursor.execute,callback_or_async,,,,
-lla_89_py_0776,llama3.1:8b,python,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,mysql_connector,41-100,68,per_pattern,database_value,,integer_forced,cursor.execute,web_handler,,,,
-lla_89_py_0783,llama3.1:8b,python,CWE-89,hard_positive,1,Reset the failed-login counter for an account name.,sqlite3,21-40,33,percent_format,web_request,parameterised_query,hand_written_escaping,cursor.execute,web_handler,,,,
-lla_89_py_0800,llama3.1:8b,python,CWE-89,safe,0,Return the leaderboard for a game mode name.,mysql_connector,6-10,10,parameterised,command_line,,standard_safe,cursor.execute,method,,,,
+lla_89_py_0788,llama3.1:8b,python,CWE-89,normal,1,"List the newest posts in a category, sorted by a column the caller chooses.",sqlalchemy_text,1-5,4,percent_format,network_message,allow_list,plain_vulnerable,session.execute(text(...)),callback_or_async,,,,
+lla_89_py_0776,llama3.1:8b,python,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,mysql_connector,41-100,68,per_pattern,database_value,,integer_forced,cursor.execute (mysql.connector),web_handler,,,,
+lla_89_py_0783,llama3.1:8b,python,CWE-89,hard_positive,1,Reset the failed-login counter for an account name.,sqlite3,21-40,33,percent_format,web_request,parameterised_query,hand_written_escaping,cursor.execute (sqlite3),web_handler,,,,
+lla_89_py_0800,llama3.1:8b,python,CWE-89,safe,0,Return the leaderboard for a game mode name.,mysql_connector,6-10,10,parameterised,command_line,,standard_safe,cursor.execute (mysql.connector),method,,,,
 lla_89_py_0786,llama3.1:8b,python,CWE-89,no_code,0,Sort a list of employees by salary.,none,6-10,8,none,not_applicable,,no_dangerous_call,,cli_entry,,,,
