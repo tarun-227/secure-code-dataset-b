@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_89_c_0314,deepseek-coder-v2:16b,c,CWE-89,normal,1,"Return one page of results, given a limit and an offset.",libpq,1-5,5,snprintf,environment,parameterised_query,plain_vulnerable,sqlite3_exec / mysql_query / PQexec,method,,,,
-dsk_89_c_0301,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Look up a session record by session token.,sqlite3_c,21-40,37,per_pattern,database_value,,fstring_placeholders_only,sqlite3_exec / mysql_query / PQexec,web_handler,,,,
-dsk_89_c_0309,deepseek-coder-v2:16b,c,CWE-89,hard_positive,1,Fetch a configuration value by key for a tenant name.,mysql_c,6-10,9,strcat,network_message,parameterised_query,hand_written_escaping,sqlite3_exec / mysql_query / PQexec,method,,,,
-dsk_89_c_0323,deepseek-coder-v2:16b,c,CWE-89,safe,0,Fetch a patient's appointments by patient number.,sqlite3_c,11-20,18,parameterised,function_argument,,standard_safe,sqlite3_exec / mysql_query / PQexec,callback_or_async,,,,
+dsk_89_c_0314,deepseek-coder-v2:16b,c,CWE-89,normal,1,"Return one page of results, given a limit and an offset.",libpq,1-5,5,snprintf,environment,parameterised_query,plain_vulnerable,PQexec,method,,,,
+dsk_89_c_0301,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Look up a session record by session token.,sqlite3_c,21-40,37,per_pattern,database_value,,fstring_placeholders_only,sqlite3_exec / sqlite3_prepare_v2,web_handler,,,,
+dsk_89_c_0309,deepseek-coder-v2:16b,c,CWE-89,hard_positive,1,Fetch a configuration value by key for a tenant name.,mysql_c,6-10,9,strcat,network_message,parameterised_query,hand_written_escaping,mysql_query,method,,,,
+dsk_89_c_0323,deepseek-coder-v2:16b,c,CWE-89,safe,0,Fetch a patient's appointments by patient number.,sqlite3_c,11-20,18,parameterised,function_argument,,standard_safe,sqlite3_exec / sqlite3_prepare_v2,callback_or_async,,,,
 dsk_89_c_0312,deepseek-coder-v2:16b,c,CWE-89,no_code,0,Format a list of order records as CSV text.,none,11-20,15,none,not_applicable,,no_dangerous_call,,callback_or_async,,,,

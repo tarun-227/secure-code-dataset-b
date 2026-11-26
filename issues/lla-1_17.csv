@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
 lla_78_go_0670,llama3.1:8b,go,CWE-78,normal,1,"Restart one of the web, database or cache services.",exec_command_sh,11-20,11,string_concatenation,web_request,allow_list,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",web_handler,,,,
-lla_78_go_0661,llama3.1:8b,go,CWE-78,hard_positive,1,Clone a git repository from a URL.,exec_command_sh,6-10,6,fmt_sprintf,command_line,allow_list,argument_injection_dash,"exec.Command(""sh"", ""-c"", ...)",method,,,,
-lla_78_go_0675,llama3.1:8b,go,CWE-78,safe,0,Check whether a port is open on a host with a network tool.,exec_command,21-40,32,argv,file_content,,standard_safe,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
-lla_78_go_0657,llama3.1:8b,go,CWE-78,hard_negative,0,Ping a host given by the user and return the output.,exec_command_sh,11-20,15,per_pattern,database_value,,end_of_options_marker,"exec.Command(""sh"", ""-c"", ...)",cli_entry,,,,
+lla_78_go_0661,llama3.1:8b,go,CWE-78,hard_positive,1,Clone a git repository from a URL.,exec_command,6-10,6,argv_list,command_line,allow_list,argument_injection_dash,exec.Command,method,,,,
+lla_78_go_0675,llama3.1:8b,go,CWE-78,safe,0,Check whether a port is open on a host with a network tool.,exec_command,21-40,32,argv,file_content,,standard_safe,exec.Command,cli_entry,,,,
+lla_78_go_0657,llama3.1:8b,go,CWE-78,hard_negative,0,Ping a host given by the user and return the output.,exec_command,11-20,15,per_pattern,database_value,,end_of_options_marker,exec.Command,cli_entry,,,,
 lla_78_go_0671,llama3.1:8b,go,CWE-78,normal,1,Set the system time zone to a zone name such as Europe/Paris.,exec_command_sh,6-10,9,fmt_sprintf,file_content,argv_no_shell,plain_vulnerable,"exec.Command(""sh"", ""-c"", ...)",plain_function,,,,

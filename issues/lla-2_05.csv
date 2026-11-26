@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_78_c_0620,llama3.1:8b,c,CWE-78,normal,1,"Run one of the maintenance jobs: backup, cleanup or reindex.",popen,11-20,15,sprintf,environment,argv_no_shell,plain_vulnerable,system / popen,plain_function,,,,
-lla_78_c_0611,llama3.1:8b,c,CWE-78,hard_positive,1,Kill the processes with a given name.,popen,6-10,10,snprintf,database_value,end_of_options,partial_metachar_filter,system / popen,web_handler,,,,
-lla_78_c_0625,llama3.1:8b,c,CWE-78,safe,0,Compress a folder into a tar.gz archive.,system,6-10,10,argv,web_request,,standard_safe,system / popen,web_handler,,,,
-lla_78_c_0607,llama3.1:8b,c,CWE-78,hard_negative,0,Return the disk-usage line for a given mount point.,system,11-20,13,per_pattern,environment,,constant_shell_command,system / popen,method,,,,
-lla_78_c_0621,llama3.1:8b,c,CWE-78,normal,1,Run a traceroute to a target address.,execl_shell,41-100,57,snprintf,command_line,allow_list,plain_vulnerable,system / popen,cli_entry,,,,
+lla_78_c_0620,llama3.1:8b,c,CWE-78,normal,1,"Run one of the maintenance jobs: backup, cleanup or reindex.",popen,11-20,15,sprintf,environment,argv_no_shell,plain_vulnerable,popen,plain_function,,,,
+lla_78_c_0611,llama3.1:8b,c,CWE-78,hard_positive,1,Kill the processes with a given name.,popen,6-10,10,snprintf,database_value,end_of_options,partial_metachar_filter,popen,web_handler,,,,
+lla_78_c_0625,llama3.1:8b,c,CWE-78,safe,0,Compress a folder into a tar.gz archive.,execvp,6-10,10,argv,web_request,,standard_safe,execvp / posix_spawn,web_handler,,,,
+lla_78_c_0607,llama3.1:8b,c,CWE-78,hard_negative,0,Return the disk-usage line for a given mount point.,system,11-20,13,per_pattern,environment,,constant_shell_command,system,method,,,,
+lla_78_c_0621,llama3.1:8b,c,CWE-78,normal,1,Run a traceroute to a target address.,execl_shell,41-100,57,snprintf,command_line,allow_list,plain_vulnerable,"execl(""/bin/sh"", ""sh"", ""-c"", ...)",cli_entry,,,,

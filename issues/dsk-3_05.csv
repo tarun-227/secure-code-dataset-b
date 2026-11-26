@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-dsk_78_cpp_0245,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Look up WHOIS information for a domain.,system,21-40,34,ostringstream,function_argument,argv_no_shell,plain_vulnerable,system / popen,helper_called_by_caller,,,,
-dsk_78_cpp_0236,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Run a linter on a source file.,popen,11-20,12,string_concatenation,file_content,quote_escape,validates_other_variable,system / popen,cli_entry,,,,
-dsk_78_cpp_0250,deepseek-coder-v2:16b,cpp,CWE-78,safe,0,Send a desktop notification with a message.,popen,11-20,19,argv,network_message,,standard_safe,system / popen,callback_or_async,,,,
-dsk_78_cpp_0232,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Download a file from a URL with curl.,popen,41-100,63,per_pattern,web_request,,strict_parser_no_shell,system / popen,web_handler,,,,
-dsk_78_cpp_0246,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Kill the processes with a given name.,boost_process,6-10,9,std_format,command_line,end_of_options,plain_vulnerable,system / popen,helper_called_by_caller,,,,
+dsk_78_cpp_0245,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Look up WHOIS information for a domain.,system,21-40,34,ostringstream,function_argument,argv_no_shell,plain_vulnerable,system,helper_called_by_caller,,,,
+dsk_78_cpp_0236,deepseek-coder-v2:16b,cpp,CWE-78,hard_positive,1,Run a linter on a source file.,popen,11-20,12,string_concatenation,file_content,validate_format,validates_other_variable,popen,cli_entry,,,,
+dsk_78_cpp_0250,deepseek-coder-v2:16b,cpp,CWE-78,safe,0,Send a desktop notification with a message.,boost_process,11-20,19,argv,network_message,,standard_safe,boost::process::system with a shell command line,callback_or_async,,,,
+dsk_78_cpp_0232,deepseek-coder-v2:16b,cpp,CWE-78,hard_negative,0,Download a file from a URL with curl.,boost_process,41-100,63,per_pattern,web_request,,strict_parser_no_shell,boost::process::system with a shell command line,web_handler,,,,
+dsk_78_cpp_0246,deepseek-coder-v2:16b,cpp,CWE-78,normal,1,Kill the processes with a given name.,boost_process,6-10,9,std_format,command_line,end_of_options,plain_vulnerable,boost::process::system with a shell command line,helper_called_by_caller,,,,

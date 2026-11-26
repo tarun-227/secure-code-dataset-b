@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-phi_89_py_1189,phi4:14b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,sqlalchemy_text,1-5,4,percent_format,environment,type_conversion,plain_vulnerable,cursor.execute,method,,,,
-phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Return the top N scores of a game.,psycopg2,6-10,7,per_pattern,file_content,,fstring_placeholders_only,cursor.execute,cli_entry,,,,
-phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,cursor.execute,cli_entry,,,,
-phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute,helper_called_by_caller,,,,
+phi_89_py_1189,phi4:14b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,sqlalchemy_text,1-5,4,percent_format,environment,type_conversion,plain_vulnerable,session.execute(text(...)),method,,,,
+phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Return the top N scores of a game.,psycopg2,6-10,7,per_pattern,file_content,,fstring_placeholders_only,cursor.execute (psycopg2),cli_entry,,,,
+phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,Model.objects.raw / connection.cursor().execute,cli_entry,,,,
+phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute (psycopg2),helper_called_by_caller,,,,
 phi_89_py_1187,phi4:14b,python,CWE-89,no_code,0,Format a list of order records as CSV text.,none,21-40,36,none,not_applicable,,no_dangerous_call,,web_handler,,,,

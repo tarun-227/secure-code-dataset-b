@@ -1,6 +1,6 @@
 sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
-lla_22_c_0420,llama3.1:8b,c,CWE-22,normal,1,Delete the cached copy of a dashboard chosen by name.,unlink,21-40,27,sprintf,environment,id_to_file_map,plain_vulnerable,fopen / unlink,helper_called_by_caller,,,,
-lla_22_c_0410,llama3.1:8b,c,CWE-22,hard_positive,1,Write cached data under a cache key.,fopen,21-40,33,snprintf,network_message,normalize_prefix_check,check_before_normalise,fopen / unlink,method,,,,
-lla_22_c_0425,llama3.1:8b,c,CWE-22,safe,0,Read a markdown page for a wiki path such as guides/setup.,fopen,6-10,10,contained_path,file_content,,standard_safe,fopen / unlink,callback_or_async,,,,
-lla_22_c_0406,llama3.1:8b,c,CWE-22,hard_negative,0,Load a user's avatar image.,fopen,11-20,14,per_pattern,environment,,safe_filename_fixed_folder,fopen / unlink,cli_entry,,,,
-lla_22_c_0421,llama3.1:8b,c,CWE-22,normal,1,"Read the price list for a region code (eu, us, asia).",open,41-100,50,sprintf,web_request,id_to_file_map,plain_vulnerable,fopen / unlink,web_handler,,,,
+lla_22_c_0420,llama3.1:8b,c,CWE-22,normal,1,Delete the cached copy of a dashboard chosen by name.,unlink,21-40,27,sprintf,environment,id_to_file_map,plain_vulnerable,unlink,helper_called_by_caller,,,,
+lla_22_c_0410,llama3.1:8b,c,CWE-22,hard_positive,1,Write cached data under a cache key.,fopen,21-40,33,snprintf,network_message,normalize_prefix_check,check_before_normalise,fopen,method,,,,
+lla_22_c_0425,llama3.1:8b,c,CWE-22,safe,0,Read a markdown page for a wiki path such as guides/setup.,fopen,6-10,10,contained_path,file_content,,standard_safe,fopen,callback_or_async,,,,
+lla_22_c_0406,llama3.1:8b,c,CWE-22,hard_negative,0,Load a user's avatar image.,fopen,11-20,14,per_pattern,environment,,safe_filename_fixed_folder,fopen,cli_entry,,,,
+lla_22_c_0421,llama3.1:8b,c,CWE-22,normal,1,"Read the price list for a region code (eu, us, asia).",open,41-100,50,sprintf,web_request,id_to_file_map,plain_vulnerable,open,web_handler,,,,
