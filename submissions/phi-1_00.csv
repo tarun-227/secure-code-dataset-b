@@ -1,0 +1,139 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+phi_89_py_1189,phi4:14b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,sqlalchemy_text,1-5,4,percent_format,environment,type_conversion,plain_vulnerable,session.execute(text(...)),method,"import os
+from sqlalchemy import text
+
+class SensorDataFetcher:
+    def get_latest_sensor_reading(self, session):
+        sensor_id = os.getenv(""SENSOR_ID"")
+        query = ""SELECT * FROM readings WHERE sensor_id = '%s' ORDER BY timestamp DESC LIMIT 1"" % sensor_id
+        return session.execute(text(query)).fetchone()","import os
+from sqlalchemy import text
+
+class SensorDataFetcher:
+    def get_latest_sensor_reading(self, session):
+        sensor_id = int(os.getenv(""SENSOR_ID""))
+        query = ""SELECT * FROM readings WHERE sensor_id = '%s' ORDER BY timestamp DESC LIMIT 1"" % sensor_id
+        return session.execute(text(query)).fetchone()","[7, 8]",The environment variable is inserted directly into the SQL query without integer conversion.
+phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Return the top N scores of a game.,psycopg2,6-10,7,per_pattern,file_content,,fstring_placeholders_only,cursor.execute (psycopg2),cli_entry,"import psycopg2
+import sys
+
+def get_top_scores(n):
+    with open(sys.argv[1], 'r') as f:
+        conn = psycopg2.connect(f.read())
+        with conn.cursor() as cur:
+            cur.execute(""SELECT score FROM scores ORDER BY score DESC LIMIT %s"", (n,))
+            return cur.fetchall()
+
+if __name__ == ""__main__"":
+    n = int(sys.argv[2])
+    print(get_top_scores(n))",,,
+phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,Model.objects.raw / connection.cursor().execute,cli_entry,"import sys
+from django.db import connection
+from myapp.models import User
+
+def main():
+    country = sys.argv[1] if len(sys.argv) > 1 else None
+
+    if country:
+        query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = '{}' GROUP BY country"".format(country)
+        cursor = connection.cursor()
+        cursor.execute(query)
+    else:
+        query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
+        cursor = connection.cursor()
+        cursor.execute(query)
+
+    for row in cursor.fetchall():
+        print(row)
+
+if __name__ == ""__main__"":
+    main()","import sys
+from django.db import connection
+from myapp.models import User
+
+def main():
+    country = sys.argv[1] if len(sys.argv) > 1 else None
+
+    if country:
+        query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = %s GROUP BY country""
+        cursor = connection.cursor()
+        cursor.execute(query, [country])
+    else:
+        query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
+        cursor = connection.cursor()
+        cursor.execute(query)
+
+    for row in cursor.fetchall():
+        print(row)
+
+if __name__ == ""__main__"":
+    main()","[9, 11, 13, 15]",
+phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute (psycopg2),helper_called_by_caller,"import psycopg2
+import logging
+
+def filter_books_by_author_year(cursor, author=None, year=None):
+    query = ""SELECT * FROM books WHERE 1=1""
+    params = []
+
+    if author is not None:
+        if not isinstance(author, str):
+            raise TypeError(""Author must be a string"")
+        author = author.strip()
+        if not author:
+            author = None
+
+    if year is not None:
+        try:
+            year = int(year)
+        except (TypeError, ValueError):
+            logging.warning(""Invalid publication year"")
+            return []
+        if year < 0:
+            logging.warning(""Publication year cannot be negative"")
+            return []
+
+    if author:
+        query += "" AND author = %s""
+        params.append(author)
+    if year:
+        query += "" AND publication_year = %s""
+        params.append(year)
+
+    try:
+        cursor.execute(query, params)
+        return cursor.fetchall()
+    except psycopg2.Error as e:
+        logging.error(f""Database error: {e}"")
+        return None
+
+def get_books_by_author_year(cursor, author=None, year=None):
+    return filter_books_by_author_year(cursor, author, year)",,,
+phi_89_py_1187,phi4:14b,python,CWE-89,no_code,0,Format a list of order records as CSV text.,none,21-40,36,none,not_applicable,,no_dangerous_call,,web_handler,"import csv
+from flask import Flask, request, Response
+
+app = Flask(__name__)
+
+@app.route('/format_orders', methods=['POST'])
+def format_orders():
+    data = request.json
+    if not isinstance(data, list):
+        return Response(""Invalid input"", status=400)
+
+    output = []
+    writer = csv.writer(output)
+    writer.writerow(['Order ID', 'Customer Name', 'Product', 'Quantity', 'Price'])
+
+    for record in data:
+        if all(key in record for key in ['order_id', 'customer_name', 'product', 'quantity', 'price']):
+            writer.writerow([
+                record['order_id'],
+                record['customer_name'],
+                record['product'],
+                record['quantity'],
+                record['price']
+            ])
+
+    return Response('\n'.join(output), mimetype='text/csv')
+
+if __name__ == '__main__':
+    app.run(debug=False)",,,
