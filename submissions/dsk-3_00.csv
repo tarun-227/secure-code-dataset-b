@@ -25,19 +25,19 @@ void searchProducts(sql::Connection* con, const std::string& searchTerm) {
     std::string query = ""SELECT * FROM products WHERE name LIKE '%"" + searchTerm + ""%'"";
     std::unique_ptr<sql::Statement> stmt(con->createStatement());
     stmt->executeQuery(query);
-}","[7]","Manually corrected with project lead approval: MySQL Connector/C++ implementation; fixed version validates search-term characters using an allow-list."
+}","[8,10]","Manually corrected with project lead approval: MySQL Connector/C++ implementation; fixed version validates search-term characters using an allow-list."
 "dsk_89_cpp_0326","deepseek-coder-v2:16b","cpp","CWE-89","hard_negative","0","Return the top N scores of a game.","sqlite3_c","6-10","7","per_pattern","web_request","","query_builder_bound","sqlite3_exec / sqlite3_prepare_v2","method","#include <sqlite3.h>
 #include <vector>
+sqlite3_stmt* buildTopScoresQuery(sqlite3* db, int N) {
+    sqlite3_stmt* stmt = nullptr; sqlite3_prepare_v2(db, ""SELECT score FROM scores ORDER BY score DESC LIMIT ?"", -1, &stmt, nullptr); sqlite3_bind_int(stmt, 1, N); return stmt;
+}
 struct GameDatabase {
 std::vector<int> getTopScores(sqlite3* db, int N) {
-        sqlite3_stmt* stmt;
-        sqlite3_prepare_v2(db, ""SELECT score FROM scores ORDER BY score DESC LIMIT ?"", -1, &stmt, nullptr);
-        sqlite3_bind_int(stmt, 1, N);
-        std::vector<int> scores;
-        while (sqlite3_step(stmt) == SQLITE_ROW) scores.push_back(sqlite3_column_int(stmt, 0));
-        sqlite3_finalize(stmt);
-        return scores;
-    }};","","","Manually shortened with project lead approval; retains SQLite parameter binding for the web-request-derived limit."
+    sqlite3_stmt* stmt = buildTopScoresQuery(db, N);
+    std::vector<int> scores;
+    while (sqlite3_step(stmt) == SQLITE_ROW) scores.push_back(sqlite3_column_int(stmt, 0));
+    sqlite3_finalize(stmt); return scores;
+}};","","","Manually restructured with project lead approval; query helper uses a placeholder and binds the web-request-derived limit."
 "dsk_89_cpp_0332","deepseek-coder-v2:16b","cpp","CWE-89","hard_positive","1","Count the rows of a lookup table chosen by name.","mysql_connector_cpp","41-100","64","string_concatenation","network_message","allow_list","identifier_from_input","sql::Statement::executeQuery / execute","callback_or_async","#include <mysql_driver.h>
 #include <mysql_connection.h>
 #include <cppconn/statement.h>
@@ -229,10 +229,10 @@ public:
 class EmployeeSorter {
 public:
     std::vector<Employee> employees;
-void addEmployee(int id, double salary) {
+    void addEmployee(int id, double salary) {
         employees.emplace_back(id, salary);
     }
-void sortBySalary() {
+    void sortBySalary() {
         std::sort(employees.begin(), employees.end(), [](const Employee& a, const Employee& b) {
             return a.salary < b.salary;
         });
