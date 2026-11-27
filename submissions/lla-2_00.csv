@@ -1,0 +1,127 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_c_0714,llama3.1:8b,c,CWE-89,normal,1,Reset the failed-login counter for an account name.,mysql_c,1-5,3,strcat,function_argument,parameterised_query,plain_vulnerable,mysql_query,callback_or_async,"#include <mysql/mysql.h>
+
+void reset_failed_login_counter(MYSQL *conn, char *account_name) {
+    sprintf(query, ""UPDATE accounts SET failed_logins = 0 WHERE name = '%s'"", account_name);
+    mysql_query(conn, query);
+}","#include <mysql/mysql.h>
+
+void reset_failed_login_counter(MYSQL *conn, char *account_name) {
+    MYSQL_STMT *stmt;
+    stmt = mysql_stmt_init(conn);
+    mysql_stmt_prepare(stmt, ""UPDATE accounts SET failed_logins = 0 WHERE name = %s"", strlen(account_name));
+    mysql_stmt_bind_param(stmt, account_name);
+    mysql_stmt_execute(stmt);
+}",[4],
+lla_89_c_0701,llama3.1:8b,c,CWE-89,hard_negative,0,"List tickets filtered by any of: assignee, priority, label.",libpq,21-40,27,per_pattern,web_request,,fstring_placeholders_only,PQexec,web_handler,"#include <libpq-fe.h>
+#include <string.h>
+
+void list_tickets(PGconn *dbconn) {
+    PGresult *res;
+    const char *query = ""SELECT * FROM tickets WHERE "";
+    int i;
+
+    // Get filter parameters from request
+    const char *assignee = getenv(""ASSIGNEE"");
+    const char *priority = getenv(""PRIORITY"");
+    const char *label = getenv(""LABEL"");
+
+    // Build query string with placeholders for filters
+    if (assignee) {
+        res = PQexecPrepared(dbconn, ""SELECT * FROM tickets WHERE assignee = $1"", 1, &assignee, NULL);
+    } else if (priority) {
+        res = PQexecPrepared(dbconn, ""SELECT * FROM tickets WHERE priority = $1"", 1, &priority, NULL);
+    } else if (label) {
+        res = PQexecPrepared(dbconn, ""SELECT * FROM tickets WHERE label = $1"", 1, &label, NULL);
+    }
+
+    // Execute query and fetch results
+    if (!res) {
+        PGresult *err = PQerrorMessage(dbconn);
+        printf(""%s\n"", PQerrorMessage(dbconn));
+        return;
+    }
+    res = PQexecPrepared(dbconn, ""SELECT * FROM tickets WHERE assignee = $1 OR priority = $2 OR label = $3"", 3, &assignee, &priority, &label);
+
+    // Fetch results and print
+    if (PQresultStatus(res) == PGRES_TUPLES_OK) {
+        int num_tuples = PQntuples(res);
+        for (i = 0; i < num_tuples; i++) {
+            printf(""%s\n"", PQgetvalue(res, i, 0));
+        }
+    }
+
+    // Clean up
+    PQclear(res);
+}",,,
+lla_89_c_0708,llama3.1:8b,c,CWE-89,hard_positive,1,Read a nickname saved at sign-up and list the forum posts signed with it.,sqlite3_c,6-10,10,snprintf,database_value,parameterised_query,second_order_stored_value,sqlite3_exec / sqlite3_prepare_v2,web_handler,"#include <sqlite3.h>
+#include <string.h>
+
+void list_posts_by_nickname(sqlite3* db, const char* nickname) {
+    sqlite3_stmt* stmt;
+    char query[256];
+
+    snprintf(query, sizeof(query), ""SELECT * FROM posts WHERE author = %s"", nickname);
+
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, NULL) != SQLITE_OK)
+        return;
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+        printf(""%s\n"", sqlite3_column_text(stmt, 0));
+
+    sqlite3_finalize(stmt);
+}","#include <sqlite3.h>
+#include <string.h>
+
+void list_posts_by_nickname(sqlite3* db, const char* nickname) {
+    sqlite3_stmt* stmt;
+    static const char* query = ""SELECT * FROM posts WHERE author = ?"";
+
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, NULL) != SQLITE_OK)
+        return;
+
+    sqlite3_bind_text(stmt, 1, nickname, -1, SQLITE_STATIC);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+        printf(""%s\n"", sqlite3_column_text(stmt, 0));
+
+    sqlite3_finalize(stmt);
+}",[8],
+lla_89_c_0722,llama3.1:8b,c,CWE-89,safe,0,Delete a comment by its numeric id if it belongs to the current user.,mysql_c,11-20,13,parameterised,command_line,,standard_safe,mysql_query,cli_entry,"#include <mysql/mysql.h>
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    if (argc != 3) return 1;
+
+    MYSQL *conn = mysql_init(NULL);
+    if (!mysql_real_connect(conn, ""localhost"", ""user"", ""password"", ""database"", 0, NULL, 0)) return 2;
+    if (!mysql_query(conn, ""SELECT COUNT(*) FROM comments WHERE user_id=? AND id=?"", argv[1], argv[2])) {
+        MYSQL_RES *result = mysql_store_result(conn);
+        int count = mysql_num_rows(result);
+        if (count > 0) {
+            if (!mysql_query(conn, ""DELETE FROM comments WHERE user_id=? AND id=?"", argv[1], argv[2])) return 3;
+        }
+    }
+
+    mysql_close(conn);
+    return 0;
+}",,,
+lla_89_c_0712,llama3.1:8b,c,CWE-89,no_code,0,Truncate a long description to a maximum length.,none,11-20,18,none,not_applicable,,no_dangerous_call,,helper_called_by_caller,"#include <string.h>
+
+#define MAX_LENGTH 50
+
+char* truncate_description(char* description) {
+    if (description == NULL || strlen(description) <= MAX_LENGTH) {
+        return description;
+    }
+
+    char truncated[MAX_LENGTH + 1];
+    strncpy(truncated, description, MAX_LENGTH);
+    truncated[MAX_LENGTH] = '\0';
+
+    return truncated;
+}
+
+char* short_description(char* code) {
+    return truncate_description(code->description);
+}",,,
