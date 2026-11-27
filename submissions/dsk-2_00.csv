@@ -1,0 +1,89 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_c_0314,deepseek-coder-v2:16b,c,CWE-89,normal,1,"Return one page of results, given a limit and an offset.",libpq,1-5,5,snprintf,environment,parameterised_query,plain_vulnerable,PQexec,method,"#include <libpq-fe.h>
+#include <stdio.h>
+#include <stdlib.h>
+void fetch_page(PGconn *conn, void (*callback)(PGresult *, void *), void *arg) {
+    const char *limit = getenv(""PAGE_LIMIT""), *offset = getenv(""PAGE_OFFSET"");
+    char query[256]; snprintf(query, sizeof(query), ""SELECT * FROM records LIMIT %s OFFSET %s"", limit, offset);
+    PGresult *res = PQexec(conn, query); callback(res, arg); PQclear(res);
+}","#include <libpq-fe.h>
+#include <stdio.h>
+#include <stdlib.h>
+void fetch_page(PGconn *conn, void (*callback)(PGresult *, void *), void *arg) {
+    const char *limit = getenv(""PAGE_LIMIT""), *offset = getenv(""PAGE_OFFSET""); const char *params[] = {limit, offset};
+    const char *sql = ""SELECT * FROM records LIMIT $1 OFFSET $2"";
+    PGresult *res = PQexecParams(conn, sql, 2, NULL, params, NULL, NULL, 0); callback(res, arg); PQclear(res);
+}",[6],
+dsk_89_c_0301,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Look up a session record by session token.,sqlite3_c,21-40,37,per_pattern,database_value,,fstring_placeholders_only,sqlite3_exec / sqlite3_prepare_v2,web_handler,"#include <sqlite3.h>
+#include <stdio.h>
+int lookup_session(sqlite3 *db, const char *session_token, int row_limit, void (*callback)(sqlite3_stmt *, void *), void *context) {
+    char sql[256];
+    sqlite3_stmt *stmt = NULL;
+    int status;
+    if (db == NULL || session_token == NULL) return SQLITE_MISUSE;
+    if (row_limit < 1) row_limit = 1;
+    if (row_limit > 100) row_limit = 100;
+    snprintf(sql, sizeof(sql), ""SELECT session_id, user_id, expires_at FROM sessions WHERE session_token = ? LIMIT %d"", row_limit);
+    status = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (status != SQLITE_OK) return status;
+    status = sqlite3_bind_text(stmt, 1, session_token, -1, SQLITE_TRANSIENT);
+    if (status != SQLITE_OK) { sqlite3_finalize(stmt); return status; }
+    while ((status = sqlite3_step(stmt)) == SQLITE_ROW) {
+        if (callback != NULL) callback(stmt, context);
+    }
+    if (status != SQLITE_DONE) {
+        sqlite3_finalize(stmt);
+        return status;
+    }
+    sqlite3_finalize(stmt);
+    return SQLITE_OK;
+}",,,
+dsk_89_c_0309,deepseek-coder-v2:16b,c,CWE-89,hard_positive,1,Fetch a configuration value by key for a tenant name.,mysql_c,6-10,9,strcat,network_message,parameterised_query,hand_written_escaping,mysql_query,method,"#include <mysql/mysql.h>
+#include <string.h>
+static void escape_quotes(char *out, const char *in) { while (*in) { if (*in == '\'') *out++ = '\\'; *out++ = *in++; } *out = '\0'; }
+void fetch_config(MYSQL *db, const char *tenant, const char *key) { char escaped[256], query[512]; escape_quotes(escaped, tenant); strcpy(query, ""SELECT value FROM config WHERE tenant='"");
+strcat(query, escaped);
+strcat(query, ""' AND config_key='"");
+strcat(query, key);
+strcat(query, ""'"");
+mysql_query(db, query);
+}","#include <mysql/mysql.h>
+#include <string.h>
+void fetch_config(MYSQL *db, const char *tenant, const char *key) {
+MYSQL_STMT *stmt = mysql_stmt_init(db); MYSQL_BIND bind[2] = {0}; const char *sql = ""SELECT value FROM config WHERE tenant=? AND config_key=?"";
+if (stmt) { bind[0].buffer_type = MYSQL_TYPE_STRING; bind[0].buffer = (void *)tenant; bind[0].buffer_length = strlen(tenant);
+bind[1].buffer_type = MYSQL_TYPE_STRING; bind[1].buffer = (void *)key; bind[1].buffer_length = strlen(key);
+if (mysql_stmt_prepare(stmt, sql, strlen(sql)) == 0 && mysql_stmt_bind_param(stmt, bind) == 0) mysql_stmt_execute(stmt);
+mysql_stmt_close(stmt); }
+}","[3, 5, 7]",
+dsk_89_c_0323,deepseek-coder-v2:16b,c,CWE-89,safe,0,Fetch a patient's appointments by patient number.,sqlite3_c,11-20,18,parameterised,function_argument,,standard_safe,sqlite3_exec / sqlite3_prepare_v2,callback_or_async,"#include <stddef.h>
+#include <sqlite3.h>
+typedef void (*AppointmentCallback)(int, const char *, const char *, void *);
+void fetch_appointments(sqlite3 *db, int patient_number, AppointmentCallback callback, void *context) {
+    const char *sql = ""SELECT appointment_id, appointment_date, description FROM appointments WHERE patient_number = ?1"";
+    sqlite3_stmt *stmt = NULL;
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) return;
+    if (sqlite3_bind_int(stmt, 1, patient_number) != SQLITE_OK) { sqlite3_finalize(stmt); return; }
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *date = sqlite3_column_text(stmt, 1);
+        const unsigned char *description = sqlite3_column_text(stmt, 2);
+        if (callback != NULL) callback(id, (const char *)date, (const char *)description, context);
+    }
+    sqlite3_finalize(stmt);
+}",,,
+dsk_89_c_0312,deepseek-coder-v2:16b,c,CWE-89,no_code,0,Format a list of order records as CSV text.,none,11-20,15,none,not_applicable,,no_dangerous_call,,callback_or_async,"#include <stddef.h>
+#include <stdio.h>
+typedef struct { unsigned int id; const char *customer; double total; } Order;
+size_t format_orders_csv(const Order *orders, size_t count, char *out, size_t capacity, void (*callback)(const char *, void *), void *context) {
+    size_t used = 0;
+    if (out == NULL || capacity == 0) return 0;
+    out[0] = '\0';
+    for (size_t i = 0; i < count; ++i) {
+        int written = snprintf(out + used, capacity - used, ""%u,\""%s\"",%.2f\n"", orders[i].id, orders[i].customer, orders[i].total);
+        if (written < 0 || (size_t)written >= capacity - used) return 0;
+        used += (size_t)written;
+    }
+    if (callback != NULL) callback(out, context);
+    return used;
+}",,,
