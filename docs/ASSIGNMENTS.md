@@ -20,11 +20,11 @@ Each model has a team of three. Every slot owns a fixed set of cells (weakness Ã
 |---|---|---|
 | `lla-1` | @rochanmb0447 | |
 | `lla-2` | @DineshMoorthy007 | |
-| `lla-3` | @dharshanvp2006-ship-it | |
+| `lla-3` | @rajverse-dev | |
 | `phi-1` | @sabarishd007-star | |
-| `phi-2` | @Nithish-codes | |
+| `phi-2` | @dharshanvp2006-ship-it | |
 | `phi-3` | @K-VIGNESH07 | |
-| `dsk-1` | @rajverse-dev | |
+| `dsk-1` | @Nithish-codes | |
 | `dsk-2` | @Sabarish-A-2006 | |
 | `dsk-3` | @Moni-stack | |
 
