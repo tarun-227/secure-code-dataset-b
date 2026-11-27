@@ -1,0 +1,99 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_c_0314,deepseek-coder-v2:16b,c,CWE-89,normal,1,"Return one page of results, given a limit and an offset.",libpq,1-5,5,snprintf,environment,parameterised_query,plain_vulnerable,PQexec,method,"void fetch_results(PGconn *conn, int limit, int offset) { char query[100];
+snprintf(query, sizeof(query), ""SELECT * FROM your_table LIMIT %d OFFSET %d"", limit, offset);
+PGresult *res = PQexec(conn, query);
+if (res && PQresultStatus(res) == PGRES_TUPLES_OK) { /* process results */ }
+if (res) PQclear(res); }","void fetch_results(PGconn *conn, int limit, int offset) {
+char limit_text[16], offset_text[16];
+snprintf(limit_text, sizeof(limit_text), ""%d"", limit);
+snprintf(offset_text, sizeof(offset_text), ""%d"", offset);
+const char *params[] = {limit_text, offset_text};
+PGresult *res = PQexecParams(conn, ""SELECT * FROM your_table LIMIT $1 OFFSET $2"", 2, NULL, params, NULL, NULL, 0);
+}",[2],
+dsk_89_c_0301,deepseek-coder-v2:16b,c,CWE-89,hard_negative,0,Look up a session record by session token.,sqlite3_c,21-40,37,per_pattern,database_value,,fstring_placeholders_only,sqlite3_exec / sqlite3_prepare_v2,web_handler,"#include <sqlite3.h>
+#include <stdio.h>
+
+int callback(void *data, int argc, char **argv, char **azColName) {
+    printf(""%s: %s\n"", argv[0], argv[1]);
+    return 0;
+}
+
+int lookup_session(sqlite3 *db, const char *token) {
+    char *sql = ""SELECT * FROM sessions WHERE token = ?"";
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, ""SQL error: %s\n"", sqlite3_errmsg(db));
+        return 1;
+    }
+    sqlite3_bind_text(stmt, 1, token, -1, SQLITE_STATIC);
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+        printf(""Session found:\n"");
+        printf(""%s: %s\n"", sqlite3_column_name(stmt, 0), sqlite3_column_text(stmt, 0));
+        printf(""%s: %s\n"", sqlite3_column_name(stmt, 1), sqlite3_column_text(stmt, 1));
+    } else {
+        printf(""No session found for token: %s\n"", token);
+    }
+    sqlite3_finalize(stmt);
+    return 0;
+}",,,
+dsk_89_c_0309,deepseek-coder-v2:16b,c,CWE-89,hard_positive,1,Fetch a configuration value by key for a tenant name.,mysql_c,6-10,9,strcat,network_message,parameterised_query,hand_written_escaping,mysql_query,method,"void fetch_config_value(MYSQL *conn, const char *tenant_name, const char *key) { char query[256];
+strcpy(query, ""SELECT value FROM config WHERE tenant = '"");
+strcat(query, tenant_name);
+strcat(query, ""' AND `key` = '"");
+strcat(query, key);
+strcat(query, ""'"");
+mysql_query(conn, query);
+MYSQL_RES *res = mysql_store_result(conn);
+if (res) mysql_free_result(res); }","void fetch_config_value(MYSQL *conn, const char *tenant_name, const char *key) {
+MYSQL_STMT *stmt = mysql_stmt_init(conn);
+const char *sql = ""SELECT value FROM config WHERE tenant = ? AND `key` = ?"";
+MYSQL_BIND bind[2] = {0};
+bind[0].buffer_type = MYSQL_TYPE_STRING; bind[0].buffer = (void *)tenant_name; bind[0].buffer_length = strlen(tenant_name);
+bind[1].buffer_type = MYSQL_TYPE_STRING; bind[1].buffer = (void *)key; bind[1].buffer_length = strlen(key);
+if (!stmt || mysql_stmt_prepare(stmt, sql, strlen(sql)) || mysql_stmt_bind_param(stmt, bind) || mysql_stmt_execute(stmt)) { if (stmt) mysql_stmt_close(stmt); return; }
+mysql_stmt_close(stmt);
+}",[7],
+dsk_89_c_0323,deepseek-coder-v2:16b,c,CWE-89,safe,0,Fetch a patient's appointments by patient number.,sqlite3_c,11-20,18,parameterised,function_argument,,standard_safe,sqlite3_exec / sqlite3_prepare_v2,callback_or_async,"#include <sqlite3.h>
+#include <stdio.h>
+
+int fetchAppointments(sqlite3 *db, int patientNumber, void (*callback)(void*,int,char**,char**), void *data) {
+    char *sql = ""SELECT * FROM appointments WHERE patientNumber = ?"";
+    sqlite3_stmt *stmt;
+    int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        return rc;
+    }
+    rc = sqlite3_bind_int(stmt, 1, patientNumber);
+    if (rc != SQLITE_OK) {
+        sqlite3_finalize(stmt);
+        return rc;
+    }
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        sqlite3_finalize(stmt);
+        return rc;
+    }
+    rc = sqlite3_finalize(stmt);
+    return rc;
+}",,,
+dsk_89_c_0312,deepseek-coder-v2:16b,c,CWE-89,no_code,0,Format a list of order records as CSV text.,none,11-20,15,none,not_applicable,,no_dangerous_call,,callback_or_async,"#include <stdio.h>
+
+typedef struct {
+    int order_id;
+    char customer_name[100];
+    float amount;
+} Order;
+
+void format_order_as_csv(Order order, void (*callback)(const char*)) {
+    char csv[200];
+    snprintf(csv, sizeof(csv), ""%d,%s,%.2f"", order.order_id, order.customer_name, order.amount);
+    callback(csv);
+}
+
+int main() {
+    Order order = {1, ""John Doe"", 150.75};
+    format_order_as_csv(order, printf);
+    return 0;
+}",,,
