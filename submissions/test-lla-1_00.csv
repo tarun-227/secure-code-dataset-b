@@ -1,0 +1,195 @@
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+lla_89_py_0788,llama3.1:8b,python,CWE-89,normal,1,"List the newest posts in a category, sorted by a column the caller chooses.",sqlalchemy_text,1-5,4,percent_format,network_message,allow_list,plain_vulnerable,cursor.execute,callback_or_async,"import sqlalchemy
+
+def get_newest_posts(cursor, category, column):
+    query = ""SELECT * FROM posts WHERE category = '%s' ORDER BY %s DESC LIMIT 10;"" % (category, column)
+    cursor.execute(query)
+    return cursor.fetchall()","import sqlalchemy
+from typing import List
+
+def get_allowed_columns() -> List[str]:
+    # Define allowed columns
+    return ['created_at', 'updated_at', 'published_at']
+
+def get_newest_posts(cursor, category, column):
+    if column not in get_allowed_columns():
+        raise ValueError(f""Invalid column: {column}"")
+    query = ""SELECT * FROM posts WHERE category = %s ORDER BY %s DESC LIMIT 10;""
+    cursor.execute(query, (category,))
+    return cursor.fetchall()","[4, 5]","checked: vulnerable_lines [4, 5] are right (guessed from the fix)"
+lla_89_py_0776,llama3.1:8b,python,CWE-89,hard_negative,0,Find employees whose salary is above a threshold.,mysql_connector,41-100,68,per_pattern,database_value,,integer_forced,cursor.execute,web_handler,"import mysql.connector
+from mysql.connector import Error
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def get_employee_threshold_db_config():
+    # Configuration for database connection
+    return {
+        'user': 'your_username',
+        'password': 'your_password',
+        'host': 'your_host',
+        'database': 'your_database'
+    }
+
+def convert_threshold_to_int(threshold):
+    try:
+        return int(threshold)
+    except ValueError:
+        logger.error(""Threshold must be an integer"")
+        raise
+
+def get_employees_above_threshold(threshold):
+    db_config = get_employee_threshold_db_config()
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        threshold = convert_threshold_to_int(threshold)
+        query = ""SELECT * FROM employees WHERE salary > %s""
+        cursor.execute(query, (threshold,))
+        employees = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return employees
+    except Error as e:
+        logger.error(f""Error getting employees: {e}"")
+        raise
+
+def get_threshold():
+    query = ""SELECT threshold FROM config WHERE name = 'salary_threshold'""
+    db_config = get_employee_threshold_db_config()
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        result = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if result:
+            return result[0]
+        else:
+            logger.error(""Threshold not found in database"")
+            raise
+    except Error as e:
+        logger.error(f""Error getting threshold: {e}"")
+        raise
+
+def main():
+    threshold = get_threshold()
+    try:
+        employees = get_employees_above_threshold(threshold)
+        for employee in employees:
+            print(employee)
+    except Exception as e:
+        logger.error(f""Error processing threshold: {e}"")",,,
+lla_89_py_0783,llama3.1:8b,python,CWE-89,hard_positive,1,Reset the failed-login counter for an account name.,sqlite3,21-40,33,percent_format,web_request,parameterised_query,hand_written_escaping,cursor.execute,web_handler,"import sqlite3
+import logging
+from urllib.parse import parse_qs
+
+def reset_failed_login(conn, query_string):
+    params = parse_qs(query_string)
+    account_name = params.get('account_name', [None])[0]
+
+    if account_name is None:
+        return 'Missing account name'
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM accounts WHERE name = %s' % account_name)
+    result = cursor.fetchone()
+
+    if result is None:
+        return 'Account not found'
+
+    cursor.execute('UPDATE accounts SET failed_logins = 0 WHERE name = %s' % account_name)
+    conn.commit()
+
+    return 'Failed login counter reset'
+
+def handle_request(request):
+    query_string = request.GET.get('account_name')
+    if query_string is not None:
+        return reset_failed_login(request.conn, query_string)
+    return 'Invalid request'
+
+def handle_json_body(request):
+    if request.json:
+        return reset_failed_login(request.conn, request.json['account_name'])
+    return 'Invalid request'
+
+def handle_url_path(request):
+    path = request.path.strip('/')
+    return reset_failed_login(request.conn, 'account_name=' + path)
+
+def handle_form_field(request):
+    form = request.form
+    if form.get('account_name'):
+        return reset_failed_login(request.conn, 'account_name=' + form['account_name'])
+    return 'Invalid request'","import sqlite3
+import logging
+from urllib.parse import parse_qs
+
+def reset_failed_login(conn, query_string):
+    params = parse_qs(query_string)
+    account_name = params.get('account_name', [None])[0]
+
+    if account_name is None:
+        return 'Missing account name'
+
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM accounts WHERE name = ?', (account_name,))
+    result = cursor.fetchone()
+
+    if result is None:
+        return 'Account not found'
+
+    cursor.execute('UPDATE accounts SET failed_logins = 0 WHERE name = ?', (account_name,))
+    conn.commit()
+
+    return 'Failed login counter reset'
+
+def handle_request(request):
+    query_string = request.GET.get('account_name')
+    if query_string is not None:
+        return reset_failed_login(request.conn, query_string)
+    return 'Invalid request'
+
+def handle_json_body(request):
+    if request.json:
+        return reset_failed_login(request.conn, request.json['account_name'])
+    return 'Invalid request'
+
+def handle_url_path(request):
+    path = request.path.strip('/')
+    return reset_failed_login(request.conn, 'account_name=' + path)
+
+def handle_form_field(request):
+    form = request.form
+    if form.get('account_name'):
+        return reset_failed_login(request.conn, 'account_name=' + form['account_name'])
+    return 'Invalid request'","[13, 19]","FAILED: after 6 tries the model never adds hand-written escaping, so this is a plain vulnerable query, not a hard positive"
+lla_89_py_0800,llama3.1:8b,python,CWE-89,safe,0,Return the leaderboard for a game mode name.,mysql_connector,6-10,10,parameterised,command_line,,standard_safe,cursor.execute,method,"import mysql.connector
+
+class GameModeLeaderboard:
+    def __init__(self, db_connection):
+        self.db_connection = db_connection
+
+    def get_leaderboard(self, game_mode_name):
+        cursor = self.db_connection.cursor()
+        query = (""SELECT * FROM leaderboard ""
+                 ""WHERE game_mode_name = %s ""
+                 ""ORDER BY score DESC"")
+        cursor.execute(query, (game_mode_name,))
+        return cursor.fetchall()",,,
+lla_89_py_0786,llama3.1:8b,python,CWE-89,no_code,0,Sort a list of employees by salary.,none,6-10,8,none,not_applicable,,no_dangerous_call,,cli_entry,"import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('employees', nargs='+')
+args = parser.parse_args()
+
+employees = [{'name': e.split(',')[0], 'salary': int(e.split(',')[1])} for e in args.employees]
+
+sorted_employees = sorted(employees, key=lambda x: x['salary'])
+for e in sorted_employees:
+    print(f""{e['name']}: {e['salary']}"")",,,
