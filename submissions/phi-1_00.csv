@@ -15,59 +15,57 @@ class SensorDataFetcher:
         query = ""SELECT * FROM readings WHERE sensor_id = '%s' ORDER BY timestamp DESC LIMIT 1"" % sensor_id
         return session.execute(text(query)).fetchone()","[7, 8]",The environment variable is inserted directly into the SQL query without integer conversion.
 phi_89_py_1176,phi4:14b,python,CWE-89,hard_negative,0,Return the top N scores of a game.,psycopg2,6-10,7,per_pattern,file_content,,fstring_placeholders_only,cursor.execute (psycopg2),cli_entry,"import psycopg2
-import sys
-
-def get_top_scores(n):
-    with open(sys.argv[1], 'r') as f:
-        conn = psycopg2.connect(f.read())
+def get_top_scores():
+    n = int(open(""scores.txt"").read().strip())
+    placeholder = ""%s""
+    query = f""SELECT score FROM game_scores ORDER BY score DESC LIMIT {placeholder}""
+    with psycopg2.connect(""dbname=game user=youruser password=yourpassword"") as conn:
         with conn.cursor() as cur:
-            cur.execute(""SELECT score FROM scores ORDER BY score DESC LIMIT %s"", (n,))
+            cur.execute(query, (n,))
             return cur.fetchall()
-
-if __name__ == ""__main__"":
-    n = int(sys.argv[2])
-    print(get_top_scores(n))",,,
+if __name__ == ""__main__"": get_top_scores()
+",,,
 phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,Model.objects.raw / connection.cursor().execute,cli_entry,"import sys
 from django.db import connection
 from myapp.models import User
 
-def main():
+def count_signups():
     country = sys.argv[1] if len(sys.argv) > 1 else None
 
     if country:
         query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = '{}' GROUP BY country"".format(country)
-        cursor = connection.cursor()
-        cursor.execute(query)
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            results = cursor.fetchall()
     else:
         query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
-        cursor = connection.cursor()
-        cursor.execute(query)
+        results = User.objects.raw(query)
 
-    for row in cursor.fetchall():
-        print(row)
+    for result in results:
+        print(result)
 
 if __name__ == ""__main__"":
-    main()","import sys
+    count_signups()","import sys
 from django.db import connection
 from myapp.models import User
 
-def main():
+def count_signups():
     country = sys.argv[1] if len(sys.argv) > 1 else None
 
     if country:
         query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = %s GROUP BY country""
-        cursor = connection.cursor()
-        cursor.execute(query, [country])
+        with connection.cursor() as cursor:
+            cursor.execute(query, [country])
+            results = cursor.fetchall()
     else:
         query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
-        cursor = connection.cursor()
-        cursor.execute(query)
+        results = User.objects.raw(query)
 
-    for row in cursor.fetchall():
-        print(row)
+    for result in results:
+        print(result)
 
 if __name__ == ""__main__"":
-    main()","[9, 11, 13, 15]",
+    count_signups()","[9, 11]",
 phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute (psycopg2),helper_called_by_caller,"import psycopg2
 import logging
 
@@ -109,6 +107,7 @@ def filter_books_by_author_year(cursor, author=None, year=None):
 def get_books_by_author_year(cursor, author=None, year=None):
     return filter_books_by_author_year(cursor, author, year)",,,
 phi_89_py_1187,phi4:14b,python,CWE-89,no_code,0,Format a list of order records as CSV text.,none,21-40,36,none,not_applicable,,no_dangerous_call,,web_handler,"import csv
+import io
 from flask import Flask, request, Response
 
 app = Flask(__name__)
@@ -119,7 +118,7 @@ def format_orders():
     if not isinstance(data, list):
         return Response(""Invalid input"", status=400)
 
-    output = []
+    output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow(['Order ID', 'Customer Name', 'Product', 'Quantity', 'Price'])
 
@@ -133,7 +132,8 @@ def format_orders():
                 record['price']
             ])
 
-    return Response('\n'.join(output), mimetype='text/csv')
+    return Response(output.getvalue(), mimetype='text/csv')
 
 if __name__ == '__main__':
-    app.run(debug=False)",,,
+    app.run(debug=False)
+",,,
