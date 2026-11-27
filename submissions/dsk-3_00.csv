@@ -1,0 +1,240 @@
+﻿"sample_id","generator","language","cwe","case_type","label","task_description","cwe_detail","band","target_lines","build_style","source","fix_type","pattern","suggested_sink","shape","code","fixed_code","vulnerable_lines","notes"
+"dsk_89_cpp_0338","deepseek-coder-v2:16b","cpp","CWE-89","normal","1","Search products whose name contains a search term.","mysql_connector_cpp","1-5","4","ostringstream","network_message","allow_list","plain_vulnerable","sql::Statement::executeQuery / execute","plain_function","#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include <string>
+
+void searchProducts(sql::Connection* con, const std::string& searchTerm) {
+    std::string query = ""SELECT * FROM products WHERE name LIKE '%"" + searchTerm + ""%'"";
+    std::unique_ptr<sql::Statement> stmt(con->createStatement());
+    stmt->executeQuery(query);
+}","#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include <string>
+#include <memory>
+#include <algorithm>
+#include <cctype>
+
+void searchProducts(sql::Connection* con, const std::string& searchTerm) {
+    const bool valid = std::all_of(searchTerm.begin(), searchTerm.end(),
+        [](unsigned char c) { return std::isalnum(c) || c == ' '; });
+    if (!valid) return;
+    std::string query = ""SELECT * FROM products WHERE name LIKE '%"" + searchTerm + ""%'"";
+    std::unique_ptr<sql::Statement> stmt(con->createStatement());
+    stmt->executeQuery(query);
+}","[8,10]","Manually corrected with project lead approval: MySQL Connector/C++ implementation; fixed version validates search-term characters using an allow-list."
+"dsk_89_cpp_0326","deepseek-coder-v2:16b","cpp","CWE-89","hard_negative","0","Return the top N scores of a game.","sqlite3_c","6-10","7","per_pattern","web_request","","query_builder_bound","sqlite3_exec / sqlite3_prepare_v2","method","#include <sqlite3.h>
+#include <vector>
+sqlite3_stmt* buildTopScoresQuery(sqlite3* db, int N) {
+    sqlite3_stmt* stmt = nullptr; sqlite3_prepare_v2(db, ""SELECT score FROM scores ORDER BY score DESC LIMIT ?"", -1, &stmt, nullptr); sqlite3_bind_int(stmt, 1, N); return stmt;
+}
+struct GameDatabase {
+std::vector<int> getTopScores(sqlite3* db, int N) {
+    sqlite3_stmt* stmt = buildTopScoresQuery(db, N);
+    std::vector<int> scores;
+    while (sqlite3_step(stmt) == SQLITE_ROW) scores.push_back(sqlite3_column_int(stmt, 0));
+    sqlite3_finalize(stmt); return scores;
+}};","","","Manually restructured with project lead approval; query helper uses a placeholder and binds the web-request-derived limit."
+"dsk_89_cpp_0332","deepseek-coder-v2:16b","cpp","CWE-89","hard_positive","1","Count the rows of a lookup table chosen by name.","mysql_connector_cpp","41-100","64","string_concatenation","network_message","allow_list","identifier_from_input","sql::Statement::executeQuery / execute","callback_or_async","#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include <cppconn/exception.h>
+#include <algorithm>
+#include <exception>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <set>
+#include <string>
+
+void handleLookupMessage(
+    sql::Connection* connection,
+    const std::string& networkMessage,
+    std::function<void(int)> callback
+) {
+    if (connection == nullptr) {
+        std::cerr << ""Database connection is unavailable"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    if (networkMessage.empty() || networkMessage.size() > 128) {
+        std::cerr << ""Invalid lookup message"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    const std::set<std::string> allowedTables = {
+        ""users"", ""orders"", ""products""
+    };
+    const bool isKnownTable = std::any_of(
+        allowedTables.begin(), allowedTables.end(),
+        [&](const std::string& allowed) {
+            return networkMessage.compare(0, allowed.size(), allowed) == 0;
+        }
+    );
+
+    if (!isKnownTable) {
+        std::cerr << ""Lookup table is not recognized"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    try {
+        std::string query = ""SELECT COUNT(*) FROM "" + networkMessage;
+        std::unique_ptr<sql::Statement> statement(
+            connection->createStatement()
+        );
+        std::unique_ptr<sql::ResultSet> result(
+            statement->executeQuery(query)
+        );
+
+        if (!result->next()) {
+            std::cerr << ""Lookup returned no result"" << std::endl;
+            callback(0);
+            return;
+        }
+
+        const int rowCount = result->getInt(1);
+        std::cout << ""Lookup completed with "" << rowCount << "" rows"" << std::endl;
+        callback(rowCount);
+    } catch (const sql::SQLException& error) {
+        std::cerr << ""Database lookup failed: "" << error.what() << std::endl;
+        callback(-1);
+    } catch (const std::exception& error) {
+        std::cerr << ""Lookup processing failed: "" << error.what() << std::endl;
+        callback(-1);
+    }
+}","#include <mysql_driver.h>
+#include <mysql_connection.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
+#include <cppconn/exception.h>
+#include <algorithm>
+#include <exception>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <set>
+#include <string>
+
+void handleLookupMessage(
+    sql::Connection* connection,
+    const std::string& networkMessage,
+    std::function<void(int)> callback
+) {
+    if (connection == nullptr) {
+        std::cerr << ""Database connection is unavailable"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    if (networkMessage.empty() || networkMessage.size() > 128) {
+        std::cerr << ""Invalid lookup message"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    const std::set<std::string> allowedTables = {
+        ""users"", ""orders"", ""products""
+    };
+    const bool isKnownTable = std::any_of(
+        allowedTables.begin(), allowedTables.end(),
+        [&](const std::string& allowed) {
+            return networkMessage == allowed;
+        }
+    );
+
+    if (!isKnownTable) {
+        std::cerr << ""Lookup table is not recognized"" << std::endl;
+        callback(-1);
+        return;
+    }
+
+    try {
+        std::string query = ""SELECT COUNT(*) FROM "" + networkMessage;
+        std::unique_ptr<sql::Statement> statement(
+            connection->createStatement()
+        );
+        std::unique_ptr<sql::ResultSet> result(
+            statement->executeQuery(query)
+        );
+
+        if (!result->next()) {
+            std::cerr << ""Lookup returned no result"" << std::endl;
+            callback(0);
+            return;
+        }
+
+        const int rowCount = result->getInt(1);
+        std::cout << ""Lookup completed with "" << rowCount << "" rows"" << std::endl;
+        callback(rowCount);
+    } catch (const sql::SQLException& error) {
+        std::cerr << ""Database lookup failed: "" << error.what() << std::endl;
+        callback(-1);
+    } catch (const std::exception& error) {
+        std::cerr << ""Lookup processing failed: "" << error.what() << std::endl;
+        callback(-1);
+    }
+}","[48,53]","Manually restructured with project lead approval. Callback-based implementation; original prefix-based allow-list is incomplete. Fixed code uses exact allow-list matching."
+"dsk_89_cpp_0348","deepseek-coder-v2:16b","cpp","CWE-89","safe","0","Return one page of results, given a limit and an offset.","mysql_connector_cpp","21-40","29","parameterised","command_line","","standard_safe","sql::Statement::executeQuery / execute","plain_function","#include <cppconn/connection.h>
+#include <cppconn/prepared_statement.h>
+#include <cppconn/resultset.h>
+#include <cppconn/exception.h>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+
+void fetchPage(sql::Connection* con, int limit, int offset) {
+    if (con == nullptr) {
+        throw std::invalid_argument(""Database connection is required"");
+    }
+    if (limit <= 0 || offset < 0) {
+        throw std::invalid_argument(""Invalid pagination values"");
+    }
+
+    try {
+        std::unique_ptr<sql::PreparedStatement> pstmt(
+            con->prepareStatement(
+                ""SELECT * FROM products LIMIT ? OFFSET ?""
+            )
+        );
+        pstmt->setInt(1, limit);
+        pstmt->setInt(2, offset);
+
+        std::unique_ptr<sql::ResultSet> res(pstmt->executeQuery());
+
+        while (res->next()) {
+            std::cout << res->getString(1) << std::endl;
+        }
+    } catch (const sql::SQLException& e) {
+        std::cerr << ""Database error: "" << e.what() << std::endl;
+        throw;
+    }
+}","","",""
+"dsk_89_cpp_0337","deepseek-coder-v2:16b","cpp","CWE-89","no_code","0","Sort a list of employees by salary.","none","11-20","13","none","not_applicable","","no_dangerous_call","","method","#include <vector>
+#include <algorithm>
+
+class Employee {
+public:
+    int id;
+    double salary;
+    Employee(int i, double s) : id(i), salary(s) {}
+};
+
+class EmployeeSorter {
+public:
+    std::vector<Employee> employees;
+    void addEmployee(int id, double salary) {
+        employees.emplace_back(id, salary);
+    }
+    void sortBySalary() {
+        std::sort(employees.begin(), employees.end(), [](const Employee& a, const Employee& b) {
+            return a.salary < b.salary;
+        });
+    }
+};","","",""
