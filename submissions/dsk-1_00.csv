@@ -1,0 +1,261 @@
+
+sample_id,generator,language,cwe,case_type,label,task_description,cwe_detail,band,target_lines,build_style,source,fix_type,pattern,suggested_sink,shape,code,fixed_code,vulnerable_lines,notes
+dsk_89_py_0389,deepseek-coder-v2:16b,python,CWE-89,normal,1,Fetch the latest readings for a numeric sensor id.,django_raw,1-5,4,percent_format,network_message,type_conversion,plain_vulnerable,cursor.execute,callback_or_async,"import django
+from django.db import connections
+
+def fetch_latest_reading(cursor, sensor_id):
+    query = ""SELECT value FROM sensor_readings WHERE id = '%s'"" % sensor_id
+    cursor.execute(query)
+    result = cursor.fetchone()
+    return result","import django
+from django.db import connections
+
+def fetch_latest_reading(cursor, sensor_id):
+    query = ""SELECT value FROM sensor_readings WHERE id = %s""
+    cursor.execute(query, [sensor_id])
+    result = cursor.fetchone()
+    return result","[5, 6]",
+dsk_89_py_0376,deepseek-coder-v2:16b,python,CWE-89,hard_negative,0,Return the events matching a list of ids.,mysql_connector,21-40,25,per_pattern,environment,,generated_placeholders,cursor.execute,cli_entry,"import mysql.connector
+import os
+from mysql.connector import Error
+
+def get_events(ids):
+    try:
+        conn = mysql.connector.connect(
+            host=os.getenv('DB_HOST'),
+            database=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD')
+        )
+        cursor = conn.cursor()
+        query = ""SELECT * FROM events WHERE id IN (%s, %s, %s, %s, %s)""
+        cursor.execute(query, ids)
+        events = cursor.fetchall()
+        return events
+    except Error as e:
+        print(e)
+    finally:
+        if conn.is_connected():
+            cursor.close()
+            conn.close()
+
+if __name__ == ""__main__"":
+    ids = os.getenv('EVENT_IDS').split(',')
+    events = get_events(ids)
+    for event in events:
+        print(event)",,,
+dsk_89_py_0383,deepseek-coder-v2:16b,python,CWE-89,hard_positive,1,Find accounts whose email address ends with a given domain.,sqlite3,41-100,70,f_string,function_argument,parameterised_query,keyword_blocklist,cursor.execute,callback_or_async,"import asyncio
+import logging
+import sqlite3
+from typing import Any
+
+
+BLOCKED_TOKENS = (
+    ""drop "",
+    ""delete "",
+    ""insert "",
+    ""update "",
+    ""--"",
+    "";"",
+)
+
+
+def _normalize_domain_input(raw_domain: str) -> str:
+    trimmed = raw_domain.strip()
+    if trimmed.startswith(""@""):
+        trimmed = trimmed[1:]
+    cleaned = trimmed.lower()
+    return cleaned
+
+
+def _check_domain_tokens(candidate: str) -> bool:
+    lowered = candidate.lower()
+    for token in BLOCKED_TOKENS:
+        if token in lowered:
+            return False
+    return True
+
+
+def _validate_domain_structure(domain: str) -> bool:
+    if not domain:
+        return False
+    if len(domain) > 253:
+        return False
+    if "".."" in domain:
+        return False
+    return True
+
+
+def _format_account_row(row: tuple[Any, ...]) -> dict[str, Any]:
+    return {
+        ""account_id"": row[0],
+        ""username"": row[1],
+        ""email"": row[2],
+        ""active"": bool(row[3]),
+    }
+
+
+def _query_accounts_by_domain(db_path: str, domain: str) -> list[dict[str, Any]]:
+    conn: sqlite3.Connection | None = None
+    results: list[dict[str, Any]] = []
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        pattern = f""%@{domain}""
+        query = f""SELECT id, username, email, is_active FROM accounts WHERE email LIKE '{pattern}'""
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        for row in rows:
+            formatted = _format_account_row(row)
+            results.append(formatted)
+    except sqlite3.Error as exc:
+        logging.error(""Database lookup failed for domain %s: %s"", domain, exc)
+        raise
+    finally:
+        if conn is not None:
+            conn.close()
+    return results
+
+
+async def find_accounts_by_email_domain(db_path: str, domain: str) -> list[dict[str, Any]]:
+    if not isinstance(domain, str):
+        logging.warning(""Received non-string domain argument"")
+        raise ValueError(""Domain must be a string"")
+    normalized = _normalize_domain_input(domain)
+    if not _validate_domain_structure(normalized):
+        logging.warning(""Domain failed structural check: %s"", normalized)
+        raise ValueError(""Invalid domain format"")
+    if not _check_domain_tokens(normalized):
+        logging.warning(""Domain rejected by token check: %s"", normalized)
+        raise ValueError(""Disallowed token in domain"")
+    try:
+        accounts = await asyncio.to_thread(_query_accounts_by_domain, db_path, normalized)
+    except Exception as exc:
+        logging.error(""Async account search error: %s"", exc)
+        raise
+    logging.info(""Found %d accounts matching domain %s"", len(accounts), normalized)
+    return accounts","import asyncio
+import logging
+import sqlite3
+from typing import Any
+
+
+BLOCKED_TOKENS = (
+    ""drop "",
+    ""delete "",
+    ""insert "",
+    ""update "",
+    ""--"",
+    "";"",
+)
+
+
+def _normalize_domain_input(raw_domain: str) -> str:
+    trimmed = raw_domain.strip()
+    if trimmed.startswith(""@""):
+        trimmed = trimmed[1:]
+    cleaned = trimmed.lower()
+    return cleaned
+
+
+def _check_domain_tokens(candidate: str) -> bool:
+    lowered = candidate.lower()
+    for token in BLOCKED_TOKENS:
+        if token in lowered:
+            return False
+    return True
+
+
+def _validate_domain_structure(domain: str) -> bool:
+    if not domain:
+        return False
+    if len(domain) > 253:
+        return False
+    if "".."" in domain:
+        return False
+    return True
+
+
+def _format_account_row(row: tuple[Any, ...]) -> dict[str, Any]:
+    return {
+        ""account_id"": row[0],
+        ""username"": row[1],
+        ""email"": row[2],
+        ""active"": bool(row[3]),
+    }
+
+
+def _query_accounts_by_domain(db_path: str, domain: str) -> list[dict[str, Any]]:
+    conn: sqlite3.Connection | None = None
+    results: list[dict[str, Any]] = []
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        pattern = f""%@{domain}""
+        query = ""SELECT id, username, email, is_active FROM accounts WHERE email LIKE ?""
+        cursor.execute(query, (pattern,))
+        rows = cursor.fetchall()
+        for row in rows:
+            formatted = _format_account_row(row)
+            results.append(formatted)
+    except sqlite3.Error as exc:
+        logging.error(""Database lookup failed for domain %s: %s"", domain, exc)
+        raise
+    finally:
+        if conn is not None:
+            conn.close()
+    return results
+
+
+async def find_accounts_by_email_domain(db_path: str, domain: str) -> list[dict[str, Any]]:
+    if not isinstance(domain, str):
+        logging.warning(""Received non-string domain argument"")
+        raise ValueError(""Domain must be a string"")
+    normalized = _normalize_domain_input(domain)
+    if not _validate_domain_structure(normalized):
+        logging.warning(""Domain failed structural check: %s"", normalized)
+        raise ValueError(""Invalid domain format"")
+    if not _check_domain_tokens(normalized):
+        logging.warning(""Domain rejected by token check: %s"", normalized)
+        raise ValueError(""Disallowed token in domain"")
+    try:
+        accounts = await asyncio.to_thread(_query_accounts_by_domain, db_path, normalized)
+    except Exception as exc:
+        logging.error(""Async account search error: %s"", exc)
+        raise
+    logging.info(""Found %d accounts matching domain %s"", len(accounts), normalized)
+    return accounts","[59, 60]",
+dsk_89_py_0399,deepseek-coder-v2:16b,python,CWE-89,safe,0,Insert a new audit-log entry with an action and a user name.,sqlalchemy_text,6-10,10,parameterised,function_argument,,standard_safe,cursor.execute,method,"from sqlalchemy import text
+
+
+class AuditLogger:
+    def record_entry(self, conn, action: str, username: str) -> None:
+        query = text(
+            ""INSERT INTO audit_log (action, username) VALUES (:action, :username)""
+        )
+        params = {
+            ""action"": action,
+            ""username"": username,
+        }
+        conn.execute(query, params)",,,
+dsk_89_py_0387,deepseek-coder-v2:16b,python,CWE-89,no_code,0,Compute pagination numbers from a total count and page size.,none,11-20,20,none,not_applicable,,no_dangerous_call,,callback_or_async,"import asyncio
+
+
+async def compute_pagination(total_items: int, page_size: int, page: int = 1) -> dict[str, int]:
+    await asyncio.sleep(0)
+    if page_size <= 0:
+        raise ValueError(""Page size must be positive"")
+    if total_items < 0:
+        raise ValueError(""Total items cannot be negative"")
+    total_pages = max(1, (total_items + page_size - 1) // page_size)
+    current_page = min(max(1, page), total_pages)
+    offset = (current_page - 1) * page_size
+    start_index = offset + 1 if total_items > 0 else 0
+    end_index = min(offset + page_size, total_items)
+    return {
+        ""total_pages"": total_pages,
+        ""current_page"": current_page,
+        ""offset"": offset,
+        ""start_index"": start_index,
+        ""end_index"": end_index,
+    }",,,
