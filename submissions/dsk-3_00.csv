@@ -71,14 +71,14 @@ void handleLookupMessage(
     const std::set<std::string> allowedTables = {
         ""users"", ""orders"", ""products""
     };
-    const bool looksAllowed = std::any_of(
+    const bool isKnownTable = std::any_of(
         allowedTables.begin(), allowedTables.end(),
         [&](const std::string& allowed) {
             return networkMessage.compare(0, allowed.size(), allowed) == 0;
         }
     );
 
-    if (!looksAllowed) {
+    if (!isKnownTable) {
         std::cerr << ""Lookup table is not recognized"" << std::endl;
         callback(-1);
         return;
@@ -142,14 +142,14 @@ void handleLookupMessage(
     const std::set<std::string> allowedTables = {
         ""users"", ""orders"", ""products""
     };
-    const bool looksAllowed = std::any_of(
+    const bool isKnownTable = std::any_of(
         allowedTables.begin(), allowedTables.end(),
         [&](const std::string& allowed) {
             return networkMessage == allowed;
         }
     );
 
-    if (!looksAllowed) {
+    if (!isKnownTable) {
         std::cerr << ""Lookup table is not recognized"" << std::endl;
         callback(-1);
         return;
