@@ -27,45 +27,43 @@ if __name__ == ""__main__"": get_top_scores()
 ",,,
 phi_89_py_1185,phi4:14b,python,CWE-89,hard_positive,1,"Count sign-ups per country, optionally only for one country.",django_raw,11-20,18,format_method,command_line,parameterised_query,param_in_one_branch_only,Model.objects.raw / connection.cursor().execute,cli_entry,"import sys
 from django.db import connection
-from myapp.models import User
 
 def count_signups():
-    country = sys.argv[1] if len(sys.argv) > 1 else None
-
-    if country:
-        query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = '{}' GROUP BY country"".format(country)
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            results = cursor.fetchall()
-    else:
-        query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
-        results = User.objects.raw(query)
-
-    for result in results:
-        print(result)
-
-if __name__ == ""__main__"":
-    count_signups()","import sys
-from django.db import connection
-from myapp.models import User
-
-def count_signups():
-    country = sys.argv[1] if len(sys.argv) > 1 else None
-
-    if country:
-        query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = %s GROUP BY country""
-        with connection.cursor() as cursor:
+    country = sys.argv[1] if len(sys.argv) > 1 else """"
+    exact_match = len(sys.argv) > 2 and sys.argv[2] == ""exact""
+    with connection.cursor() as cursor:
+        if country and exact_match:
+            query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = %s GROUP BY country""
             cursor.execute(query, [country])
-            results = cursor.fetchall()
-    else:
-        query = ""SELECT country, COUNT(*) FROM myapp_user GROUP BY country""
-        results = User.objects.raw(query)
-
+        else:
+            query = f""SELECT country, COUNT(*) FROM myapp_user WHERE country LIKE '%{country}%' GROUP BY country""
+            cursor.execute(query)
+        results = cursor.fetchall()
     for result in results:
         print(result)
 
 if __name__ == ""__main__"":
-    count_signups()","[9, 11]",
+    count_signups()
+","import sys
+from django.db import connection
+
+def count_signups():
+    country = sys.argv[1] if len(sys.argv) > 1 else """"
+    exact_match = len(sys.argv) > 2 and sys.argv[2] == ""exact""
+    with connection.cursor() as cursor:
+        if country and exact_match:
+            query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country = %s GROUP BY country""
+            cursor.execute(query, [country])
+        else:
+            query = ""SELECT country, COUNT(*) FROM myapp_user WHERE country LIKE %s GROUP BY country""
+            cursor.execute(query, [f""%{country}%""])
+        results = cursor.fetchall()
+    for result in results:
+        print(result)
+
+if __name__ == ""__main__"":
+    count_signups()
+","[12, 13]",
 phi_89_py_1198,phi4:14b,python,CWE-89,safe,0,Filter books by an optional author and an optional publication year.,psycopg2,21-40,35,parameterised,function_argument,,standard_safe,cursor.execute (psycopg2),helper_called_by_caller,"import psycopg2
 import logging
 
